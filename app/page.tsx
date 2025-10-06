@@ -86,102 +86,95 @@ export default function MorbiaWebsite() {
     },
   ]
 
-const technologies = [
-  {
-    name: "React",
-    logo: (
-      <svg viewBox="0 0 24 24" className="w-12 h-12" fill="none">
-        <circle cx="12" cy="12" r="2.5" fill="#61DAFB" />
-        <ellipse cx="12" cy="12" rx="11" ry="4.5" stroke="#61DAFB" strokeWidth="1" fill="none" />
-        <ellipse
-          cx="12"
-          cy="12"
-          rx="11"
-          ry="4.5"
-          stroke="#61DAFB"
-          strokeWidth="1"
-          fill="none"
-          transform="rotate(60 12 12)"
-        />
-        <ellipse
-          cx="12"
-          cy="12"
-          rx="11"
-          ry="4.5"
-          stroke="#61DAFB"
-          strokeWidth="1"
-          fill="none"
-          transform="rotate(120 12 12)"
-        />
-      </svg>
-    ),
-  },
-  {
-    name: "Next.js",
-    logo: (
-      <svg viewBox="0 0 24 24" className="w-12 h-12" fill="currentColor">
-        <path
-          d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0Z"
-          fill="black"
-        />
-        <path
-          d="M16.5 17.25h-1.65L9.75 9.6v7.65H8.25v-11h1.65l5.1 7.65V6.25h1.5v11Z"
-          fill="white"
-        />
-      </svg>
-    ),
-  },
-{
-  name: "OpenAI",
-  logo: (
-    <svg viewBox="0 0 24 24" className="w-12 h-12" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"
-        fill="#FFFFFF"
-      />
-    </svg>
-  ),
-},
+  const technologies = [
+    {
+      name: "React",
+      logo: (
+        <svg viewBox="0 0 24 24" className="w-12 h-12" fill="none">
+          <circle cx="12" cy="12" r="2.5" fill="#61DAFB" />
+          <ellipse cx="12" cy="12" rx="11" ry="4.5" stroke="#61DAFB" strokeWidth="1" fill="none" />
+          <ellipse
+            cx="12"
+            cy="12"
+            rx="11"
+            ry="4.5"
+            stroke="#61DAFB"
+            strokeWidth="1"
+            fill="none"
+            transform="rotate(60 12 12)"
+          />
+          <ellipse
+            cx="12"
+            cy="12"
+            rx="11"
+            ry="4.5"
+            stroke="#61DAFB"
+            strokeWidth="1"
+            fill="none"
+            transform="rotate(120 12 12)"
+          />
+        </svg>
+      ),
+    },
+    {
+      name: "Next.js",
+      logo: (
+        <svg viewBox="0 0 24 24" className="w-12 h-12" fill="currentColor">
+          <path d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0Z" fill="black" />
+          <path d="M16.5 17.25h-1.65L9.75 9.6v7.65H8.25v-11h1.65l5.1 7.65V6.25h1.5v11Z" fill="white" />
+        </svg>
+      ),
+    },
+    {
+      name: "OpenAI",
+      logo: (
+        <svg viewBox="0 0 24 24" className="w-12 h-12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"
+            fill="#FFFFFF"
+          />
+        </svg>
+      ),
+    },
 
-  {
-    name: "Stripe",
-    logo: (
-      <svg viewBox="0 0 24 24" className="w-12 h-12" fill="none">
-        <rect width="24" height="24" rx="4" fill="#635BFF" />
-        <path
-          d="M13.3 8.3c-.9-.4-1.5-.7-1.5-1.1 0-.4.3-.6.8-.6 1 0 2 .4 2.7.7l.4-2.5C14.8 4.4 13.7 4 12.5 4c-1.1 0-2 .3-2.7.8-.7.6-1.1 1.4-1.1 2.4 0 1.8 1.1 2.6 2.9 3.2 1.2.4 1.5.7 1.5 1.2 0 .4-.4.7-1.1.7-.8 0-2.2-.4-3.1-.9l-.4 2.5c.9.5 2.2.9 3.5.9 1.2 0 2.2-.3 2.9-.8.7-.6 1.1-1.4 1.1-2.6 0-1.9-1.1-2.7-2.9-3.2z"
-          fill="white"
-        />
-      </svg>
-    ),
-  },
-  {
-    name: "Power Automate",
-    logo: (
-      <svg viewBox="0 0 24 24" className="w-12 h-12" fill="none">
-        <rect width="24" height="24" rx="3" fill="#0066FF" />
-        <path d="M7 6h10v2H7V6zm0 4h10v2H7v-2zm0 4h7v2H7v-2z" fill="white" />
-        <path d="M16 14l3-3-3-3v2H7v2h9v2z" fill="white" />
-      </svg>
-    ),
-  },
-  {
-    name: "Python",
-    logo: (
-      <svg viewBox="0 0 24 24" className="w-12 h-12" fill="none">
-        <path
-          d="M12.5 2c1.5 0 2.8.2 3.8.6 1 .4 1.7 1 1.7 2.4v2h-5v1h7c1 0 1.8.4 2.3 1.2.5.8.7 1.8.7 3 0 1.2-.2 2.2-.7 3-.5.8-1.3 1.2-2.3 1.2h-1.5v-2c0-1.1-.9-2-2-2h-5c-1 0-1.8-.8-1.8-1.8V5.2c0-1.4.7-2 1.7-2.4 1-.4 2.3-.6 3.8-.6h.3zm-1 2.5c-.4 0-.7.3-.7.7s.3.7.7.7.7-.3.7-.7-.3-.7-.7-.7z"
-          fill="#3776AB"
-        />
-        <path
-          d="M11.5 22c-1.5 0-2.8-.2-3.8-.6-1-.4-1.7-1-1.7-2.4v-2h5v-1H4c-1 0-1.8-.4-2.3-1.2C1.2 14 1 13 1 11.8c0-1.2.2-2.2.7-3C2.2 8 3 7.6 4 7.6h1.5v2c0 1.1.9 2 2 2h5c1 0 1.8.8 1.8 1.8v4.4c0 1.4-.7 2-1.7 2.4-1 .4-2.3.6-3.8.6h-.3zm1-2.5c.4 0 .7-.3.7-.7s-.3-.7-.7-.7-.7.3-.7.7.3.7.7.7z"
-          fill="#FFD43B"
-        />
-      </svg>
-    ),
-  },
-];
-
+    {
+      name: "Stripe",
+      logo: (
+        <svg viewBox="0 0 24 24" className="w-12 h-12" fill="none">
+          <rect width="24" height="24" rx="4" fill="#635BFF" />
+          <path
+            d="M13.3 8.3c-.9-.4-1.5-.7-1.5-1.1 0-.4.3-.6.8-.6 1 0 2 .4 2.7.7l.4-2.5C14.8 4.4 13.7 4 12.5 4c-1.1 0-2 .3-2.7.8-.7.6-1.1 1.4-1.1 2.4 0 1.8 1.1 2.6 2.9 3.2 1.2.4 1.5.7 1.5 1.2 0 .4-.4.7-1.1.7-.8 0-2.2-.4-3.1-.9l-.4 2.5c.9.5 2.2.9 3.5.9 1.2 0 2.2-.3 2.9-.8.7-.6 1.1-1.4 1.1-2.6 0-1.9-1.1-2.7-2.9-3.2z"
+            fill="white"
+          />
+        </svg>
+      ),
+    },
+    {
+      name: "Power Automate",
+      logo: (
+        <svg viewBox="0 0 24 24" className="w-12 h-12" fill="none">
+          <rect width="24" height="24" rx="3" fill="#0066FF" />
+          <path d="M7 6h10v2H7V6zm0 4h10v2H7v-2zm0 4h7v2H7v-2z" fill="white" />
+          <path d="M16 14l3-3-3-3v2H7v2h9v2z" fill="white" />
+        </svg>
+      ),
+    },
+    {
+      name: "Python",
+      logo: (
+        <svg viewBox="0 0 24 24" className="w-12 h-12" fill="none">
+          <path
+            d="M12.5 2c1.5 0 2.8.2 3.8.6 1 .4 1.7 1 1.7 2.4v2h-5v1h7c1 0 1.8.4 2.3 1.2.5.8.7 1.8.7 3 0 1.2-.2 2.2-.7 3-.5.8-1.3 1.2-2.3 1.2h-1.5v-2c0-1.1-.9-2-2-2h-5c-1 0-1.8-.8-1.8-1.8V5.2c0-1.4.7-2 1.7-2.4 1-.4 2.3-.6 3.8-.6h.3zm-1 2.5c-.4 0-.7.3-.7.7s.3.7.7.7.7-.3.7-.7-.3-.7-.7-.7z"
+            fill="#3776AB"
+          />
+          <path
+            d="M11.5 22c-1.5 0-2.8-.2-3.8-.6-1-.4-1.7-1-1.7-2.4v-2h5v-1H4c-1 0-1.8-.4-2.3-1.2C1.2 14 1 13 1 11.8c0-1.2.2-2.2.7-3C2.2 8 3 7.6 4 7.6h1.5v2c0 1.1.9 2 2 2h5c1 0 1.8.8 1.8 1.8v4.4c0 1.4-.7 2-1.7 2.4-1 .4-2.3.6-3.8.6h-.3zm1-2.5c.4 0 .7-.3.7-.7s-.3-.7-.7-.7-.7.3-.7.7.3.7.7.7z"
+            fill="#FFD43B"
+          />
+        </svg>
+      ),
+    },
+  ]
 
   const testimonials = [
     {
@@ -202,53 +195,63 @@ const technologies = [
     },
   ]
 
-const socialLinks = [
-  {
-    name: "Facebook",
-    url: "https://www.facebook.com/share/1JCLHGkqxF/?mibextid=wwXIfr",
+  const socialLinks = [
+    {
+      name: "Facebook",
+      url: "https://www.facebook.com/share/1JCLHGkqxF/?mibextid=wwXIfr",
+      logo: (
+        <svg viewBox="0 0 24 24" className="w-6 h-6">
+          <path
+            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+            fill="#1877F2"
+          />
+        </svg>
+      ),
+    },
+    {
+      name: "Instagram",
+      url: "https://www.instagram.com/morbia_mx?igsh=YTlva3FpMzIxeDNk",
+      logo: (
+        <svg viewBox="0 0 24 24" className="w-6 h-6">
+          <defs>
+            <linearGradient id="instagram-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#833AB4" />
+              <stop offset="50%" stopColor="#FD1D1D" />
+              <stop offset="100%" stopColor="#FCB045" />
+            </linearGradient>
+          </defs>
+          <path
+            fill="url(#instagram-gradient)"
+            d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.25-.88a1.12 1.12 0 1 1-2.25 0 1.12 1.12 0 0 1 2.25 0z"
+          />
+        </svg>
+      ),
+    },
+    {
+      name: "TikTok",
+      logo: (
+        <svg viewBox="0 0 24 24" className="w-6 h-6">
+          <path
+            d="M12 2h4.5a5.5 5.5 0 0 0 5.5 5.5V11a9.99 9.99 0 0 1-5.5-1.6v6.6a6.5 6.5 0 1 1-6.5-6.5c.34 0 .67.03 1 .09V14a2.5 2.5 0 1 0 2.5 2.5V2z"
+            fill="#FFFFFF"
+          />
+        </svg>
+      ),
+    },
+    {
+    name: "WhatsApp",
+    url: "https://wa.me/522215268440",
     logo: (
-      <svg viewBox="0 0 24 24" className="w-6 h-6">
+      <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
-          d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
-          fill="#1877F2"
-        />
-      </svg>
-    ),
-  },
-  {
-    name: "Instagram",
-    url: "https://www.instagram.com/morbia_mx?igsh=YTlva3FpMzIxeDNk",
-    logo: (
-      <svg viewBox="0 0 24 24" className="w-6 h-6">
-        <defs>
-          <linearGradient id="instagram-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#833AB4" />
-            <stop offset="50%" stopColor="#FD1D1D" />
-            <stop offset="100%" stopColor="#FCB045" />
-          </linearGradient>
-        </defs>
-        <path
-          fill="url(#instagram-gradient)"
-          d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.25-.88a1.12 1.12 0 1 1-2.25 0 1.12 1.12 0 0 1 2.25 0z"
-        />
-      </svg>
-    ),
-  },
-  {
-    name: "TikTok",
-    url: "https://www.tiktok.com/@morbiamx",
-    logo: (
-      <svg viewBox="0 0 24 24" className="w-6 h-6">
-        <path
-          d="M12 2h4.5a5.5 5.5 0 0 0 5.5 5.5V11a9.99 9.99 0 0 1-5.5-1.6v6.6a6.5 6.5 0 1 1-6.5-6.5c.34 0 .67.03 1 .09V14a2.5 2.5 0 1 0 2.5 2.5V2z"
+          d="M20.52 3.48A11.94 11.94 0 0 0 12.02 0C5.38 0 .02 5.36.02 11.98c0 2.12.56 4.19 1.62 6.01L0 24l6.18-1.62a11.97 11.97 0 0 0 5.82 1.48h.01c6.63 0 12-5.36 12-11.98 0-3.2-1.25-6.21-3.49-8.4ZM12.02 21.8h-.01a9.8 9.8 0 0 1-4.99-1.37l-.36-.21-3.67.96.98-3.58-.23-.37a9.8 9.8 0 0 1-1.51-5.2c0-5.41 4.41-9.82 9.82-9.82 2.62 0 5.08 1.02 6.94 2.87a9.74 9.74 0 0 1 2.88 6.93c0 5.41-4.41 9.8-9.85 9.8Zm5.39-7.35c-.29-.15-1.71-.84-1.98-.93-.27-.1-.46-.15-.65.15-.19.29-.75.93-.92 1.12-.17.19-.34.21-.63.06-.29-.15-1.23-.45-2.35-1.43-.87-.77-1.46-1.71-1.63-2-.17-.29-.02-.45.13-.6.14-.14.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.03-.51-.08-.15-.65-1.56-.9-2.14-.24-.58-.48-.5-.65-.51h-.55c-.19 0-.51.07-.78.36-.27.29-1.02.99-1.02 2.42s1.05 2.81 1.19 3c.15.19 2.06 3.15 5 4.42.7.3 1.25.48 1.68.61.71.23 1.35.2 1.86.12.57-.08 1.71-.7 1.95-1.37.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.34Z"
           fill="#FFFFFF"
         />
       </svg>
     ),
   },
-];
 
-
+  ]
 
   return (
     <div className="min-h-screen bg-gray-950">
@@ -268,24 +271,29 @@ const socialLinks = [
             </div>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex space-x-8">
-              {["Inicio", "Acerca de Nosotros", "Servicios", "Tecnologías", "Testimonios"].map((item) => (
-                <button
-                  key={item}
-                  onClick={() => scrollToSection(item.toLowerCase().replace(/\s+/g, "-"))}
-                  className="text-gray-300 hover:text-[#61e59c] transition-colors duration-300 font-medium relative group"
-                >
-                  {item}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#61e59c] transition-all duration-300 group-hover:w-full"></span>
-                </button>
-              ))}
+            <div className="hidden md:flex items-center flex-1 justify-center">
+              <div className="flex space-x-8">
+                {["Inicio", "Acerca de Nosotros", "Servicios", "Tecnologías", "Testimonios", "Clientes"].map((item) => (
+                  <button
+                    key={item}
+                    onClick={() => scrollToSection(item.toLowerCase().replace(/\s+/g, "-"))}
+                    className="text-gray-300 hover:text-[#61e59c] transition-colors duration-300 font-medium relative group"
+                  >
+                    {item}
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#61e59c] transition-all duration-300 group-hover:w-full"></span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="hidden md:block">
               <a
                 href="https://finzenbymorbia.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-300 hover:text-[#61e59c] transition-colors duration-300 font-medium relative group"
+                className="text-gray-300 hover:text-[#61e59c] transition-colors duration-300 font-medium relative group animate-color-shift"
               >
-                FinZen
+                Ingresa a FinZen
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#61e59c] transition-all duration-300 group-hover:w-full"></span>
               </a>
             </div>
@@ -299,7 +307,7 @@ const socialLinks = [
           {/* Mobile Menu */}
           {isMenuOpen && (
             <div className="md:hidden bg-gray-800/95 backdrop-blur-md rounded-lg mt-2 p-4 border border-gray-700">
-              {["Inicio", "Acerca de Nosotros", "Servicios", "Tecnologías", "Testimonios"].map((item) => (
+              {["Inicio", "Acerca de Nosotros", "Servicios", "Tecnologías", "Testimonios", "Clientes"].map((item) => (
                 <button
                   key={item}
                   onClick={() => scrollToSection(item.toLowerCase().replace(/\s+/g, "-"))}
@@ -314,7 +322,7 @@ const socialLinks = [
                 rel="noopener noreferrer"
                 className="block w-full text-left py-3 text-gray-300 hover:text-[#61e59c] transition-colors duration-300 font-medium"
               >
-                FinZen
+                Ingresa a FinZen
               </a>
             </div>
           )}
@@ -501,13 +509,81 @@ const socialLinks = [
               </Card>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="text-center mt-16">
+      {/* Clients Section */}
+      <section id="clientes" className="py-20 bg-gray-900/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#2c5b8b] to-[#17a993] bg-clip-text text-transparent mb-4">
+              Conoce a nuestros clientes
+            </h2>
+            <p className="text-xl text-[#61e59c]">Empresas que confían en nosotros</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+            <a
+              href="https://grupo.sosadelbosque.mx/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center p-8 bg-gray-900/60 rounded-xl border border-gray-800 hover:border-[#61e59c]/50 transition-all duration-500 transform hover:scale-110 hover:shadow-lg hover:shadow-[#61e59c]/20 backdrop-blur-sm"
+            >
+              <Image
+                src="/images/sosadelbosque.jpg"
+                alt="Sosa Del Bosque"
+                width={200}
+                height={200}
+                className="w-full h-auto object-contain"
+              />
+            </a>
+
+            <a
+              href="https://grupo-morales-consultores.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center p-8 bg-gray-900/60 rounded-xl border border-gray-800 hover:border-[#61e59c]/50 transition-all duration-500 transform hover:scale-110 hover:shadow-lg hover:shadow-[#61e59c]/20 backdrop-blur-sm"
+            >
+              <Image
+                src="/images/grupo_morales_consultores.png"
+                alt="Grupo Morales Consultores"
+                width={200}
+                height={200}
+                className="w-full h-auto object-contain"
+              />
+            </a>
+
+            <a
+              href="https://sorteosramos369.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center p-8 bg-gray-900/60 rounded-xl border border-gray-800 hover:border-[#61e59c]/50 transition-all duration-500 transform hover:scale-110 hover:shadow-lg hover:shadow-[#61e59c]/20 backdrop-blur-sm"
+            >
+              <Image
+                src="/images/sorteosramos369.png"
+                alt="Sorteos Ramos 369"
+                width={200}
+                height={200}
+                className="w-full h-auto object-contain"
+              />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section - Comienza a automatizar tu futuro */}
+      <section className="py-20 bg-gray-950">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
             <h3 className="text-2xl font-bold text-white mb-4">Comienza a automatizar tu futuro</h3>
-            <p className="text-gray-400 mb-6">Contáctanos al contacto@morbia.com.mx o llámanos al +52 221 526 8440  </p>
-            <Button className="bg-gradient-to-r from-[#2c5b8b] to-[#17a993] hover:from-[#17a993] hover:to-[#61e59c] text-white px-8 py-4 text-lg rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-[#61e59c]/25 border-0">
+            <p className="text-gray-400 mb-6">Contáctanos al contacto@morbia.com.mx o llámanos al +52 221 526 8440 </p>
+            <Button
+              className="bg-gradient-to-r from-[#2c5b8b] to-[#17a993] hover:from-[#17a993] hover:to-[#61e59c] text-white px-8 py-4 text-lg rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-[#61e59c]/25 border-0"
+              onClick={() => window.open("https://wa.me/522215268440", "_blank")}
+            >
               Contáctanos
             </Button>
+
           </div>
         </div>
       </section>
@@ -560,7 +636,7 @@ const socialLinks = [
       {showScrollTop && (
         <Button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 bg-gradient-to-r from-[#17a993] to-[#61e59c] hover:from-[#61e59c] hover:to-[#17a993] text-white p-4 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 z-50 animate-bounce"
+          className="fixed bottom-8 right-8 bg-gradient-to-r from-[#17a993] to-[#61e59c] hover:from-[#61e59c] hover:to-[#17a993] text-white p-4 rounded-full shadow-lg hover:shadow-[#61e59c]/25 border-0"
         >
           <ArrowUp size={24} />
         </Button>

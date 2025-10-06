@@ -45,7 +45,7 @@
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
     --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
@@ -274,4 +274,27 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(to bottom, #61e59c, #17a993);
+}
+
+/* Adding color-shifting animation for FinZen link */
+@keyframes colorShift {
+  0% {
+    color: #d1d5db; /* gray-300 */
+  }
+  25% {
+    color: #61e59c; /* brand green */
+  }
+  50% {
+    color: #17a993; /* brand teal */
+  }
+  75% {
+    color: #2c5b8b; /* brand blue */
+  }
+  100% {
+    color: #d1d5db; /* gray-300 */
+  }
+}
+
+.animate-color-shift {
+  animation: colorShift 4s ease-in-out infinite;
 }
