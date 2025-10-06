@@ -4,10 +4,10 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   title: "Morbia",
-  description: "Created with v0",
-  generator: "v0.dev",
+  description: "Creado por Morbia",
+  generator: "Morbia",
   icons: {
-    icon: "/images/main-logo.png",
+    icon: "/favicon.png",
   },
 }
 
