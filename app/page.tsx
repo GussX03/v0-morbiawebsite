@@ -18,6 +18,13 @@ import {
   Phone,
   MapPin,
   ArrowUp,
+  ChevronDown,
+  Sparkles,
+  TrendingUp,
+  Calendar,
+  PieChart,
+  Mic,
+  User,
 } from "lucide-react"
 import Image from "next/image"
 
@@ -25,6 +32,9 @@ export default function MorbiaWebsite() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrollY, setScrollY] = useState(0)
   const [showScrollTop, setShowScrollTop] = useState(false)
+  const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false)
+  const [isMobileAboutOpen, setIsMobileAboutOpen] = useState(false)
+  const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,6 +48,29 @@ export default function MorbiaWebsite() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  useEffect(() => {
+    return () => {
+      if (dropdownTimeout) {
+        clearTimeout(dropdownTimeout)
+      }
+    }
+  }, [dropdownTimeout])
+
+  const handleDropdownEnter = () => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout)
+      setDropdownTimeout(null)
+    }
+    setIsAboutDropdownOpen(true)
+  }
+
+  const handleDropdownLeave = () => {
+    const timeout = setTimeout(() => {
+      setIsAboutDropdownOpen(false)
+    }, 300) // 300ms delay before closing
+    setDropdownTimeout(timeout)
+  }
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
@@ -45,6 +78,14 @@ export default function MorbiaWebsite() {
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
     setIsMenuOpen(false)
+    setIsAboutDropdownOpen(false)
+    setIsMobileAboutOpen(false)
+  }
+
+  const getHeaderOpacity = () => {
+    const maxScroll = 500 // Start becoming more transparent after 500px
+    const opacity = Math.max(0.7, 0.95 - (scrollY / maxScroll) * 0.25) // Range from 0.95 to 0.7
+    return opacity
   }
 
   const services = [
@@ -130,7 +171,7 @@ export default function MorbiaWebsite() {
       logo: (
         <svg viewBox="0 0 24 24" className="w-12 h-12" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
-            d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"
+            d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1686a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"
             fill="#FFFFFF"
           />
         </svg>
@@ -187,7 +228,7 @@ export default function MorbiaWebsite() {
     },
     {
       name: "Carlos Ruiz",
-      text: "Su solución de inteligencia artificial detecta patrones que antes pasaban desapercibidos. Gracias a ello optimizamos la producción y reducimos costos en un 20%.",
+      text: "Su solución de inteligencia artificial detecta patrones que antes pasaban desapercibidos. Gracias a elloğimiz la producción y reducimos costos en un 20%.",
     },
     {
       name: "Luis Ramírez",
@@ -232,31 +273,68 @@ export default function MorbiaWebsite() {
       logo: (
         <svg viewBox="0 0 24 24" className="w-6 h-6">
           <path
-            d="M12 2h4.5a5.5 5.5 0 0 0 5.5 5.5V11a9.99 9.99 0 0 1-5.5-1.6v6.6a6.5 6.5 0 1 1-6.5-6.5c.34 0 .67.03 1 .09V14a2.5 2.5 0 1 0 2.5 2.5V2z"
+            d="M20.52 3.48A11.94 11.94 0 0 0 12.02 0C5.38 0 .02 5.36.02 11.98c0 2.12.56 4.19 1.62 6.01L0 24l6.18-1.62a11.97 11.97 0 0 0 5.82 1.48h.01c6.63 0 12-5.36 12-11.98 0-3.2-1.25-6.21-3.49-8.4ZM12.02 21.8h-.01a9.8 9.8 0 0 1-4.99-1.37l-.36-.21-3.67.96.98-3.58-.23-.37a9.8 9.8 0 0 1-1.51-5.2c0-5.41 4.41-9.82 9.82-9.82 2.62 0 5.08 1.02 6.94 2.87a9.74 9.74 0 0 1 2.88 6.93c0 5.41-4.41 9.8-9.85 9.8Zm5.39-7.35c-.29-.15-1.71-.84-1.98-.93-.27-.1-.46-.15-.65.15-.19.29-.75.93-.92 1.12-.17.19-.34.21-.63.06-.29-.15-1.23-.45-2.35-1.43-.87-.77-1.46-1.71-1.63-2-.17-.29-.02-.45.13-.6.14-.14.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.03-.51-.08-.15-.65-1.56-.9-2.14-.24-.58-.48-.5-.65-.51h-.55c-.19 0-.51.07-.78.36-.27.29-1.02.99-1.02 2.42s1.05 2.81 1.19 3c.15.19 2.06 3.15 5 4.42.7.3 1.25.48 1.68.61.71.23 1.35.2 1.86.12.57-.08 1.71-.7 1.95-1.37.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.34Z"
             fill="#FFFFFF"
           />
         </svg>
       ),
     },
     {
-    name: "WhatsApp",
-    url: "https://wa.me/522215268440",
-    logo: (
-      <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M20.52 3.48A11.94 11.94 0 0 0 12.02 0C5.38 0 .02 5.36.02 11.98c0 2.12.56 4.19 1.62 6.01L0 24l6.18-1.62a11.97 11.97 0 0 0 5.82 1.48h.01c6.63 0 12-5.36 12-11.98 0-3.2-1.25-6.21-3.49-8.4ZM12.02 21.8h-.01a9.8 9.8 0 0 1-4.99-1.37l-.36-.21-3.67.96.98-3.58-.23-.37a9.8 9.8 0 0 1-1.51-5.2c0-5.41 4.41-9.82 9.82-9.82 2.62 0 5.08 1.02 6.94 2.87a9.74 9.74 0 0 1 2.88 6.93c0 5.41-4.41 9.8-9.85 9.8Zm5.39-7.35c-.29-.15-1.71-.84-1.98-.93-.27-.1-.46-.15-.65.15-.19.29-.75.93-.92 1.12-.17.19-.34.21-.63.06-.29-.15-1.23-.45-2.35-1.43-.87-.77-1.46-1.71-1.63-2-.17-.29-.02-.45.13-.6.14-.14.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.03-.51-.08-.15-.65-1.56-.9-2.14-.24-.58-.48-.5-.65-.51h-.55c-.19 0-.51.07-.78.36-.27.29-1.02.99-1.02 2.42s1.05 2.81 1.19 3c.15.19 2.06 3.15 5 4.42.7.3 1.25.48 1.68.61.71.23 1.35.2 1.86.12.57-.08 1.71-.7 1.95-1.37.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.34Z"
-          fill="#FFFFFF"
-        />
-      </svg>
-    ),
-  },
+      name: "WhatsApp",
+      url: "https://wa.me/522215268440",
+      logo: (
+        <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M20.52 3.48A11.94 11.94 0 0 0 12.02 0C5.38 0 .02 5.36.02 11.98c0 2.12.56 4.19 1.62 6.01L0 24l6.18-1.62a11.97 11.97 0 0 0 5.82 1.48h.01c6.63 0 12-5.36 12-11.98 0-3.2-1.25-6.21-3.49-8.4ZM13.3 8.3c-.9-.4-1.5-.7-1.5-1.1 0-.4.3-.6.8-.6 1 0 2 .4 2.7.7l.4-2.5C14.8 4.4 13.7 4 12.5 4c-1.1 0-2 .3-2.7.8-.7.6-1.1 1.4-1.1 2.4 0 1.8 1.1 2.6 2.9 3.2 1.2.4 1.5.7 1.5 1.2 0 .4-.4.7-1.1.7-.8 0-2.2-.4-3.1-.9l-.4 2.5c.9.5 2.2.9 3.5.9 1.2 0 2.2-.3 2.9-.8.7-.6 1.1-1.4 1.1-2.6 0-1.9-1.1-2.7-2.9-3.2z"
+            fill="#FFFFFF"
+          />
+        </svg>
+      ),
+    },
+  ]
 
+  const finzenFeatures = [
+    {
+      icon: TrendingUp,
+      title: "Resumen Completo",
+      description: "Visualiza todas tus finanzas en un solo lugar",
+    },
+    {
+      icon: Calendar,
+      title: "Calendario Financiero",
+      description: "Organiza tus movimientos en el tiempo",
+    },
+    {
+      icon: PieChart,
+      title: "Análisis Visual",
+      description: "Gráficas dinámicas de tus datos",
+    },
+    {
+      icon: Brain,
+      title: "Chat IA",
+      description: "Asistente inteligente para tus finanzas",
+    },
+    {
+      icon: Mic,
+      title: "Registro por Voz",
+      description: "Habla y registra tus movimientos",
+    },
+    {
+      icon: User,
+      title: "Perfil Personalizable",
+      description: "Adapta la app a tu estilo",
+    },
   ]
 
   return (
     <div className="min-h-screen bg-gray-950">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-gray-900/95 backdrop-blur-md border-b border-gray-800">
+      <nav
+        className="fixed top-0 w-full z-50 backdrop-blur-md border-b border-gray-800 transition-all duration-300"
+        style={{
+          backgroundColor: `rgba(17, 24, 39, ${getHeaderOpacity()})`,
+        }}
+      >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-3">
@@ -270,19 +348,71 @@ export default function MorbiaWebsite() {
               />
             </div>
 
-            {/* Desktop Menu */}
             <div className="hidden md:flex items-center flex-1 justify-center">
               <div className="flex space-x-8">
-                {["Inicio", "Acerca de Nosotros", "Servicios", "Tecnologías", "Testimonios", "Clientes"].map((item) => (
+                <button
+                  onClick={() => scrollToSection("inicio")}
+                  className="text-gray-300 hover:text-[#61e59c] transition-colors duration-300 font-medium relative group"
+                >
+                  Inicio
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#61e59c] transition-all duration-300 group-hover:w-full"></span>
+                </button>
+
+                {/* Acerca de Nosotros with Dropdown */}
+                <div className="relative" onMouseEnter={handleDropdownEnter} onMouseLeave={handleDropdownLeave}>
                   <button
-                    key={item}
-                    onClick={() => scrollToSection(item.toLowerCase().replace(/\s+/g, "-"))}
-                    className="text-gray-300 hover:text-[#61e59c] transition-colors duration-300 font-medium relative group"
+                    onClick={() => scrollToSection("acerca-de-nosotros")}
+                    className="text-gray-300 hover:text-[#61e59c] transition-colors duration-300 font-medium relative group flex items-center gap-1"
                   >
-                    {item}
+                    Acerca de Nosotros
+                    <ChevronDown size={16} className="transition-transform duration-300 group-hover:rotate-180" />
                     <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#61e59c] transition-all duration-300 group-hover:w-full"></span>
                   </button>
-                ))}
+
+                  {/* Dropdown Menu */}
+                  {isAboutDropdownOpen && (
+                    <div className="absolute top-full left-0 pt-2 w-48 animate-in fade-in slide-in-from-top-2 duration-200">
+                      <div className="bg-gray-800/95 backdrop-blur-md rounded-lg border border-gray-700 shadow-xl overflow-hidden">
+                        <button
+                          onClick={() => scrollToSection("servicios")}
+                          className="w-full text-left px-4 py-3 text-gray-300 hover:text-[#61e59c] hover:bg-gray-700/50 transition-all duration-200 font-medium"
+                        >
+                          Servicios
+                        </button>
+                        <button
+                          onClick={() => scrollToSection("tecnologías")}
+                          className="w-full text-left px-4 py-3 text-gray-300 hover:text-[#61e59c] hover:bg-gray-700/50 transition-all duration-200 font-medium"
+                        >
+                          Tecnologías
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <button
+                  onClick={() => scrollToSection("conoce-finzen")}
+                  className="text-gray-300 hover:text-[#61e59c] transition-colors duration-300 font-medium relative group"
+                >
+                  Conoce FinZen
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#61e59c] transition-all duration-300 group-hover:w-full"></span>
+                </button>
+
+                <button
+                  onClick={() => scrollToSection("testimonios")}
+                  className="text-gray-300 hover:text-[#61e59c] transition-colors duration-300 font-medium relative group"
+                >
+                  Testimonios
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#61e59c] transition-all duration-300 group-hover:w-full"></span>
+                </button>
+
+                <button
+                  onClick={() => scrollToSection("clientes")}
+                  className="text-gray-300 hover:text-[#61e59c] transition-colors duration-300 font-medium relative group"
+                >
+                  Clientes
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#61e59c] transition-all duration-300 group-hover:w-full"></span>
+                </button>
               </div>
             </div>
 
@@ -304,18 +434,67 @@ export default function MorbiaWebsite() {
             </button>
           </div>
 
-          {/* Mobile Menu */}
           {isMenuOpen && (
             <div className="md:hidden bg-gray-800/95 backdrop-blur-md rounded-lg mt-2 p-4 border border-gray-700">
-              {["Inicio", "Acerca de Nosotros", "Servicios", "Tecnologías", "Testimonios", "Clientes"].map((item) => (
+              <button
+                onClick={() => scrollToSection("inicio")}
+                className="block w-full text-left py-3 text-gray-300 hover:text-[#61e59c] transition-colors duration-300 font-medium"
+              >
+                Inicio
+              </button>
+
+              {/* Acerca de Nosotros with expandable submenu */}
+              <div>
                 <button
-                  key={item}
-                  onClick={() => scrollToSection(item.toLowerCase().replace(/\s+/g, "-"))}
-                  className="block w-full text-left py-3 text-gray-300 hover:text-[#61e59c] transition-colors duration-300 font-medium"
+                  onClick={() => setIsMobileAboutOpen(!isMobileAboutOpen)}
+                  className="flex items-center justify-between w-full text-left py-3 text-gray-300 hover:text-[#61e59c] transition-colors duration-300 font-medium"
                 >
-                  {item}
+                  Acerca de Nosotros
+                  <ChevronDown
+                    size={16}
+                    className={`transition-transform duration-300 ${isMobileAboutOpen ? "rotate-180" : ""}`}
+                  />
                 </button>
-              ))}
+
+                {isMobileAboutOpen && (
+                  <div className="pl-4 space-y-2 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <button
+                      onClick={() => scrollToSection("servicios")}
+                      className="block w-full text-left py-2 text-gray-400 hover:text-[#61e59c] transition-colors duration-300"
+                    >
+                      Servicios
+                    </button>
+                    <button
+                      onClick={() => scrollToSection("tecnologías")}
+                      className="block w-full text-left py-2 text-gray-400 hover:text-[#61e59c] transition-colors duration-300"
+                    >
+                      Tecnologías
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              <button
+                onClick={() => scrollToSection("conoce-finzen")}
+                className="block w-full text-left py-3 text-gray-300 hover:text-[#61e59c] transition-colors duration-300 font-medium"
+              >
+                Conoce FinZen
+              </button>
+
+              <button
+                onClick={() => scrollToSection("testimonios")}
+                className="block w-full text-left py-3 text-gray-300 hover:text-[#61e59c] transition-colors duration-300 font-medium"
+              >
+                Testimonios
+              </button>
+
+              <button
+                onClick={() => scrollToSection("clientes")}
+                className="block w-full text-left py-3 text-gray-300 hover:text-[#61e59c] transition-colors duration-300 font-medium"
+              >
+                Clientes
+              </button>
+
               <a
                 href="https://finzenbymorbia.vercel.app/"
                 target="_blank"
@@ -479,8 +658,130 @@ export default function MorbiaWebsite() {
         </div>
       </section>
 
+      <section id="conoce-finzen" className="py-20 bg-gray-950 relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-[#17a993] rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#2c5b8b] rounded-full blur-3xl animate-pulse delay-1000"></div>
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#17a993]/20 to-[#61e59c]/20 rounded-full border border-[#61e59c]/30 mb-6">
+              <Sparkles className="text-[#61e59c]" size={20} />
+              <span className="text-[#61e59c] font-semibold">Nuestra Aplicación</span>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-[#2c5b8b] via-[#17a993] to-[#61e59c] bg-clip-text text-transparent mb-6">
+              Conoce FinZen
+            </h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              Tu aliado inteligente para el control total de tus finanzas personales
+            </p>
+          </div>
+
+          {/* Main Content Grid */}
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+            {/* Left Side - Logo and Tagline */}
+            <div className="relative">
+              <div className="relative group">
+                {/* Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#17a993] to-[#61e59c] rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+
+                {/* Logo Container */}
+                <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-12 border border-gray-700 hover:border-[#61e59c]/50 transition-all duration-500 transform hover:scale-105">
+                  <Image
+                    src="/images/finzen.png"
+                    alt="FinZen Logo"
+                    width={400}
+                    height={400}
+                    className="w-full h-auto object-contain drop-shadow-2xl"
+                  />
+
+                  {/* Floating Particles */}
+                  <div className="absolute top-10 right-10 w-3 h-3 bg-[#61e59c] rounded-full animate-ping"></div>
+                  <div className="absolute bottom-20 left-10 w-2 h-2 bg-[#17a993] rounded-full animate-pulse"></div>
+                </div>
+              </div>
+
+              {/* Tagline Card */}
+              <div className="mt-8 bg-gradient-to-r from-[#2c5b8b] to-[#17a993] p-1 rounded-2xl">
+                <div className="bg-gray-900 rounded-2xl p-6 text-center">
+                  <p className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#17a993] to-[#61e59c] bg-clip-text text-transparent">
+                    Inteligencia orbitando tus finanzas
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side - Description */}
+            <div className="space-y-6">
+              <div className="bg-gray-900/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-800 hover:border-[#61e59c]/30 transition-all duration-500">
+                <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                  <div className="w-2 h-8 bg-gradient-to-b from-[#17a993] to-[#61e59c] rounded-full"></div>
+                  ¿Qué es FinZen?
+                </h3>
+                <p className="text-lg text-gray-300 leading-relaxed">
+                  FinZen es la aplicación de finanzas personales desarrollada por nosotros, diseñada para que tomes el
+                  control de tu dinero de forma sencilla e inteligente. Con FinZen puedes visualizar un resumen completo
+                  de tus finanzas, gestionar ingresos, gastos y ahorros, organizar todo en un calendario financiero,
+                  acceder a análisis visuales con gráficas dinámicas y hasta conversar con un chat impulsado por
+                  inteligencia artificial que responde sobre tus propios datos.
+                </p>
+              </div>
+
+              <div className="bg-gray-900/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-800 hover:border-[#61e59c]/30 transition-all duration-500">
+                <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                  <div className="w-2 h-8 bg-gradient-to-b from-[#17a993] to-[#61e59c] rounded-full"></div>
+                  Innovación a tu alcance
+                </h3>
+                <p className="text-lg text-gray-300 leading-relaxed">
+                  Además, FinZen te permite registrar movimientos con tu voz, haciendo que administrar tu dinero sea tan
+                  natural como hablar. Todo esto se complementa con un perfil personalizable, pensado para que la app se
+                  adapte a ti y evolucione junto a tu manera de manejar tus finanzas.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Features Grid */}
+          <div className="mb-12">
+            <h3 className="text-3xl font-bold text-center text-white mb-8">Características principales</h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {finzenFeatures.map((feature, index) => (
+                <div
+                  key={index}
+                  className="group bg-gray-900/60 backdrop-blur-sm rounded-xl p-6 border border-gray-800 hover:border-[#61e59c]/50 transition-all duration-500 transform hover:scale-105 hover:shadow-xl hover:shadow-[#61e59c]/10"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-[#17a993] to-[#61e59c] rounded-lg flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                      <feature.icon className="text-white" size={24} />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-bold text-white mb-2">{feature.title}</h4>
+                      <p className="text-gray-400 text-sm">{feature.description}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* CTA Button */}
+          <div className="text-center">
+            <Button
+              onClick={() => window.open("https://finzenbymorbia.vercel.app/", "_blank")}
+              className="bg-gradient-to-r from-[#2c5b8b] via-[#17a993] to-[#61e59c] hover:from-[#17a993] hover:via-[#61e59c] hover:to-[#2c5b8b] text-white px-12 py-6 text-xl rounded-full transition-all duration-500 transform hover:scale-110 shadow-2xl hover:shadow-[#61e59c]/50 border-0 font-bold"
+            >
+              Descubre FinZen
+              <ChevronRight className="ml-2" size={24} />
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials Section */}
-      <section id="testimonios" className="py-20 bg-gray-950">
+      <section id="testimonios" className="py-20 bg-gray-900/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#2c5b8b] to-[#17a993] bg-clip-text text-transparent mb-4">
@@ -513,7 +814,7 @@ export default function MorbiaWebsite() {
       </section>
 
       {/* Clients Section */}
-      <section id="clientes" className="py-20 bg-gray-900/30">
+      <section id="clientes" className="py-20 bg-gray-900/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#2c5b8b] to-[#17a993] bg-clip-text text-transparent mb-4">
@@ -583,7 +884,6 @@ export default function MorbiaWebsite() {
             >
               Contáctanos
             </Button>
-
           </div>
         </div>
       </section>
