@@ -7,7 +7,13 @@ export const metadata: Metadata = {
   description: "Creado por Morbia",
   generator: "Morbia",
   icons: {
-    icon: "/favicon.png",
+    icon: [
+      {
+        url: "/favicon.png",
+        sizes: "16x16",
+        type: "image/png",
+      },
+    ],
   },
 }
 
