@@ -29,8 +29,8 @@ This website includes Google Tag Manager (GTM) integration. To configure your Go
 1. Open `app/layout.tsx`
 2. Replace `GTM-XXXXXXX` with your actual Google Tag Manager ID (found in your Google Tag Manager account)
 3. The GTM ID appears in two places:
-   - In the `<script>` tag in the `<head>` section
-   - In the `<noscript>` iframe in the `<body>` section
+   - In the Script component in the `<body>` section (around line 39)
+   - In the `<noscript>` iframe in the `<body>` section (around line 46)
 
 **Note:** If you're using Google Analytics instead of GTM, you can replace the GTM script with your Google Analytics tracking code.
 
