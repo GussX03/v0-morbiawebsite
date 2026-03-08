@@ -50,22 +50,29 @@ export default function FloatingChat() {
     setInput("")
     setIsLoading(true)
 
+    const payload = { id: sessionId, mensaje: trimmed }
+    console.log("[v0] Sending to n8n:", payload)
+
     try {
       const response = await fetch(
         "https://n8n.morbia.com.mx/webhook/4fc39209-5fb5-46ba-9877-f54a40c5404e",
         {
-          method: "GET",
+          method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: sessionId, mensaje: trimmed }),
+          body: JSON.stringify(payload),
         }
       )
 
+      console.log("[v0] Response status:", response.status, response.statusText)
+
       const text = await response.text()
+      console.log("[v0] Raw response text:", text)
+
       let reply = ""
 
       try {
         const json = JSON.parse(text)
-        // Handle various response shapes from n8n
+        console.log("[v0] Parsed JSON:", json)
         reply =
           json.output ||
           json.message ||
@@ -74,12 +81,15 @@ export default function FloatingChat() {
           json.reply ||
           (typeof json === "string" ? json : JSON.stringify(json))
       } catch {
+        console.log("[v0] Response is plain text, not JSON")
         reply = text
       }
 
+      console.log("[v0] Final reply:", reply)
       const assistantMessage: Message = { role: "assistant", content: reply }
       setMessages((prev) => [...prev, assistantMessage])
-    } catch {
+    } catch (err) {
+      console.log("[v0] Fetch error:", err)
       setMessages((prev) => [
         ...prev,
         {
