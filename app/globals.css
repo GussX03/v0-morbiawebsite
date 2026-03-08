@@ -298,3 +298,12 @@ html {
 .animate-color-shift {
   animation: colorShift 4s ease-in-out infinite;
 }
+
+/* Safe area padding for mobile chat (notch, home indicator) */
+.safe-top {
+  padding-top: max(0.75rem, env(safe-area-inset-top));
+}
+
+.safe-bottom {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
