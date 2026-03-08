@@ -9,9 +9,10 @@ interface Message {
   content: string
 }
 
-const SESSION_ID = "morbia_" + Math.random().toString(36).slice(2, 11)
+const generateSessionId = () => "morbia_" + Math.random().toString(36).slice(2, 11)
 
 export default function FloatingChat() {
+  const [sessionId, setSessionId] = useState(generateSessionId)
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
@@ -55,7 +56,7 @@ export default function FloatingChat() {
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: SESSION_ID, mensaje: trimmed }),
+          body: JSON.stringify({ id: sessionId, mensaje: trimmed }),
         }
       )
 
@@ -100,6 +101,7 @@ export default function FloatingChat() {
 
   const resetConversation = () => {
     setMessages([])
+    setSessionId(generateSessionId())
   }
 
   return (
