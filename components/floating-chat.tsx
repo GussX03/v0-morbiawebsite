@@ -239,21 +239,30 @@ export default function FloatingChat() {
         }
       )
 
-      const text = await response.text()
+      const rawText = await response.text()
       let reply = ""
 
       try {
-        const json = JSON.parse(text)
+        let json = JSON.parse(rawText)
+
+        // If the response is an array, take the first element
+        if (Array.isArray(json)) {
+          json = json[0] ?? {}
+        }
+
         reply =
           json.output ||
           json.message ||
           json.respuesta ||
           json.text ||
           json.reply ||
-          (typeof json === "string" ? json : JSON.stringify(json))
+          (typeof json === "string" ? json : "")
       } catch {
-        reply = text
+        reply = rawText
       }
+
+      // Ensure literal \n sequences are converted to real newlines
+      reply = reply.replace(/\\n/g, "\n").trim()
 
       const assistantMessage: Message = { role: "assistant", content: reply }
       setMessages((prev) => [...prev, assistantMessage])
