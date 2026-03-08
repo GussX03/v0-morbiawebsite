@@ -27,6 +27,7 @@ import {
   User,
 } from "lucide-react"
 import Image from "next/image"
+import FloatingChat from "@/components/floating-chat"
 
 export default function MorbiaWebsite() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -937,11 +938,14 @@ export default function MorbiaWebsite() {
       {showScrollTop && (
         <Button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 bg-gradient-to-r from-[#17a993] to-[#61e59c] hover:from-[#61e59c] hover:to-[#17a993] text-white p-4 rounded-full shadow-lg hover:shadow-[#61e59c]/25 border-0"
+          className="fixed bottom-8 right-24 bg-gradient-to-r from-[#17a993] to-[#61e59c] hover:from-[#61e59c] hover:to-[#17a993] text-white p-4 rounded-full shadow-lg hover:shadow-[#61e59c]/25 border-0"
         >
           <ArrowUp size={24} />
         </Button>
       )}
+
+      {/* Floating Chat */}
+      <FloatingChat />
     </div>
   )
 }
