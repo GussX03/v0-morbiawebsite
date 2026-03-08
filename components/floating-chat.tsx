@@ -95,8 +95,8 @@ function parseMarkdown(text: string): React.ReactNode[] {
 }
 
 function parseInlineMarkdown(text: string, keyPrefix: string): React.ReactNode[] {
-  // Match **bold**, *italic*, `code`
-  const regex = /(\*\*(.+?)\*\*|\*(.+?)\*|`(.+?)`)/g
+  // Match [link](url), **bold**, *italic*, `code`, or bare URLs
+  const regex = /(\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|\*\*(.+?)\*\*|\*(.+?)\*|`(.+?)`|(https?:\/\/[^\s<>,;)]+))/g
   const nodes: React.ReactNode[] = []
   let lastIndex = 0
   let match: RegExpExecArray | null
@@ -107,29 +107,55 @@ function parseInlineMarkdown(text: string, keyPrefix: string): React.ReactNode[]
       nodes.push(text.slice(lastIndex, match.index))
     }
 
-    if (match[2]) {
+    if (match[2] && match[3]) {
+      // [text](url) markdown link
+      nodes.push(
+        <a
+          key={`${keyPrefix}-a-${match.index}`}
+          href={match[3]}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#61e59c] underline underline-offset-2 decoration-[#61e59c]/40 hover:decoration-[#61e59c] transition-colors duration-200"
+        >
+          {match[2]}
+        </a>
+      )
+    } else if (match[4]) {
       // **bold**
       nodes.push(
         <strong key={`${keyPrefix}-b-${match.index}`} className="font-semibold text-white">
-          {match[2]}
+          {match[4]}
         </strong>
       )
-    } else if (match[3]) {
+    } else if (match[5]) {
       // *italic*
       nodes.push(
         <em key={`${keyPrefix}-i-${match.index}`} className="italic text-gray-300">
-          {match[3]}
+          {match[5]}
         </em>
       )
-    } else if (match[4]) {
+    } else if (match[6]) {
       // `code`
       nodes.push(
         <code
           key={`${keyPrefix}-c-${match.index}`}
           className="bg-gray-700/60 text-[#61e59c] px-1 py-0.5 rounded text-xs font-mono"
         >
-          {match[4]}
+          {match[6]}
         </code>
+      )
+    } else if (match[7]) {
+      // Bare URL (https://...)
+      nodes.push(
+        <a
+          key={`${keyPrefix}-u-${match.index}`}
+          href={match[7]}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#61e59c] underline underline-offset-2 decoration-[#61e59c]/40 hover:decoration-[#61e59c] transition-colors duration-200 break-all"
+        >
+          {match[7]}
+        </a>
       )
     }
 
