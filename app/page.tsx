@@ -29,6 +29,20 @@ import {
 import Image from "next/image"
 import FloatingChat from "@/components/floating-chat"
 
+// Pre-computed star positions to avoid server/client hydration mismatch
+// (Math.random() called at module level is stable across SSR and hydration)
+function seededRandom(seed: number) {
+  const x = Math.sin(seed + 1) * 10000
+  return x - Math.floor(x)
+}
+
+const STARS = Array.from({ length: 100 }, (_, i) => ({
+  left: seededRandom(i * 4) * 100,
+  top: seededRandom(i * 4 + 1) * 100,
+  delay: seededRandom(i * 4 + 2) * 3,
+  duration: 2 + seededRandom(i * 4 + 3) * 3,
+}))
+
 export default function MorbiaWebsite() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrollY, setScrollY] = useState(0)
@@ -542,15 +556,15 @@ export default function MorbiaWebsite() {
 
         {/* Background Stars */}
         <div className="absolute inset-0">
-          {[...Array(100)].map((_, i) => (
+          {STARS.map((star, i) => (
             <div
               key={i}
               className="absolute w-0.5 h-0.5 bg-gray-400 rounded-full opacity-20 animate-pulse"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 3}s`,
-                animationDuration: `${2 + Math.random() * 3}s`,
+                left: `${star.left}%`,
+                top: `${star.top}%`,
+                animationDelay: `${star.delay}s`,
+                animationDuration: `${star.duration}s`,
               }}
             />
           ))}
