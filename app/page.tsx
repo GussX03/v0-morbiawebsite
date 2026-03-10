@@ -829,8 +829,8 @@ export default function MorbiaWebsite() {
         </div>
       </section>
 
-      {/* Clients Section */}
-      <section id="clientes" className="py-20 bg-gray-900/50">
+      {/* Clients Section — Infinite Carousel */}
+      <section id="clientes" className="py-20 bg-gray-900/50 overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#2c5b8b] to-[#17a993] bg-clip-text text-transparent mb-4">
@@ -838,52 +838,44 @@ export default function MorbiaWebsite() {
             </h2>
             <p className="text-xl text-[#61e59c]">Empresas que confían en nosotros</p>
           </div>
+        </div>
 
-          <div className="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto">
-            <a
-              href="https://grupo.sosadelbosque.mx/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center p-8 bg-gray-900/60 rounded-xl border border-gray-800 hover:border-[#61e59c]/50 transition-all duration-500 transform hover:scale-110 hover:shadow-lg hover:shadow-[#61e59c]/20 backdrop-blur-sm"
-            >
-              <Image
-                src="/images/sosadelbosque.jpg"
-                alt="Sosa Del Bosque"
-                width={200}
-                height={200}
-                className="w-full h-auto object-contain"
-              />
-            </a>
+        {/* Infinite scrolling carousel */}
+        <div className="relative">
+          {/* Left fade */}
+          <div className="absolute left-0 top-0 bottom-0 w-24 md:w-40 bg-gradient-to-r from-gray-900/90 to-transparent z-10 pointer-events-none" />
+          {/* Right fade */}
+          <div className="absolute right-0 top-0 bottom-0 w-24 md:w-40 bg-gradient-to-l from-gray-900/90 to-transparent z-10 pointer-events-none" />
 
-            <a
-              href="https://grupo-morales-consultores.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center p-8 bg-gray-900/60 rounded-xl border border-gray-800 hover:border-[#61e59c]/50 transition-all duration-500 transform hover:scale-110 hover:shadow-lg hover:shadow-[#61e59c]/20 backdrop-blur-sm"
-            >
-              <Image
-                src="/images/grupo_morales_consultores.png"
-                alt="Grupo Morales Consultores"
-                width={200}
-                height={200}
-                className="w-full h-auto object-contain"
-              />
-            </a>
-
-            <a
-              href="https://sorteosramos369.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center p-8 bg-gray-900/60 rounded-xl border border-gray-800 hover:border-[#61e59c]/50 transition-all duration-500 transform hover:scale-110 hover:shadow-lg hover:shadow-[#61e59c]/20 backdrop-blur-sm"
-            >
-              <Image
-                src="/images/sorteosramos369.png"
-                alt="Sorteos Ramos 369"
-                width={200}
-                height={200}
-                className="w-full h-auto object-contain"
-              />
-            </a>
+          <div className="flex animate-infinite-scroll">
+            {/* Duplicate the list twice for seamless loop */}
+            {[0, 1].map((copy) => (
+              <div key={copy} className="flex shrink-0 items-center gap-8 md:gap-14 px-4 md:px-7">
+                {[
+                  { src: "/images/sosadelbosque.jpg", alt: "Sosa Del Bosque", href: "https://grupo.sosadelbosque.mx/", invert: false },
+                  { src: "/images/grupo_morales_consultores.png", alt: "Grupo Morales Consultores", href: "https://grupo-morales-consultores.vercel.app/", invert: false },
+                  { src: "/images/sorteosramos369.png", alt: "Sorteos Ramos 369", href: "https://sorteosramos369.vercel.app/", invert: false },
+                  { src: "/images/amanda.png", alt: "Amanda", href: "#", invert: true },
+                  { src: "/images/finzen.png", alt: "Finzen", href: "#", invert: false },
+                ].map((client, idx) => (
+                  <a
+                    key={`${copy}-${idx}`}
+                    href={client.href}
+                    target={client.href !== "#" ? "_blank" : undefined}
+                    rel={client.href !== "#" ? "noopener noreferrer" : undefined}
+                    className="group flex items-center justify-center w-[180px] h-[120px] md:w-[220px] md:h-[140px] shrink-0 rounded-2xl bg-gray-800/40 border border-gray-700/50 backdrop-blur-sm px-6 py-4 hover:border-[#17a993]/50 hover:bg-gray-800/70 hover:shadow-lg hover:shadow-[#17a993]/10 transition-all duration-500"
+                  >
+                    <Image
+                      src={client.src}
+                      alt={client.alt}
+                      width={180}
+                      height={80}
+                      className={`max-h-[70px] md:max-h-[80px] w-auto object-contain opacity-70 group-hover:opacity-100 transition-all duration-500 group-hover:scale-110 ${client.invert ? "invert" : ""}`}
+                    />
+                  </a>
+                ))}
+              </div>
+            ))}
           </div>
         </div>
       </section>

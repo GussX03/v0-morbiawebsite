@@ -218,16 +218,8 @@ export default function FloatingChat() {
     }
   }, [isOpen])
 
-  const sendMessage = async () => {
-    const trimmed = input.trim()
-    if (!trimmed || isLoading) return
-
-    const userMessage: Message = { role: "user", content: trimmed }
-    setMessages((prev) => [...prev, userMessage])
-    setInput("")
-    setIsLoading(true)
-
-    const payload = { id: sessionId, mensaje: trimmed }
+  const sendMessageDirect = async (text: string) => {
+    const payload = { id: sessionId, mensaje: text }
 
     try {
       const response = await fetch(
@@ -278,6 +270,18 @@ export default function FloatingChat() {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const sendMessage = async () => {
+    const trimmed = input.trim()
+    if (!trimmed || isLoading) return
+
+    const userMessage: Message = { role: "user", content: trimmed }
+    setMessages((prev) => [...prev, userMessage])
+    setInput("")
+    setIsLoading(true)
+
+    await sendMessageDirect(trimmed)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -371,7 +375,7 @@ export default function FloatingChat() {
                 </div>
                 <div className="text-center px-6">
                   <p className="text-gray-300 text-base sm:text-sm font-medium mb-1">
-                    ¡Hola! 👋
+                    ¡Hola!
                   </p>
                   <p className="text-gray-400 text-sm sm:text-sm leading-relaxed">
                     Soy el asistente inteligente de Morbia. Escribe tu mensaje para comenzar.
@@ -384,10 +388,12 @@ export default function FloatingChat() {
                     <button
                       key={suggestion}
                       onClick={() => {
-                        setInput(suggestion)
-                        setTimeout(() => {
-                          inputRef.current?.focus()
-                        }, 50)
+                        const userMessage: Message = { role: "user", content: suggestion }
+                        setMessages((prev) => [...prev, userMessage])
+                        setInput("")
+                        setIsLoading(true)
+                        // Trigger send directly
+                        sendMessageDirect(suggestion)
                       }}
                       className="px-3 py-1.5 text-xs rounded-full border border-[#17a993]/40 text-[#61e59c] hover:bg-[#17a993]/10 transition-colors duration-200"
                     >
