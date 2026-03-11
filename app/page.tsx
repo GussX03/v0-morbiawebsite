@@ -25,6 +25,9 @@ import {
   PieChart,
   Mic,
   User,
+  LayoutGrid,
+  Target,
+  PiggyBank,
 } from "lucide-react"
 import Image from "next/image"
 import FloatingChat from "@/components/floating-chat"
@@ -339,6 +342,21 @@ export default function MorbiaWebsite() {
       icon: User,
       title: "Perfil Personalizable",
       description: "Adapta la app a tu estilo",
+    },
+    {
+      icon: LayoutGrid,
+      title: "Widgets Personalizados",
+      description: "Configura tu dashboard a tu medida",
+    },
+    {
+      icon: Target,
+      title: "Metas Financieras",
+      description: "Define objetivos y monitorea tu progreso",
+    },
+    {
+      icon: PiggyBank,
+      title: "Ahorros",
+      description: "Gestiona y haz crecer tus ahorros",
     },
   ]
 
