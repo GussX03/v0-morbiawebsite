@@ -1,5 +1,7 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
+import { Mail, MapPin, Phone } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Aviso de Privacidad - FinZen | Morbia",
@@ -9,7 +11,88 @@ export const metadata: Metadata = {
 
 const privacyEmail = "privacy@morbia.com.mx"
 
-const sections = [
+type PrivacySection = {
+  title: string
+  content?: string[]
+  items?: string[]
+  footer?: string
+  groups?: Array<{
+    subtitle: string
+    items: string[]
+  }>
+}
+
+const socialLinks = [
+  {
+    name: "Facebook",
+    url: "https://www.facebook.com/share/1JCLHGkqxF/?mibextid=wwXIfr",
+    logo: (
+      <svg viewBox="0 0 24 24" className="h-6 w-6">
+        <path
+          d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+          fill="#1877F2"
+        />
+      </svg>
+    ),
+  },
+  {
+    name: "Instagram",
+    url: "https://www.instagram.com/morbia_mx?igsh=YTlva3FpMzIxeDNk",
+    logo: (
+      <svg viewBox="0 0 24 24" className="h-6 w-6">
+        <defs>
+          <linearGradient id="privacy-instagram-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#833AB4" />
+            <stop offset="50%" stopColor="#FD1D1D" />
+            <stop offset="100%" stopColor="#FCB045" />
+          </linearGradient>
+        </defs>
+        <path
+          fill="url(#privacy-instagram-gradient)"
+          d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.25-.88a1.12 1.12 0 1 1-2.25 0 1.12 1.12 0 0 1 2.25 0z"
+        />
+      </svg>
+    ),
+  },
+  {
+    name: "TikTok",
+    url: "https://www.tiktok.com/@morbiamx",
+    logo: (
+      <svg viewBox="0 0 24 24" className="h-6 w-6">
+        <path
+          d="M12 2h4.5a5.5 5.5 0 0 0 5.5 5.5V11a9.99 9.99 0 0 1-5.5-1.6v6.6a6.5 6.5 0 1 1-6.5-6.5c.34 0 .67.03 1 .09V14a2.5 2.5 0 1 0 2.5 2.5V2z"
+          fill="#FFFFFF"
+        />
+      </svg>
+    ),
+  },
+  {
+    name: "WhatsApp",
+    url: "https://wa.me/522215268440",
+    logo: (
+      <svg viewBox="0 0 24 24" className="h-6 w-6">
+        <path
+          d="M20.52 3.48A11.94 11.94 0 0 0 12.02 0C5.38 0 .02 5.36.02 11.98c0 2.12.56 4.19 1.62 6.01L0 24l6.18-1.62a11.97 11.97 0 0 0 5.82 1.48h.01c6.63 0 12-5.36 12-11.98 0-3.2-1.25-6.21-3.49-8.4ZM12.02 21.8h-.01a9.8 9.8 0 0 1-4.99-1.37l-.36-.21-3.67.96.98-3.58-.23-.37a9.8 9.8 0 0 1-1.51-5.2c0-5.41 4.41-9.82 9.82-9.82 2.62 0 5.08 1.02 6.94 2.87a9.74 9.74 0 0 1 2.88 6.93c0 5.41-4.41 9.8-9.85 9.8Zm5.39-7.35c-.29-.15-1.71-.84-1.98-.93-.27-.1-.46-.15-.65.15-.19.29-.75.93-.92 1.12-.17.19-.34.21-.63.06-.29-.15-1.23-.45-2.35-1.43-.87-.77-1.46-1.71-1.63-2-.17-.29-.02-.45.13-.6.14-.14.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.03-.51-.08-.15-.65-1.56-.9-2.14-.24-.58-.48-.5-.65-.51h-.55c-.19 0-.51.07-.78.36-.27.29-1.02.99-1.02 2.42s1.05 2.81 1.19 3c.15.19 2.06 3.15 5 4.42.7.3 1.25.48 1.68.61.71.23 1.35.2 1.86.12.57-.08 1.71-.7 1.95-1.37.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.34Z"
+          fill="#FFFFFF"
+        />
+      </svg>
+    ),
+  },
+  {
+    name: "LinkedIn",
+    url: "http://linkedin.com/company/morbia/",
+    logo: (
+      <svg viewBox="0 0 24 24" className="h-6 w-6">
+        <path
+          d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+          fill="#0A66C2"
+        />
+      </svg>
+    ),
+  },
+]
+
+const sections: PrivacySection[] = [
   {
     title: "1. Responsable del tratamiento",
     content: [
@@ -203,21 +286,84 @@ const sections = [
 export default function PrivacyNoticePage() {
   return (
     <main className="min-h-screen bg-gray-950 text-gray-200">
-      <section className="border-b border-gray-800 bg-gray-900/80">
-        <div className="mx-auto max-w-5xl px-5 py-8 md:py-10">
-          <Link href="/" className="text-sm font-medium text-[#00d4e8] transition-colors hover:text-white">
-            Morbia
-          </Link>
-          <div className="mt-10 max-w-3xl">
-            <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-[#00d4e8]">FinZen</p>
-            <h1 className="text-4xl font-bold text-white md:text-6xl">Aviso de Privacidad</h1>
-            <p className="mt-5 text-lg leading-8 text-gray-300">
+      <nav className="fixed top-0 z-50 w-full border-b border-gray-800 bg-gray-900/95 backdrop-blur-md">
+        <div className="container mx-auto px-4">
+          <div className="flex h-16 items-center justify-between">
+            <Link href="/" className="flex items-center space-x-3">
+              <Image
+                src="/images/main-logo.png"
+                alt="MORBIA Logo"
+                width={120}
+                height={40}
+                className="h-8 w-auto transition-transform duration-300 hover:scale-105"
+              />
+            </Link>
+
+            <div className="hidden items-center gap-8 md:flex">
+              <Link href="/#inicio" className="group relative font-medium text-gray-300 transition-colors duration-300 hover:text-[#61e59c]">
+                Inicio
+                <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-[#61e59c] transition-all duration-300 group-hover:w-full" />
+              </Link>
+              <Link href="/#acerca-de-nosotros" className="group relative font-medium text-gray-300 transition-colors duration-300 hover:text-[#61e59c]">
+                Acerca de Nosotros
+                <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-[#61e59c] transition-all duration-300 group-hover:w-full" />
+              </Link>
+              <Link href="/#conoce-finzen" className="group relative font-medium text-gray-300 transition-colors duration-300 hover:text-[#61e59c]">
+                Conoce FinZen
+                <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-[#61e59c] transition-all duration-300 group-hover:w-full" />
+              </Link>
+              <Link href="/#clientes" className="group relative font-medium text-gray-300 transition-colors duration-300 hover:text-[#61e59c]">
+                Clientes
+                <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-[#61e59c] transition-all duration-300 group-hover:w-full" />
+              </Link>
+            </div>
+
+            <a
+              href="https://finzenbymorbia.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden font-medium text-gray-300 transition-colors duration-300 hover:text-[#61e59c] md:block"
+            >
+              Ingresa a FinZen
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      <section className="relative overflow-hidden border-b border-gray-800 bg-gray-950 pt-28">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute left-10 top-20 h-72 w-72 rounded-full bg-[#17a993] blur-3xl" />
+          <div className="absolute bottom-10 right-10 h-96 w-96 rounded-full bg-[#2c5b8b] blur-3xl" />
+        </div>
+        <div className="container relative z-10 mx-auto grid gap-10 px-4 py-16 lg:grid-cols-[1fr_320px] lg:items-center">
+          <div className="max-w-3xl">
+            <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-[#61e59c]">FinZen</p>
+            <h1 className="text-4xl font-bold text-white md:text-6xl">
+              Aviso de{" "}
+              <span className="bg-gradient-to-r from-[#2c5b8b] via-[#17a993] to-[#61e59c] bg-clip-text text-transparent">
+                Privacidad
+              </span>
+            </h1>
+            <p className="mt-6 text-lg leading-8 text-gray-300">
               Este Aviso de Privacidad describe como se recopilan, usan, almacenan y eliminan los datos personales de
               las personas usuarias de FinZen, aplicacion movil iOS y servicios relacionados.
             </p>
             <p className="mt-6 text-sm text-gray-400">
               <span className="font-semibold text-gray-300">Ultima actualizacion:</span> 2026-05-03
             </p>
+          </div>
+
+          <div className="relative mx-auto w-full max-w-[260px]">
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#17a993] to-[#61e59c] opacity-30 blur-2xl" />
+            <div className="relative rounded-3xl border border-gray-700 bg-gradient-to-br from-gray-900 to-gray-800 p-8">
+              <Image
+                src="/images/finzen.png"
+                alt="FinZen Logo"
+                width={300}
+                height={300}
+                className="h-auto w-full object-contain drop-shadow-2xl"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -226,7 +372,7 @@ export default function PrivacyNoticePage() {
         <aside className="hidden md:block">
           <div className="sticky top-8 rounded-lg border border-gray-800 bg-gray-900/60 p-5">
             <p className="text-sm font-semibold text-white">Contacto de privacidad</p>
-            <a className="mt-3 block break-words text-sm text-[#00d4e8] hover:text-white" href={`mailto:${privacyEmail}`}>
+            <a className="mt-3 block break-words text-sm text-[#61e59c] hover:text-white" href={`mailto:${privacyEmail}`}>
               {privacyEmail}
             </a>
             <p className="mt-5 text-xs leading-5 text-gray-400">
@@ -237,7 +383,7 @@ export default function PrivacyNoticePage() {
         </aside>
 
         <div className="space-y-10">
-          <div className="rounded-lg border border-[#00d4e8]/25 bg-[#00d4e8]/10 p-5 text-sm leading-7 text-gray-200">
+          <div className="rounded-lg border border-[#61e59c]/25 bg-[#17a993]/10 p-5 text-sm leading-7 text-gray-200">
             <p>
               FinZen no vende informacion personal ni utiliza datos para rastreo publicitario entre apps o sitios de
               terceros. Algunos datos se comparten con proveedores estrictamente para operar la app, almacenar
@@ -260,7 +406,7 @@ export default function PrivacyNoticePage() {
                 <ul className="mt-4 space-y-3">
                   {section.items.map((item) => (
                     <li key={item} className="flex gap-3 leading-7 text-gray-300">
-                      <span className="mt-3 h-1.5 w-1.5 flex-none rounded-full bg-[#00d4e8]" />
+                      <span className="mt-3 h-1.5 w-1.5 flex-none rounded-full bg-[#61e59c]" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -269,7 +415,7 @@ export default function PrivacyNoticePage() {
 
               {section.groups?.map((group) => (
                 <div key={group.subtitle} className="mt-7">
-                  <h3 className="text-lg font-semibold text-[#00d4e8]">{group.subtitle}</h3>
+                  <h3 className="text-lg font-semibold text-[#61e59c]">{group.subtitle}</h3>
                   <ul className="mt-3 grid gap-2 md:grid-cols-2">
                     {group.items.map((item) => (
                       <li key={item} className="rounded-md border border-gray-800 bg-gray-900/50 px-4 py-3 text-sm text-gray-300">
@@ -288,7 +434,7 @@ export default function PrivacyNoticePage() {
             <h2 className="text-2xl font-bold text-white">Contacto</h2>
             <p className="mt-4 leading-8 text-gray-300">
               Si tienes dudas sobre privacidad o tratamiento de datos, contactanos en{" "}
-              <a className="font-semibold text-[#00d4e8] hover:text-white" href={`mailto:${privacyEmail}`}>
+              <a className="font-semibold text-[#61e59c] hover:text-white" href={`mailto:${privacyEmail}`}>
                 {privacyEmail}
               </a>
               .
@@ -296,6 +442,49 @@ export default function PrivacyNoticePage() {
           </section>
         </div>
       </section>
+
+      <footer className="border-t border-gray-800 bg-gray-900 py-12">
+        <div className="container mx-auto px-4">
+          <div className="grid items-center gap-8 md:grid-cols-3">
+            <div>
+              <div className="mb-4 flex items-center space-x-3">
+                <Image src="/images/main-logo.png" alt="MORBIA Logo" width={150} height={50} className="h-10 w-auto" />
+              </div>
+              <p className="text-sm text-[#61e59c]">INTELIGENCIA ORBITANDO TUS PROCESOS</p>
+            </div>
+            <div className="space-y-3">
+              <div className="flex items-center text-gray-300">
+                <MapPin className="mr-3 text-[#61e59c]" size={20} />
+                Puebla, Puebla
+              </div>
+              <div className="flex items-center text-gray-300">
+                <Phone className="mr-3 text-[#61e59c]" size={20} />
+                (+52) 221-526-8440
+              </div>
+              <div className="flex items-center text-gray-300">
+                <Mail className="mr-3 text-[#61e59c]" size={20} />
+                contacto@morbia.com.mx
+              </div>
+            </div>
+            <div className="flex flex-col items-center md:items-end">
+              <h4 className="mb-4 font-semibold text-white">Siguenos</h4>
+              <div className="flex space-x-4">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-full bg-gray-800 p-3 transition-all duration-300 hover:scale-110 hover:bg-gray-700 hover:shadow-lg"
+                  >
+                    {social.logo}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
     </main>
   )
 }
