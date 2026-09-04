@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { Mail, MapPin, Phone } from "lucide-react"
+import { Clock, FileText, HelpCircle, Mail, MapPin, Phone, Settings, ShieldCheck, Trash2 } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Aviso de Privacidad - FinZen | Morbia",
@@ -10,6 +10,60 @@ export const metadata: Metadata = {
 }
 
 const privacyEmail = "privacy@morbia.com.mx"
+
+const detailCards = [
+  {
+    icon: ShieldCheck,
+    title: "Datos protegidos",
+    description:
+      "Tratamos información de cuenta, datos financieros capturados por la persona usuaria, imágenes y datos técnicos necesarios para operar FinZen.",
+  },
+  {
+    icon: FileText,
+    title: "Uso declarado",
+    description:
+      "La información se usa para administrar la cuenta, mostrar resúmenes financieros, gestionar metas, habilitar IA, soporte y seguridad operativa.",
+  },
+  {
+    icon: Settings,
+    title: "Control del dispositivo",
+    description:
+      "Los permisos de micrófono, reconocimiento de voz, fotos y notificaciones pueden revocarse desde Configuración de iOS en cualquier momento.",
+  },
+  {
+    icon: Clock,
+    title: "Respuesta a solicitudes",
+    description:
+      "Las solicitudes de privacidad se atienden preferentemente dentro de 20 días hábiles, sujeto a ley aplicable y verificación de identidad.",
+  },
+]
+
+const helpCards = [
+  {
+    icon: Mail,
+    title: "Ejercer derechos",
+    description:
+      "Escríbenos desde el correo asociado a tu cuenta e indica si solicitas acceso, rectificación, eliminación, oposición, portabilidad o limitación.",
+    action: "Enviar solicitud",
+    href: `mailto:${privacyEmail}`,
+  },
+  {
+    icon: Trash2,
+    title: "Eliminar cuenta",
+    description:
+      "Puedes iniciar la eliminación desde la sección de perfil de FinZen. También puedes pedir seguimiento por correo si necesitas confirmación.",
+    action: "Contactar privacidad",
+    href: `mailto:${privacyEmail}?subject=Solicitud%20de%20eliminaci%C3%B3n%20de%20cuenta%20FinZen`,
+  },
+  {
+    icon: HelpCircle,
+    title: "Dudas de App Store",
+    description:
+      "La política debe coincidir con App Store Connect > App Privacy. Si notas una categoría distinta, repórtala para revisarla antes de publicar.",
+    action: "Reportar duda",
+    href: `mailto:${privacyEmail}?subject=Duda%20sobre%20privacidad%20FinZen`,
+  },
+]
 
 type PrivacySection = {
   title: string
@@ -401,6 +455,71 @@ export default function PrivacyNoticePage() {
               obligaciones legales.
             </p>
           </div>
+
+          <section className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.06] p-6 shadow-2xl shadow-[#17a993]/10 backdrop-blur-2xl">
+            <div className="pointer-events-none absolute -right-20 -top-24 h-56 w-56 rounded-full bg-[#61e59c]/20 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-[#2c5b8b]/30 blur-3xl" />
+            <div className="relative">
+              <p className="text-sm font-semibold uppercase tracking-wide text-[#61e59c]">Detalles</p>
+              <h2 className="mt-3 text-3xl font-bold text-white">Lo esencial de tu privacidad en FinZen</h2>
+              <p className="mt-4 max-w-3xl leading-8 text-gray-300">
+                Esta sección resume los puntos principales del aviso para que puedas identificar rápido qué datos se
+                tratan, para qué se usan y qué controles tienes disponibles. El texto completo permanece más abajo como
+                referencia legal vigente.
+              </p>
+              <div className="mt-8 grid gap-4 md:grid-cols-2">
+                {detailCards.map((card) => (
+                  <div
+                    key={card.title}
+                    className="group rounded-xl border border-white/10 bg-gray-950/35 p-5 backdrop-blur-xl transition-all duration-300 hover:border-[#61e59c]/40 hover:bg-gray-900/55"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="flex h-11 w-11 flex-none items-center justify-center rounded-xl border border-[#61e59c]/25 bg-[#17a993]/15 text-[#61e59c] shadow-lg shadow-[#17a993]/10">
+                        <card.icon size={22} />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-white">{card.title}</h3>
+                        <p className="mt-2 text-sm leading-6 text-gray-300">{card.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="relative overflow-hidden rounded-2xl border border-[#61e59c]/15 bg-gradient-to-br from-gray-900/80 via-gray-900/45 to-[#2c5b8b]/20 p-6 shadow-2xl shadow-[#2c5b8b]/10 backdrop-blur-2xl">
+            <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-[#61e59c]/70 to-transparent" />
+            <div className="relative">
+              <p className="text-sm font-semibold uppercase tracking-wide text-[#61e59c]">Ayuda</p>
+              <h2 className="mt-3 text-3xl font-bold text-white">Acciones rápidas de privacidad</h2>
+              <p className="mt-4 max-w-3xl leading-8 text-gray-300">
+                Para solicitudes formales, usa el correo de privacidad desde la cuenta asociada a FinZen e incluye una
+                descripción clara de lo que necesitas. Podemos pedir información adicional razonable para verificar tu
+                identidad antes de responder.
+              </p>
+              <div className="mt-8 grid gap-4 lg:grid-cols-3">
+                {helpCards.map((card) => (
+                  <div
+                    key={card.title}
+                    className="flex min-h-[230px] flex-col rounded-xl border border-white/10 bg-white/[0.055] p-5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-[#61e59c]/40 hover:bg-white/[0.085]"
+                  >
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#17a993] to-[#2c5b8b] text-white shadow-lg shadow-[#17a993]/20">
+                      <card.icon size={22} />
+                    </div>
+                    <h3 className="mt-5 font-semibold text-white">{card.title}</h3>
+                    <p className="mt-3 flex-1 text-sm leading-6 text-gray-300">{card.description}</p>
+                    <a
+                      href={card.href}
+                      className="mt-5 inline-flex w-fit items-center rounded-full border border-[#61e59c]/25 bg-[#61e59c]/10 px-4 py-2 text-sm font-semibold text-[#61e59c] transition-colors duration-300 hover:border-[#61e59c]/60 hover:bg-[#61e59c]/20 hover:text-white"
+                    >
+                      {card.action}
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
 
           {sections.map((section) => (
             <section key={section.title} className="scroll-mt-8">

@@ -10,6 +10,8 @@ interface Message {
 }
 
 const generateSessionId = () => "morbia_" + Math.random().toString(36).slice(2, 11)
+const CHAT_WEBHOOK_URL = "https://n8n.morbia.com.mx/webhook/4fc39209-5fb5-46ba-9877-f54a40c5404e"
+const AVAILABILITY_TIMEOUT_MS = 5000
 
 /**
  * Parse basic markdown: **bold**, *italic*, `code`, newlines, and bullet lists.
@@ -177,6 +179,7 @@ function FormattedMessage({ content }: { content: string }) {
 
 export default function FloatingChat() {
   const [sessionId, setSessionId] = useState(generateSessionId)
+  const [isAvailable, setIsAvailable] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
@@ -184,6 +187,41 @@ export default function FloatingChat() {
   const [showGreeting, setShowGreeting] = useState(true)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+
+  // Do not expose the chat unless the n8n workflow responds successfully.
+  useEffect(() => {
+    const controller = new AbortController()
+    const timeout = window.setTimeout(() => controller.abort(), AVAILABILITY_TIMEOUT_MS)
+
+    const checkAvailability = async () => {
+      try {
+        const response = await fetch(CHAT_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: "morbia_healthcheck", mensaje: "healthcheck" }),
+          signal: controller.signal,
+          cache: "no-store",
+        })
+
+        if (response.ok) {
+          setIsAvailable(true)
+        } else {
+          console.warn("[Morbia Chat] Availability check failed:", response.status)
+        }
+      } catch (err) {
+        console.warn("[Morbia Chat] Availability check failed:", err)
+      } finally {
+        window.clearTimeout(timeout)
+      }
+    }
+
+    void checkAvailability()
+
+    return () => {
+      controller.abort()
+      window.clearTimeout(timeout)
+    }
+  }, [])
 
   useEffect(() => {
     if (isOpen) {
@@ -222,14 +260,15 @@ export default function FloatingChat() {
     const payload = { id: sessionId, mensaje: text }
 
     try {
-      const response = await fetch(
-        "https://n8n.morbia.com.mx/webhook/4fc39209-5fb5-46ba-9877-f54a40c5404e",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      )
+      const response = await fetch(CHAT_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+
+      if (!response.ok) {
+        throw new Error(`Chat request failed with status ${response.status}`)
+      }
 
       const rawText = await response.text()
       let reply = ""
@@ -294,6 +333,10 @@ export default function FloatingChat() {
   const resetConversation = () => {
     setMessages([])
     setSessionId(generateSessionId())
+  }
+
+  if (!isAvailable) {
+    return null
   }
 
   return (
