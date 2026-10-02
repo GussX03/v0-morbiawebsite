@@ -11,7 +11,7 @@ interface Message {
 
 const generateSessionId = () => "morbia_" + Math.random().toString(36).slice(2, 11)
 const CHAT_WEBHOOK_URL = "https://n8n.morbia.com.mx/webhook/4fc39209-5fb5-46ba-9877-f54a40c5404e"
-const AVAILABILITY_TIMEOUT_MS = 5000
+const AVAILABILITY_TIMEOUT_MS = 30000
 
 /**
  * Parse basic markdown: **bold**, *italic*, `code`, newlines, and bullet lists.
