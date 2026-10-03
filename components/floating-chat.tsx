@@ -14,7 +14,7 @@ interface Message {
 }
 
 const generateSessionId = () => "morbia_" + Math.random().toString(36).slice(2, 11)
-const CHAT_WEBHOOK_URL = "https://n8n.morbia.com.mx/webhook/4fc39209-5fb5-46ba-9877-f54a40c5404e"
+const CHAT_ENDPOINT = "/api/chat"
 const AVAILABILITY_TIMEOUT_MS = 30000
 
 /**
@@ -233,7 +233,7 @@ export default function FloatingChat() {
 
     const checkAvailability = async () => {
       try {
-        const response = await fetch(CHAT_WEBHOOK_URL, {
+        const response = await fetch(CHAT_ENDPOINT, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ id: "morbia_healthcheck", mensaje: "healthcheck" }),
@@ -296,12 +296,16 @@ export default function FloatingChat() {
 
   const sendMessageDirect = async (text: string) => {
     const payload = { id: sessionId, mensaje: text }
+    const controller = new AbortController()
+    const timeout = window.setTimeout(() => controller.abort(), AVAILABILITY_TIMEOUT_MS)
 
     try {
-      const response = await fetch(CHAT_WEBHOOK_URL, {
+      const response = await fetch(CHAT_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
+        signal: controller.signal,
+        cache: "no-store",
       })
 
       if (!response.ok) {
@@ -337,14 +341,18 @@ export default function FloatingChat() {
       setMessages((prev) => [...prev, assistantMessage])
     } catch (err) {
       console.error("[Morbia Chat] Fetch error:", err)
+      const timedOut = err instanceof DOMException && err.name === "AbortError"
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: "Ocurrió un error al conectar con el asistente. Por favor intenta de nuevo.",
+          content: timedOut
+            ? "El asistente tardó más de lo esperado. Por favor intenta de nuevo."
+            : "Ocurrió un error al conectar con el asistente. Por favor intenta de nuevo.",
         },
       ])
     } finally {
+      window.clearTimeout(timeout)
       setIsLoading(false)
     }
   }

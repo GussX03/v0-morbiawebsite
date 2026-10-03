@@ -2,7 +2,7 @@ import "server-only"
 
 import { unstable_cache } from "next/cache"
 
-const CACHE_SECONDS = 60 * 60 * 24 * 30
+const CACHE_SECONDS = 60 * 60 * 6
 const MORBIA_GOOGLE_MAPS_DATA_ID = "0xaaa0000f18d746cf:0x95d6e124df4644ed"
 const MORBIA_GOOGLE_MAPS_URL = "https://www.google.com/maps/place/Morbia/@19.0400474,-98.1921822,12z/data=!3m1!4b1!4m6!3m5!1s0xaaa0000f18d746cf:0x95d6e124df4644ed!8m2!3d19.0400474!4d-98.1921822!16s%2Fg%2F11n3ppxs3r?entry=ttu"
 
@@ -48,12 +48,12 @@ function unavailableData(): MorbiaReviewsData {
   return { businessName: "Morbia", rating: 0, total: 0, mapsUrl: MORBIA_GOOGLE_MAPS_URL, reviews: [], source: "unavailable" }
 }
 
-async function fetchMorbiaReviews(): Promise<MorbiaReviewsData> {
+async function fetchGoogleReviews(): Promise<MorbiaReviewsData> {
   const apiKey = process.env.SERPAPI_API_KEY
   const dataId = process.env.MORBIA_GOOGLE_MAPS_DATA_ID || MORBIA_GOOGLE_MAPS_DATA_ID
   const mapsUrl = process.env.MORBIA_GOOGLE_MAPS_SHARE_URL || MORBIA_GOOGLE_MAPS_URL
 
-  if (!apiKey) return unavailableData()
+  if (!apiKey) throw new Error("SERPAPI_API_KEY no está configurada.")
 
   const baseParams = { engine: "google_maps_reviews", data_id: dataId, hl: "es-419", sort_by: "qualityScore", api_key: apiKey }
   const requestPage = async (params: URLSearchParams) => {
@@ -101,11 +101,20 @@ async function fetchMorbiaReviews(): Promise<MorbiaReviewsData> {
     }
   } catch (error) {
     console.error("[Morbia reviews] No fue posible actualizar las opiniones.", error)
-    return unavailableData()
+    throw error
   }
 }
 
-export const getMorbiaReviews = unstable_cache(fetchMorbiaReviews, ["morbia-google-reviews-v2"], {
+const getCachedMorbiaReviews = unstable_cache(fetchGoogleReviews, ["morbia-google-reviews-v3"], {
   revalidate: CACHE_SECONDS,
   tags: ["morbia-google-reviews"],
 })
+
+export async function getMorbiaReviews(): Promise<MorbiaReviewsData> {
+  try {
+    return await getCachedMorbiaReviews()
+  } catch {
+    // Failed requests are intentionally not cached, so a recovered provider is retried immediately.
+    return unavailableData()
+  }
+}
