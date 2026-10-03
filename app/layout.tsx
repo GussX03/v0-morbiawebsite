@@ -4,8 +4,8 @@ import Script from "next/script"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Morbia",
-  description: "Creado por Morbia",
+  title: "Morbia | Inteligencia orbitando tus procesos",
+  description: "Soluciones tecnológicas, automatización e inteligencia artificial para impulsar tu negocio.",
   generator: "Morbia",
   icons: {
     icon: [
@@ -24,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="es-MX">
       <head>
         {/* Google tag (gtag.js) */}
         <Script

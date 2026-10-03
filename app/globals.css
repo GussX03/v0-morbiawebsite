@@ -4,324 +4,104 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 197 66% 98%;
+    --foreground: 209 88% 18%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 209 88% 18%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --popover-foreground: 209 88% 18%;
+    --primary: 187 89% 43%;
+    --primary-foreground: 209 88% 18%;
+    --secondary: 195 64% 95%;
+    --secondary-foreground: 209 88% 18%;
+    --muted: 195 42% 93%;
+    --muted-foreground: 204 25% 42%;
+    --accent: 178 83% 46%;
+    --accent-foreground: 209 88% 18%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 193 44% 90%;
+    --input: 193 44% 90%;
+    --ring: 183 77% 40%;
+    --radius: 1rem;
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-  }
-}
-
-@layer base {
   * {
     @apply border-border;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
-/* 3D Orbital Animation Styles */
-.orbital-system-3d {
-  position: relative;
-  width: 400px;
-  height: 400px;
-  opacity: 0.4;
-  perspective: 1000px;
-  transform-style: preserve-3d;
+.morbia-diagonal {
+  background-color: #06345c;
+  background-image: url("/images/morbia-diagonal-bg.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.planet-3d {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotateX(15deg);
-  width: 60px;
-  height: 60px;
-  transform-style: preserve-3d;
+.morbia-grid {
+  background-image:
+    linear-gradient(rgba(123, 255, 245, 0.13) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123, 255, 245, 0.13) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
 }
 
-.planet-core-3d {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #2c5b8b, #17a993);
-  border-radius: 50%;
-  box-shadow: 0 0 30px rgba(23, 169, 147, 0.3), inset -10px -10px 20px rgba(0, 0, 0, 0.3), inset 10px 10px 20px
-    rgba(255, 255, 255, 0.1);
-  animation: planetPulse3d 4s ease-in-out infinite;
-  transform-style: preserve-3d;
+.morbia-glass {
+  border: 1px solid rgba(198, 255, 250, 0.28);
+  border-radius: 1.35rem;
+  background: linear-gradient(135deg, rgba(73, 226, 220, 0.24), rgba(5, 61, 101, 0.62));
+  box-shadow: 0 18px 50px rgba(0, 20, 47, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(16px);
 }
 
-.planet-ring-3d {
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  width: 80px;
-  height: 80px;
-  border: 2px solid rgba(97, 229, 156, 0.3);
-  border-radius: 50%;
-  animation: ringRotate3d 8s linear infinite;
-  transform: rotateX(75deg);
-  box-shadow: 0 0 20px rgba(97, 229, 156, 0.2);
+.morbia-chat-surface {
+  background-color: #05345b;
+  background-image:
+    linear-gradient(145deg, rgba(3, 40, 72, 0.9), rgba(0, 118, 140, 0.72)),
+    url("/images/morbia-diagonal-bg.jpg");
+  background-position: center;
+  background-size: cover;
 }
 
-.orbit-3d {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  border: 1px solid rgba(97, 229, 156, 0.1);
-  border-radius: 50%;
-  transform: translate(-50%, -50%) rotateX(15deg);
-  transform-style: preserve-3d;
+.morbia-header-scrolled {
+  background: linear-gradient(90deg, rgb(3 42 73 / 0.7), rgb(0 91 108 / 0.58));
+  backdrop-filter: blur(30px) saturate(125%);
+  -webkit-backdrop-filter: blur(30px) saturate(125%);
 }
 
-.orbit-1-3d {
-  width: 150px;
-  height: 150px;
-  animation: orbitRotate3d 15s linear infinite;
-  transform: translate(-50%, -50%) rotateX(15deg) rotateY(0deg);
-}
-
-.orbit-2-3d {
-  width: 220px;
-  height: 220px;
-  animation: orbitRotate3d 25s linear infinite reverse;
-  transform: translate(-50%, -50%) rotateX(45deg) rotateY(0deg);
-}
-
-.orbit-3-3d {
-  width: 300px;
-  height: 300px;
-  animation: orbitRotate3d 35s linear infinite;
-  transform: translate(-50%, -50%) rotateX(75deg) rotateY(0deg);
-}
-
-.satellite-3d {
-  position: absolute;
-  top: -8px;
-  left: 50%;
-  transform: translateX(-50%) rotateX(-15deg);
-}
-
-.ai-node-3d {
-  width: 16px;
-  height: 16px;
-  background: rgba(97, 229, 156, 0.2);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(4px);
-  border: 1px solid rgba(97, 229, 156, 0.3);
-  box-shadow: 0 0 15px rgba(97, 229, 156, 0.3), inset 0 0 10px rgba(97, 229, 156, 0.1);
-  transform-style: preserve-3d;
-}
-
-/* 3D Card Effects */
-.service-card-3d {
-  transform-style: preserve-3d;
-  transition: transform 0.5s ease;
-}
-
-.service-card-3d:hover {
-  transform: scale(1.05) rotateY(5deg) rotateX(5deg);
-}
-
-.tech-card-3d {
-  transform-style: preserve-3d;
-  transition: transform 0.5s ease;
-}
-
-.tech-card-3d:hover {
-  transform: scale(1.1) rotateY(10deg) rotateX(5deg);
-}
-
-.testimonial-card-3d {
-  transform-style: preserve-3d;
-  transition: transform 0.5s ease;
-}
-
-.testimonial-card-3d:hover {
-  transform: scale(1.05) rotateY(-3deg) rotateX(3deg);
-}
-
-@keyframes orbitRotate3d {
-  from {
-    transform: translate(-50%, -50%) rotateX(var(--orbit-x, 15deg)) rotateZ(0deg);
-  }
-  to {
-    transform: translate(-50%, -50%) rotateX(var(--orbit-x, 15deg)) rotateZ(360deg);
+@media (max-width: 767px) {
+  [data-service-detail] {
+    grid-template-rows: 1fr !important;
+    opacity: 1 !important;
   }
 }
 
-@keyframes planetPulse3d {
-  0%,
-  100% {
-    transform: scale(1) rotateY(0deg);
-    box-shadow: 0 0 30px rgba(23, 169, 147, 0.3), inset -10px -10px 20px rgba(0, 0, 0, 0.3), inset 10px 10px 20px
-      rgba(255, 255, 255, 0.1);
-  }
-  50% {
-    transform: scale(1.05) rotateY(180deg);
-    box-shadow: 0 0 40px rgba(23, 169, 147, 0.5), inset -15px -15px 30px rgba(0, 0, 0, 0.4), inset 15px 15px 30px
-      rgba(255, 255, 255, 0.2);
-  }
-}
-
-@keyframes ringRotate3d {
-  from {
-    transform: rotateX(75deg) rotateZ(0deg);
-  }
-  to {
-    transform: rotateX(75deg) rotateZ(360deg);
-  }
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .orbital-system-3d {
-    width: 300px;
-    height: 300px;
+@media (prefers-reduced-motion: reduce) {
+  [data-service-detail] {
+    grid-template-rows: 1fr !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 
-  .orbit-1-3d {
-    width: 120px;
-    height: 120px;
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
-
-  .orbit-2-3d {
-    width: 180px;
-    height: 180px;
-  }
-
-  .orbit-3-3d {
-    width: 240px;
-    height: 240px;
-  }
-
-  .service-card-3d:hover,
-  .tech-card-3d:hover,
-  .testimonial-card-3d:hover {
-    transform: scale(1.02);
-  }
-}
-
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #1f2937;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #17a993, #61e59c);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #61e59c, #17a993);
-}
-
-/* Adding color-shifting animation for FinZen link */
-@keyframes colorShift {
-  0% {
-    color: #d1d5db; /* gray-300 */
-  }
-  25% {
-    color: #61e59c; /* brand green */
-  }
-  50% {
-    color: #17a993; /* brand teal */
-  }
-  75% {
-    color: #2c5b8b; /* brand blue */
-  }
-  100% {
-    color: #d1d5db; /* gray-300 */
-  }
-}
-
-.animate-color-shift {
-  animation: colorShift 4s ease-in-out infinite;
-}
-
-/* Safe area padding for mobile chat (notch, home indicator) */
-.safe-top {
-  padding-top: max(0.75rem, env(safe-area-inset-top));
-}
-
-.safe-bottom {
-  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
-}
-
-/* Infinite scrolling carousel */
-@keyframes infiniteScroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-infinite-scroll {
-  animation: infiniteScroll 12s linear infinite;
-}
-
-.animate-infinite-scroll:hover {
-  animation-play-state: paused;
 }
