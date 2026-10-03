@@ -184,6 +184,7 @@ function FormattedMessage({ content }: { content: string }) {
 export default function FloatingChat() {
   const [sessionId, setSessionId] = useState(generateSessionId)
   const [isAvailable, setIsAvailable] = useState(false)
+  const [isMobileViewport, setIsMobileViewport] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
@@ -192,6 +193,16 @@ export default function FloatingChat() {
   const chatRef = useRef<HTMLDivElement>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    const mobileQuery = window.matchMedia("(max-width: 767px)")
+    const updateViewport = () => setIsMobileViewport(mobileQuery.matches)
+
+    updateViewport()
+    mobileQuery.addEventListener("change", updateViewport)
+
+    return () => mobileQuery.removeEventListener("change", updateViewport)
+  }, [])
 
   useGSAP(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
@@ -362,7 +373,8 @@ export default function FloatingChat() {
     setSessionId(generateSessionId())
   }
 
-  if (!isAvailable) {
+  // Keep the launcher reachable on phones while preserving the desktop health gate.
+  if (!isAvailable && !isMobileViewport) {
     return null
   }
 

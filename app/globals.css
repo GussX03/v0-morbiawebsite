@@ -84,6 +84,29 @@
   -webkit-backdrop-filter: blur(30px) saturate(125%);
 }
 
+.client-marquee {
+  overflow: hidden;
+  padding-inline: 1rem;
+}
+
+.client-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 1rem;
+  animation: client-marquee-right 32s linear infinite;
+  will-change: transform;
+}
+
+.client-marquee:hover .client-marquee-track,
+.client-marquee:focus-within .client-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes client-marquee-right {
+  from { transform: translateX(calc(-50% - 0.5rem)); }
+  to { transform: translateX(0); }
+}
+
 @media (max-width: 767px) {
   [data-service-detail] {
     grid-template-rows: 1fr !important;
@@ -92,6 +115,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .client-marquee {
+    overflow-x: auto;
+  }
+
+  .client-marquee-track {
+    animation: none;
+  }
+
   [data-service-detail] {
     grid-template-rows: 1fr !important;
     opacity: 1 !important;
