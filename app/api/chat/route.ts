@@ -26,8 +26,10 @@ export async function POST(request: Request) {
   const controller = new AbortController()
   const timeout = setTimeout(() => controller.abort(), CHAT_TIMEOUT_MS)
 
+  const webhookUrl = process.env.N8N_CHAT_WEBHOOK_URL || DEFAULT_N8N_CHAT_WEBHOOK_URL
+
   try {
-    const response = await fetch(process.env.N8N_CHAT_WEBHOOK_URL || DEFAULT_N8N_CHAT_WEBHOOK_URL, {
+    const response = await fetch(webhookUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: payload.id, mensaje: payload.mensaje }),
@@ -50,6 +52,17 @@ export async function POST(request: Request) {
     })
   } catch (error) {
     const timedOut = error instanceof DOMException && error.name === "AbortError"
+    const causeCode = typeof error === "object" && error && "cause" in error
+      ? (error.cause as { code?: string } | undefined)?.code
+      : undefined
+
+    // Vercel cannot currently open a TCP connection to this on-premise n8n host.
+    // A 307 preserves the POST body and lets the browser continue through n8n's CORS-enabled endpoint.
+    if (causeCode === "UND_ERR_CONNECT_TIMEOUT") {
+      console.warn("[Morbia Chat] Vercel no pudo conectar con n8n; usando fallback del navegador.")
+      return NextResponse.redirect(webhookUrl, 307)
+    }
+
     console.error("[Morbia Chat] No fue posible contactar n8n.", timedOut ? "timeout" : error)
     return NextResponse.json(
       { error: timedOut ? "El asistente tardó demasiado en responder." : "No fue posible conectar con el asistente." },
