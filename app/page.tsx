@@ -46,6 +46,7 @@ const clientLogos = [
   { src: "/images/sorteosramos369.png", alt: "Sorteos Ramos Tlaxcala", href: "https://www.sorteosramostlaxcala.vercel.app/", logoClass: "scale-100" },
   { src: "/images/amanda.png", alt: "Amanda", href: "https://v0-amanda-oficial.vercel.app/", logoClass: "scale-100" },
   { src: "/images/finzen.png", alt: "FinZen", href: "https://finzen.morbia.com.mx/", logoClass: "scale-100" },
+  { src: "/images/innova.png", alt: "Innova Gestión y Soluciones", href: "https://comercial-innova-one.vercel.app/", logoClass: "scale-100" },
 ]
 
 const clientCarouselLogos = [...clientLogos, ...clientLogos]
