@@ -40,6 +40,13 @@ const technologyIcons = [
   ["Stripe", SiStripe], ["Power Automate", Workflow], ["Python", SiPython],
 ] as const
 
+const principles = [
+  { icon: UsersRound, number: "01", title: "Enfoque en personas", text: "La tecnología tiene más sentido cuando mejora la vida de las personas." },
+  { icon: Settings2, number: "02", title: "Soluciones a medida", text: "Cada negocio es único; por eso creamos soluciones que se adaptan a ti." },
+  { icon: BarChart3, number: "03", title: "Resultados reales", text: "Nos enfocamos en generar valor medible y sostenible." },
+  { icon: Handshake, number: "04", title: "Alianzas a largo plazo", text: "Construimos relaciones duraderas basadas en confianza y crecimiento." },
+] as const
+
 const clientLogos = [
   { src: "/images/sosadelbosque.png", alt: "Sosa del Bosque", href: "https://grupo.sosadelbosque.mx/", logoClass: "scale-100", surfaceClass: "bg-[#f7fcfd]" },
   { src: "/images/grupo_morales_consultores.png", alt: "Grupo Morales Consultores", href: "https://grupo-morales-consultores.vercel.app/", logoClass: "scale-100", surfaceClass: "bg-[#f7fcfd]" },
@@ -70,6 +77,7 @@ export default function MorbiaWebsite() {
 
     const select = gsap.utils.selector(pageRef)
     const hero = pageRef.current?.querySelector<HTMLElement>("[data-hero]")
+    const aboutSection = pageRef.current?.querySelector<HTMLElement>("#nosotros")
     const technologiesSection = pageRef.current?.querySelector<HTMLElement>("#tecnologias")
 
     gsap.from(select("[data-gsap-header]"), { autoAlpha: 0, y: -22, duration: 0.72, ease: "power3.out" })
@@ -98,6 +106,31 @@ export default function MorbiaWebsite() {
       start: "top 86%",
       onEnter: (elements) => gsap.from(elements, { y: 18, scale: 0.94, duration: 0.55, stagger: 0.08, ease: "power3.out", overwrite: true }),
     })
+
+    if (aboutSection) {
+      gsap.from(select("[data-about-principle]"), {
+        autoAlpha: 0,
+        x: 36,
+        duration: 0.72,
+        stagger: 0.12,
+        ease: "power3.out",
+        scrollTrigger: { trigger: aboutSection, start: "top 68%", once: true },
+      })
+      gsap.from(select("[data-about-path]"), {
+        scaleY: 0,
+        transformOrigin: "top",
+        duration: 1.05,
+        ease: "power2.out",
+        scrollTrigger: { trigger: aboutSection, start: "top 68%", once: true },
+      })
+      gsap.to(select("[data-about-orbit]"), {
+        rotation: 360,
+        duration: 20,
+        repeat: -1,
+        ease: "none",
+        scrollTrigger: { trigger: aboutSection, start: "top 78%", once: true },
+      })
+    }
 
     const media = gsap.matchMedia()
     media.add("(min-width: 1024px)", () => {
@@ -179,11 +212,36 @@ export default function MorbiaWebsite() {
         </div>
       </section>
 
-      <section id="nosotros" className="scroll-mt-20 bg-white py-20 lg:py-28">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-[.9fr_1.1fr] lg:px-8">
-          <div data-gsap-reveal><p className="text-sm font-bold tracking-[.14em] text-[#008eaa]">ACERCA DE NOSOTROS</p><h2 className="mt-4 max-w-md text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Todo en órbita, <span className="text-[#00aeb7]">nada al azar.</span></h2><p className="mt-6 max-w-md text-lg leading-relaxed text-[#496579]">En Morbia creemos en un futuro donde la tecnología impulse el potencial de las personas. Diseñamos soluciones a la medida con estrategia, innovación y cercanía.</p><blockquote className="mt-9 max-w-sm border-l-4 border-[#11c8c5] pl-5 text-xl font-semibold leading-snug text-[#0a4771]">La tecnología es más poderosa cuando impulsa personas.</blockquote></div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {[[UsersRound, "Enfoque en personas", "La tecnología tiene más sentido cuando mejora la vida de las personas."], [Settings2, "Soluciones a medida", "Cada negocio es único; por eso creamos soluciones que se adaptan a ti."], [BarChart3, "Resultados reales", "Nos enfocamos en generar valor medible y sostenible."], [Handshake, "Alianzas a largo plazo", "Construimos relaciones duraderas basadas en confianza y crecimiento."]].map(([Icon, title, text]) => { const FeatureIcon = Icon as typeof UsersRound; return <article data-gsap-reveal key={title as string} className="rounded-3xl border border-[#dceff4] bg-[#f4fbff] p-6 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-[#007b9a]/10"><FeatureIcon className="text-[#009ab1]" size={30} /><h3 className="mt-5 text-lg font-bold">{title as string}</h3><p className="mt-2 leading-relaxed text-[#527082]">{text as string}</p></article> })}
+      <section id="nosotros" className="relative isolate scroll-mt-20 overflow-hidden bg-white py-20 lg:py-28">
+        <div aria-hidden="true" className="absolute -left-36 top-20 h-80 w-80 rounded-full bg-[#48dcd5]/10 blur-3xl" />
+        <div aria-hidden="true" className="absolute right-[-9rem] top-14 hidden h-72 w-72 rounded-full border border-[#7ae8e0]/35 lg:block" />
+        <div className="relative mx-auto grid max-w-7xl gap-14 px-5 lg:grid-cols-[.78fr_1.22fr] lg:items-start lg:px-8">
+          <div data-gsap-reveal className="lg:sticky lg:top-28">
+            <p className="text-sm font-bold tracking-[.14em] text-[#008eaa]">ACERCA DE NOSOTROS</p>
+            <h2 className="mt-4 max-w-md text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Todo en órbita, <span className="text-[#00aeb7]">nada al azar.</span></h2>
+            <p className="mt-6 max-w-md text-lg leading-relaxed text-[#496579]">En Morbia creemos en un futuro donde la tecnología impulse el potencial de las personas. Diseñamos soluciones a la medida con estrategia, innovación y cercanía.</p>
+            <blockquote className="mt-9 max-w-sm border-l-4 border-[#11c8c5] pl-5 text-xl font-semibold leading-snug text-[#0a4771]">La tecnología es más poderosa cuando impulsa personas.</blockquote>
+          </div>
+          <div className="relative">
+            <div data-about-path aria-hidden="true" className="absolute bottom-10 left-[1.75rem] top-10 w-px bg-[linear-gradient(#20cbc5,rgba(32,203,197,.12))] sm:left-[2.25rem]" />
+            <Orbit data-about-orbit aria-hidden="true" className="absolute -right-2 top-1 hidden text-[#0fbab7]/25 sm:block" size={88} strokeWidth={1} />
+            <div className="relative">
+              {principles.map(({ icon: FeatureIcon, number, title, text }, index) => (
+                <article data-about-principle key={title} className="group grid grid-cols-[3.5rem_1fr] gap-x-5 border-b border-[#cae6ea] py-8 first:pt-0 last:border-b-0 last:pb-0 sm:grid-cols-[4.5rem_1fr] sm:gap-x-7">
+                  <div className="relative flex flex-col items-center gap-3">
+                    <span className="text-xs font-black tracking-[.18em] text-[#079aaa]">{number}</span>
+                    <span className="grid h-11 w-11 place-items-center rounded-full border border-[#74dad7] bg-white text-[#078c9c] shadow-[0_10px_24px_rgba(0,125,145,.12)] transition duration-500 group-hover:scale-110 group-hover:border-[#0dbdb9] group-hover:bg-[#0d8e9d] group-hover:text-white"><FeatureIcon size={21} strokeWidth={1.8} /></span>
+                  </div>
+                  <div className="pb-1 pt-1">
+                    <div className="flex items-start justify-between gap-4">
+                      <h3 className="text-2xl font-black tracking-[-.03em] text-[#083c67] transition duration-300 group-hover:text-[#008f9f] sm:text-3xl">{title}</h3>
+                      <span aria-hidden="true" className="mt-3 h-px w-8 shrink-0 bg-[#19c6bf] transition duration-500 group-hover:w-14" />
+                    </div>
+                    <p className="mt-3 max-w-xl text-base leading-relaxed text-[#527082] sm:text-lg">{text}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </section>
