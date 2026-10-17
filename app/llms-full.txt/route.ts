@@ -24,6 +24,7 @@ Morbia transforma información dispersa en lecturas claras sobre operación, opo
 ## Contacto y fuentes oficiales
 
 - Página principal: https://www.morbia.com.mx/
+- Servicios en Puebla y Tlaxcala: https://www.morbia.com.mx/servicios-tecnologicos-puebla-tlaxcala
 - Contacto: contacto@morbia.com.mx
 - Teléfono: +52 221 526 8440
 - Ubicación: Puebla, Puebla, México

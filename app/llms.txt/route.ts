@@ -13,6 +13,7 @@ const content = `# Morbia
 ## Información vigente
 
 - Sitio: https://www.morbia.com.mx/
+- Servicios en Puebla y Tlaxcala: https://www.morbia.com.mx/servicios-tecnologicos-puebla-tlaxcala
 - Contacto: contacto@morbia.com.mx | +52 221 526 8440
 - Ubicación y cobertura: Puebla, Puebla; atención para empresas de Puebla y Tlaxcala, México.
 - Producto relacionado: NexaCV — https://nexacv.morbia.com.mx/

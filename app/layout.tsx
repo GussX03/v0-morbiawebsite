@@ -1,17 +1,16 @@
 import type React from "react"
 import type { Metadata } from "next"
 import Script from "next/script"
+import { siteUrl } from "@/lib/seo-content"
 import "./globals.css"
-
-const siteUrl = "https://www.morbia.com.mx"
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Morbia | Chatbots, páginas web y automatización en Puebla y Tlaxcala",
+    default: "Morbia | IA, chatbots y páginas web en Puebla y Tlaxcala",
     template: "%s | Morbia",
   },
-  description: "Morbia crea páginas web, chatbots, automatizaciones, inteligencia artificial y análisis de datos para empresas en Puebla y Tlaxcala.",
+  description: "Morbia crea páginas web, chatbots con IA, RPA, automatización de procesos, flujos de trabajo y análisis de datos para empresas en Puebla y Tlaxcala.",
   keywords: [
     "servicios de tecnología en Puebla",
     "servicios de tecnología en Tlaxcala",
@@ -19,6 +18,10 @@ export const metadata: Metadata = {
     "chatbot Tlaxcala",
     "páginas web Puebla",
     "páginas web Tlaxcala",
+    "RPA Tlaxcala",
+    "inteligencia artificial Tlaxcala",
+    "optimización de procesos Tlaxcala",
+    "flujos de trabajo Tlaxcala",
     "automatización de procesos",
     "inteligencia artificial para empresas",
   ],
@@ -42,7 +45,7 @@ export const metadata: Metadata = {
     url: siteUrl,
     siteName: "Morbia",
     title: "Morbia | Tecnología para empresas en Puebla y Tlaxcala",
-    description: "Páginas web, chatbots, automatizaciones, inteligencia artificial y análisis de datos para empresas que quieren avanzar con claridad.",
+    description: "Páginas web, chatbots con IA, RPA, automatización de procesos y análisis de datos para empresas en Puebla y Tlaxcala.",
     images: [
       {
         url: "/images/morbia-diagonal-bg.jpg",
@@ -55,7 +58,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Morbia | Tecnología para empresas en Puebla y Tlaxcala",
-    description: "Páginas web, chatbots, automatizaciones, inteligencia artificial y análisis de datos.",
+    description: "Páginas web, chatbots con IA, RPA, automatización de procesos y análisis de datos.",
     images: ["/images/morbia-diagonal-bg.jpg"],
   },
   generator: "Morbia",
@@ -79,7 +82,7 @@ const organizationSchema = {
       name: "Morbia",
       url: siteUrl,
       logo: `${siteUrl}/images/main-logo.png`,
-      description: "Morbia crea páginas web, chatbots, automatizaciones, inteligencia artificial y análisis de datos para empresas en Puebla y Tlaxcala.",
+      description: "Morbia crea páginas web, chatbots con IA, RPA, automatización de procesos, flujos de trabajo y análisis de datos para empresas en Puebla y Tlaxcala.",
       email: "contacto@morbia.com.mx",
       telephone: "+52-221-526-8440",
       address: {

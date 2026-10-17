@@ -18,5 +18,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.4,
     },
+    {
+      url: `${siteUrl}/servicios-tecnologicos-puebla-tlaxcala`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
   ]
 }
