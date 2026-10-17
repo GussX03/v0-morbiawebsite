@@ -101,12 +101,12 @@ export default async function ServicePage({ params }: ServiceRouteProps) {
 
         <section className="service-section bg-[#eaf8fa]" id="en-tu-negocio">
           <div className="service-container">
-            <div data-service-reveal className="max-w-3xl"><p className="mb-4 text-sm font-bold text-[#087e92]">ASÍ PODRÍA VERSE EN TU NEGOCIO</p><h2 className="service-heading">{story.example.title}</h2><p className="service-lead">{story.example.context}</p></div>
+            <div data-service-reveal className="max-w-3xl"><p className="mb-4 text-sm font-bold text-[#06687a]">ASÍ PODRÍA VERSE EN TU NEGOCIO</p><h2 className="service-heading">{story.example.title}</h2><p className="service-lead">{story.example.context}</p></div>
             <div data-service-reveal className="mt-10 grid overflow-hidden rounded-3xl border border-[#c5e1e6] bg-[#f7fcfd] lg:grid-cols-2">
               <div className="p-6 sm:p-9"><h3 className="text-lg font-bold text-[#557381]">Hoy puede sentirse así</h3><p className="mt-4 text-lg leading-8 text-[#496579]">{story.example.before}</p></div>
               <div className="border-t border-[#c5e1e6] bg-[#dff3f4] p-6 sm:p-9 lg:border-l lg:border-t-0"><h3 className="flex items-center gap-2 text-lg font-bold text-[#08718a]">Con un recorrido mejor <ArrowRight size={19} /></h3><p className="mt-4 text-lg leading-8 text-[#195875]">{story.example.after}</p></div>
             </div>
-            <p className="mt-4 text-sm leading-6 text-[#627e8d]">Ejemplo ilustrativo. El alcance y los resultados se definen según las necesidades de cada negocio.</p>
+            <p className="mt-4 text-sm leading-6 text-[#496775]">Ejemplo ilustrativo. El alcance y los resultados se definen según las necesidades de cada negocio.</p>
           </div>
         </section>
 
