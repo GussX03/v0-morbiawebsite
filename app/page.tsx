@@ -94,7 +94,8 @@ export default function MorbiaWebsite() {
     gsap.to(select("[data-orbit-ring-a]"), { rotation: 360, duration: 22, repeat: -1, ease: "none" })
     gsap.to(select("[data-orbit-ring-b]"), { rotation: -360, duration: 30, repeat: -1, ease: "none" })
     gsap.to(select("[data-orbit-node]"), { scale: 1.16, duration: 1.45, yoyo: true, repeat: -1, stagger: 0.24, ease: "sine.inOut" })
-    gsap.to(select("[data-orbit-icon]"), { rotation: 360, duration: 16, repeat: -1, ease: "none" })
+    gsap.to(select("[data-globe-world]"), { rotation: 7, scale: 1.04, duration: 2.4, yoyo: true, repeat: -1, ease: "sine.inOut" })
+    gsap.to(select("[data-globe-shell]"), { y: -7, scale: 1.025, duration: 2.8, yoyo: true, repeat: -1, ease: "sine.inOut" })
 
     const reveal = select("[data-gsap-reveal]")
     ScrollTrigger.batch(reveal, {
@@ -193,7 +194,7 @@ export default function MorbiaWebsite() {
           <div data-hero-copy className="max-w-2xl">
             <p className="mb-5 text-sm font-bold tracking-[.17em] text-[#52f3e7]">TECNOLOGÍA QUE IMPULSA PERSONAS</p>
             <h1 className="max-w-xl text-5xl font-black leading-[.96] tracking-[-.055em] sm:text-6xl lg:text-7xl">Inteligencia orbitando <span className="text-[#27e3d5]">tus procesos.</span></h1>
-            <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/80">Convertimos ideas en soluciones tecnológicas que hacen más simple, inteligente y eficiente el presente de tu negocio.</p>
+            <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/80">Creamos páginas web, chatbots, automatizaciones e inteligencia artificial para empresas de Puebla y Tlaxcala que buscan operar con más claridad.</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <button onClick={() => goTo("servicios")} className="inline-flex items-center justify-center gap-2 rounded-full bg-[#138ba3] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Explorar soluciones <ArrowRight size={17} /></button>
               <button onClick={() => goTo("nexacv")} className="inline-flex items-center justify-center gap-2 rounded-full border border-[#d7eeee] bg-white/10 px-6 py-4 text-sm font-bold text-[#e8fffb] transition hover:-translate-y-0.5 hover:bg-[#0a668b] hover:text-white">Conoce NexaCV <ChevronRight size={17} /></button>
@@ -203,9 +204,8 @@ export default function MorbiaWebsite() {
             <div className="absolute h-[14rem] w-[14rem] rounded-full bg-[#18d8d0]/15 blur-3xl sm:h-[20rem] sm:w-[20rem]" />
             <div data-orbit-ring-a className="absolute h-[17rem] w-[17rem] rounded-full border border-[#51f4e8]/35 sm:h-[25rem] sm:w-[25rem]"><span data-orbit-node className="absolute -right-2 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-[#69fff0] shadow-[0_0_28px_#69fff0]" /></div>
             <div data-orbit-ring-b className="absolute h-[12rem] w-[24rem] rotate-[-32deg] rounded-[50%] border border-[#7efbf2]/40 sm:h-[16rem] sm:w-[32rem]"><span data-orbit-node className="absolute left-8 top-4 h-3 w-3 rounded-full bg-[#40e4db] shadow-[0_0_22px_#40e4db]" /></div>
-            <div className="relative grid h-48 w-48 place-items-center rounded-full border border-white/20 bg-[#053d69]/55 shadow-[0_0_80px_rgba(29,224,208,.28)] backdrop-blur-sm sm:h-64 sm:w-64">
-              <Globe2 className="absolute text-[#20d8d1]/25" size={180} strokeWidth={0.7} />
-              <Orbit data-orbit-icon className="relative text-[#65f7eb]" size={142} strokeWidth={1.15} />
+            <div data-globe-shell className="relative grid h-44 w-44 place-items-center sm:h-60 sm:w-60">
+              <Globe2 data-globe-world className="h-full w-full text-[#65f7eb] drop-shadow-[0_0_24px_rgba(101,247,235,.42)]" strokeWidth={0.95} />
             </div>
             <span className="absolute bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-white/20 bg-[#063d66]/70 px-4 py-2 text-xs font-bold tracking-[.16em] text-[#79fff1] backdrop-blur sm:bottom-4">MORBIA EN ÓRBITA</span>
           </div>
@@ -252,7 +252,7 @@ export default function MorbiaWebsite() {
           <div data-gsap-reveal className="max-w-3xl">
             <p className="text-sm font-bold tracking-[.14em] text-[#52f3e7]">NUESTROS SERVICIOS</p>
             <h2 className="mt-4 text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Soluciones tecnológicas para un mundo en evolución.</h2>
-            <p className="mt-5 text-lg leading-relaxed text-white/75">Explora cada solución y descubre el cambio concreto que puede generar en tu operación.</p>
+            <p className="mt-5 text-lg leading-relaxed text-white/75">Desde Puebla, acompañamos a empresas de Puebla y Tlaxcala con páginas web, chatbots, automatización, inteligencia artificial y datos para convertir sus procesos en ventaja.</p>
           </div>
           <div data-services-track className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {services.map((service) => {
