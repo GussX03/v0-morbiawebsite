@@ -159,7 +159,7 @@ export default function MorbiaWebsite() {
           <div data-hero-copy className="max-w-2xl">
             <p className="mb-5 text-sm font-bold tracking-[.17em] text-[#52f3e7]">TECNOLOGÍA QUE IMPULSA PERSONAS</p>
             <h1 className="max-w-xl text-5xl font-black leading-[.96] tracking-[-.055em] sm:text-6xl lg:text-7xl">Inteligencia orbitando <span className="text-[#27e3d5]">tus procesos.</span></h1>
-            <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/80">Creamos páginas web, chatbots, automatizaciones e inteligencia artificial para empresas de Puebla y Tlaxcala que buscan operar con más claridad.</p>
+            <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/80">Creamos páginas web, chatbots, automatizaciones e inteligencia artificial para que tu negocio opere con más claridad. Nos ubicamos en Puebla y Tlaxcala y te acompañamos estés donde estés.</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <button onClick={() => goTo("servicios")} className="inline-flex items-center justify-center gap-2 rounded-full bg-[#138ba3] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Explorar soluciones <ArrowRight size={17} /></button>
               <button onClick={() => goTo("nexacv")} className="inline-flex items-center justify-center gap-2 rounded-full border border-[#d7eeee] bg-white/10 px-6 py-4 text-sm font-bold text-[#e8fffb] transition hover:-translate-y-0.5 hover:bg-[#0a668b] hover:text-white">Conoce NexaCV <ChevronRight size={17} /></button>
