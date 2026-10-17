@@ -1,35 +1,33 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, Check, MapPin } from "lucide-react"
+import { ArrowDown, ArrowLeft, ArrowRight, Check, ChevronRight, Plus } from "lucide-react"
 import AnalyticsLink from "@/components/analytics-link"
+import SiteHeader from "@/components/site-header"
+import ServiceMotion from "@/components/service-motion"
+import ServiceArtwork from "@/components/service-artwork"
+import { ServiceApproach, ServiceContact, ServiceFooter } from "@/components/service-shared"
+import { serviceIcons } from "@/components/service-icons"
 import { regionalServiceGroups, servicePageBySlug, servicePages, siteUrl } from "@/lib/seo-content"
+import { serviceStories } from "@/lib/service-stories"
+import { serviceImages } from "@/lib/service-images"
 
-type ServiceRouteProps = {
-  params: Promise<{ slug: string }>
-}
+type ServiceRouteProps = { params: Promise<{ slug: string }> }
 
-export function generateStaticParams() {
-  return servicePages.map(({ slug }) => ({ slug }))
-}
+export function generateStaticParams() { return servicePages.map(({ slug }) => ({ slug })) }
 
 export async function generateMetadata({ params }: ServiceRouteProps): Promise<Metadata> {
   const { slug } = await params
   const service = servicePageBySlug.get(slug)
-
-  if (!service) return {}
-
+  const story = serviceStories[slug]
+  if (!service || !story) return {}
   const url = `/servicios/${service.slug}`
   return {
     title: service.title,
     description: service.description,
     alternates: { canonical: url },
-    openGraph: {
-      title: `${service.title} | Morbia`,
-      description: service.description,
-      url: `${siteUrl}${url}`,
-    },
+    openGraph: { title: `${service.title} | Morbia`, description: service.description, url: `${siteUrl}${url}`, images: [{ url: serviceImages[service.slug].src, width: serviceImages[service.slug].width, height: serviceImages[service.slug].height, alt: story.imageAlt }] },
+    twitter: { card: "summary_large_image", title: `${service.title} | Morbia`, description: service.description, images: [serviceImages[service.slug].src] },
   }
 }
 
@@ -37,29 +35,20 @@ export default async function ServicePage({ params }: ServiceRouteProps) {
   const { slug } = await params
   const service = servicePageBySlug.get(slug)
   const group = regionalServiceGroups.find((item) => item.slug === slug)
-
-  if (!service || !group) notFound()
-
+  const story = serviceStories[slug]
+  if (!service || !group || !story) notFound()
+  const Icon = serviceIcons[group.slug]
   const pageUrl = `${siteUrl}/servicios/${service.slug}`
   const schema = {
-    "@context": "https://schema.org",
-    "@graph": [
+    "@context": "https://schema.org", "@graph": [
       {
-        "@type": "Service",
-        "@id": `${pageUrl}#service`,
-        name: service.title,
-        description: service.description,
-        url: pageUrl,
-        inLanguage: "es-MX",
-        provider: { "@id": `${siteUrl}/#organization` },
-        areaServed: [
-          { "@type": "City", name: "Puebla, Puebla, México" },
-          { "@type": "State", name: "Tlaxcala, México" },
-        ],
+        "@type": "Service", "@id": `${pageUrl}#service`, name: service.title, description: service.description, url: pageUrl,
+        image: `${siteUrl}${serviceImages[service.slug].src}`, provider: { "@id": `${siteUrl}/#organization` },
+        areaServed: [{ "@type": "City", name: "Puebla, Puebla, México" }, { "@type": "State", name: "Tlaxcala, México" }],
       },
+      { "@type": "WebPage", "@id": `${pageUrl}#webpage`, url: pageUrl, name: service.title, description: service.description, inLanguage: "es-MX", isPartOf: { "@id": `${siteUrl}/#website` }, mainEntity: { "@id": `${pageUrl}#service` } },
       {
-        "@type": "BreadcrumbList",
-        itemListElement: [
+        "@type": "BreadcrumbList", itemListElement: [
           { "@type": "ListItem", position: 1, name: "Inicio", item: siteUrl },
           { "@type": "ListItem", position: 2, name: "Servicios", item: `${siteUrl}/servicios-tecnologicos-puebla-tlaxcala` },
           { "@type": "ListItem", position: 3, name: service.title, item: pageUrl },
@@ -69,69 +58,77 @@ export default async function ServicePage({ params }: ServiceRouteProps) {
   }
 
   return (
-    <main className="min-h-[100dvh] overflow-x-clip bg-[#f4fbff] text-[#062b52]">
-      <header className="morbia-header-scrolled relative z-10 border-b border-white/10 text-white">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 lg:px-8">
-          <Link href="/" aria-label="Ir al inicio de Morbia">
-            <Image src="/images/main-logo.png" alt="Morbia" width={160} height={50} className="h-9 w-auto brightness-0 invert" priority />
-          </Link>
-          <AnalyticsLink href="/#contacto" contentId={`contact:${service.slug}`} className="inline-flex items-center gap-2 rounded-full bg-[#138ba3] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Hablemos hoy <ArrowRight size={16} /></AnalyticsLink>
-        </div>
-      </header>
-
-      <section className="morbia-diagonal relative isolate overflow-hidden px-5 py-20 text-white sm:py-28 lg:px-8">
-        <div className="absolute inset-0 bg-[linear-gradient(105deg,rgba(3,29,61,.94),rgba(3,58,87,.74),rgba(3,89,106,.5))]" />
-        <div className="morbia-grid absolute inset-0 opacity-25" />
-        <div className="relative mx-auto max-w-5xl">
-          <p className="text-sm font-bold tracking-[.14em] text-[#68f6e8]">SERVICIOS MORBIA</p>
-          <h1 className="mt-5 max-w-4xl text-4xl font-black leading-[.98] tracking-[-.05em] sm:text-6xl">{service.title} para una operación más clara.</h1>
-          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/80 sm:text-xl">{service.intro}</p>
-          <div className="mt-8 flex flex-wrap gap-3 text-sm font-semibold text-white/85">
-            <span className="inline-flex items-center gap-2"><MapPin size={18} className="text-[#69f6e9]" />Puebla, Puebla</span>
-            <span className="inline-flex items-center gap-2"><MapPin size={18} className="text-[#69f6e9]" />Atención en Tlaxcala</span>
+    <main className="service-page min-h-[100dvh] overflow-x-clip bg-[#f4fbff] text-[#062b52]">
+      <SiteHeader />
+      <ServiceMotion>
+        <section className="service-hero morbia-diagonal">
+          <div className="service-container">
+            <nav aria-label="Ruta de navegación" className="service-breadcrumb flex-wrap"><Link href={`/servicios-tecnologicos-puebla-tlaxcala#${slug}`} className="inline-flex items-center gap-2"><ArrowLeft size={15} /> Todos los servicios</Link><ChevronRight size={13} aria-hidden="true" /><span>{group.title}</span></nav>
+            <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-14">
+              <div data-service-hero-copy>
+                <p className="flex items-center gap-2.5 text-sm font-bold text-[#6beee3]"><Icon size={21} strokeWidth={1.8} />{service.title}</p>
+                <h1 className="mt-5 max-w-2xl text-[2.15rem] font-black leading-[1.12] tracking-[-.045em] sm:text-5xl xl:text-[3.5rem]">{story.headline}</h1>
+                <p className="mt-6 max-w-xl text-lg leading-8 text-[#d5e8ed]">{story.summary}</p>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><a href="#que-resolvemos" className="service-button">Descubre cómo <ArrowDown size={17} /></a><a href="#hablemos" className="service-button service-button-secondary">Hablemos hoy <ArrowRight size={17} /></a></div>
+              </div>
+              <div data-service-hero-image><ServiceArtwork image={serviceImages[service.slug]} alt={story.imageAlt} title={service.title} priority /></div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="px-5 py-16 sm:py-20 lg:px-8 lg:py-24">
-        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.05fr_.95fr] lg:items-start">
-          <div>
-            <p className="text-sm font-bold tracking-[.14em] text-[#008eaa]">CÓMO APORTA A TU NEGOCIO</p>
-            <h2 className="mt-4 text-3xl font-black leading-tight tracking-[-.04em] sm:text-5xl">Tecnología útil, pensada desde el trabajo real de tu equipo.</h2>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[#496579]">{service.focus}</p>
-            <p className="mt-5 border-l-2 border-[#18c8c1] pl-4 text-lg font-bold leading-relaxed text-[#175879]">{service.outcome}</p>
+        <nav aria-label="Contenido de este servicio" className="border-b border-[#c9e4e9] bg-[#edf8fa]">
+          <div className="service-container flex flex-wrap gap-x-6 gap-y-1 py-4 text-sm font-semibold text-[#1b5a79] sm:gap-x-8">
+            <a href="#que-resolvemos" className="py-2 hover:text-[#08718a]">Qué resolvemos</a><a href="#en-tu-negocio" className="py-2 hover:text-[#08718a]">En tu día a día</a><a href="#como-empezamos" className="py-2 hover:text-[#08718a]">Cómo empezamos</a><a href="#preguntas" className="py-2 hover:text-[#08718a]">Tus preguntas</a>
           </div>
-          <aside className="rounded-[2rem] border border-[#b9e2e7] bg-white p-7 shadow-[0_18px_45px_rgba(5,76,103,.08)] sm:p-9">
-            <h2 className="text-2xl font-black tracking-[-.03em] text-[#083c67]">Lo que podemos resolver</h2>
-            <ul className="mt-6 space-y-4">
-              {group.capabilities.map((capability) => (
-                <li key={capability} className="flex gap-3 text-[#376076]"><Check className="mt-0.5 shrink-0 text-[#0b9da8]" size={19} strokeWidth={2.4} />{capability}</li>
-              ))}
-            </ul>
-          </aside>
-        </div>
-      </section>
+        </nav>
 
-      <section className="border-y border-[#c9e8ec] bg-white px-5 py-12 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <p className="text-sm font-bold tracking-[.14em] text-[#008eaa]">EXPLORA LOS DEMÁS SERVICIOS</p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            {servicePages.filter((item) => item.slug !== service.slug).map((item) => (
-              <AnalyticsLink key={item.slug} href={`/servicios/${item.slug}`} contentId={`service:${item.slug}`} className="rounded-full border border-[#b9dfe6] bg-[#f5fcfd] px-4 py-2 text-sm font-bold text-[#145778] transition hover:border-[#138ba3] hover:bg-[#e2f8f8]">{item.title}</AnalyticsLink>
-            ))}
+        <section id="que-resolvemos" className="service-section">
+          <div className="service-container grid items-start gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
+            <div>
+              <div data-service-reveal><h2 className="service-heading">¿Te pasa algo de esto?</h2>{story.overview.map((paragraph) => <p key={paragraph} className="mt-6 text-[1.05rem] leading-8 text-[#496579]">{paragraph}</p>)}</div>
+              <div className="mt-10 space-y-7">{story.signals.map((signal) => <div key={signal.title} data-service-reveal className="border-l-2 border-[#8ecdd5] pl-5"><h3 className="text-lg font-bold leading-7 text-[#0b4d70]">{signal.title}</h3><p className="mt-2 leading-7 text-[#527082]">{signal.text}</p></div>)}</div>
+            </div>
+            <aside data-service-reveal className="morbia-diagonal relative isolate overflow-hidden rounded-3xl border border-[#5bc0ca]/40 p-6 text-white shadow-[0_20px_55px_rgba(4,72,104,.14)] sm:p-9">
+              <div className="absolute inset-0 -z-10 bg-[linear-gradient(135deg,rgba(3,47,82,.97),rgba(3,62,92,.94),rgba(2,106,121,.86))]" />
+              <span className="mb-5 grid h-14 w-14 place-items-center rounded-2xl border border-[#6ee2df]/25 bg-[#6de9e2]/10 text-[#75f0e8]"><Icon size={29} strokeWidth={1.8} /></span>
+              <h2 className="text-3xl font-black leading-tight tracking-[-.035em]">Lo que podemos resolver.</h2>
+              <p className="mt-4 leading-7 text-[#c4dee7]">{story.audience}</p>
+              <ul className="mt-8 space-y-6">{story.solutions.map((solution) => <li key={solution.title} className="flex gap-3"><Check size={20} className="mt-1 shrink-0 text-[#6de9e2]" /><div><h3 className="text-base font-bold leading-7 text-[#eefafb]">{solution.title}</h3><p className="mt-1 text-sm leading-7 text-[#c6dee7]">{solution.text}</p></div></li>)}</ul>
+              <a href="#hablemos" className="service-button mt-8">Hablemos hoy <ArrowRight size={17} /></a>
+            </aside>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="morbia-diagonal relative overflow-hidden px-5 py-16 text-white sm:py-20 lg:px-8">
-        <div className="absolute inset-0 bg-[#04345d]/84" />
-        <div className="relative mx-auto flex max-w-7xl flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-3xl"><h2 className="text-3xl font-black leading-tight tracking-[-.04em] sm:text-5xl">Hablemos del siguiente paso para tu operación.</h2><p className="mt-4 text-lg leading-relaxed text-white/78">Cuéntanos qué quieres mejorar y diseñamos una ruta clara para empezar.</p></div>
-          <AnalyticsLink href="/#contacto" contentId={`contact:${service.slug}:footer`} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#138ba3] px-7 py-4 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Hablemos hoy <ArrowRight size={17} /></AnalyticsLink>
-        </div>
-      </section>
+        <section className="service-section bg-[#eaf8fa]" id="en-tu-negocio">
+          <div className="service-container">
+            <div data-service-reveal className="max-w-3xl"><p className="mb-4 text-sm font-bold text-[#087e92]">ASÍ PODRÍA VERSE EN TU NEGOCIO</p><h2 className="service-heading">{story.example.title}</h2><p className="service-lead">{story.example.context}</p></div>
+            <div data-service-reveal className="mt-10 grid overflow-hidden rounded-3xl border border-[#c5e1e6] bg-[#f7fcfd] lg:grid-cols-2">
+              <div className="p-6 sm:p-9"><h3 className="text-lg font-bold text-[#557381]">Hoy puede sentirse así</h3><p className="mt-4 text-lg leading-8 text-[#496579]">{story.example.before}</p></div>
+              <div className="border-t border-[#c5e1e6] bg-[#dff3f4] p-6 sm:p-9 lg:border-l lg:border-t-0"><h3 className="flex items-center gap-2 text-lg font-bold text-[#08718a]">Con un recorrido mejor <ArrowRight size={19} /></h3><p className="mt-4 text-lg leading-8 text-[#195875]">{story.example.after}</p></div>
+            </div>
+            <p className="mt-4 text-sm leading-6 text-[#627e8d]">Ejemplo ilustrativo. El alcance y los resultados se definen según las necesidades de cada negocio.</p>
+          </div>
+        </section>
 
-      <footer className="bg-[#042b4d] px-5 py-9 text-white lg:px-8"><div className="mx-auto flex max-w-7xl flex-col gap-4 text-sm text-white/70 sm:flex-row sm:items-center sm:justify-between"><span>© 2026 Morbia. Tecnología para Puebla y Tlaxcala.</span><Link href="/" className="font-semibold text-[#6cf4e7] hover:text-white">Volver a Morbia</Link></div></footer>
+        <section className="service-section">
+          <div className="service-container"><div data-service-reveal><h2 className="service-heading">Lo que cambia para tu equipo.</h2><p className="service-lead">La mejora se tiene que notar en la forma de trabajar, atender y tomar decisiones.</p></div><div className="mt-10 grid gap-8 md:grid-cols-3">{story.benefits.map((benefit) => <div key={benefit.title} data-service-reveal className="border-t-2 border-[#95cfd8] pt-6"><Check className="text-[#078394]" size={25} /><h3 className="mt-5 text-xl font-bold leading-7 text-[#0b4d70]">{benefit.title}</h3><p className="mt-3 leading-7 text-[#496579]">{benefit.text}</p></div>)}</div></div>
+        </section>
+
+        <ServiceApproach />
+
+        <section className="service-section" id="preguntas">
+          <div className="service-container grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:gap-16">
+            <div data-service-reveal><h2 className="service-heading">Antes de dar el siguiente paso.</h2><p className="service-lead">Respuestas claras para empezar a valorar si este servicio tiene sentido para tu negocio.</p></div>
+            <div data-service-reveal>{story.questions.map((item) => <details key={item.question} className="service-faq border-b border-[#c8e2e8]"><summary>{item.question}<Plus size={21} aria-hidden="true" /></summary><p>{item.answer}</p></details>)}</div>
+          </div>
+        </section>
+
+        <section className="service-section border-t border-[#cbe5e9] bg-[#edf8fa]">
+          <div className="service-container"><h2 className="text-2xl font-black tracking-[-.035em] text-[#073b61]">A veces, el siguiente paso conecta más de un servicio.</h2><p className="mt-4 max-w-2xl leading-7 text-[#496579]">Explora otras formas de atender mejor y liberar tiempo en tu operación.</p><div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{servicePages.filter((item) => item.slug !== service.slug).map((item) => { const RelatedIcon = serviceIcons[item.slug]; return <AnalyticsLink key={item.slug} href={`/servicios/${item.slug}`} contentId={`service:${item.slug}`} className="group flex min-h-24 items-center gap-3 rounded-2xl border border-[#bddde5] bg-[#f9fdfe] p-5 text-sm font-bold text-[#145778] transition hover:border-[#2597a8] hover:bg-white"><RelatedIcon size={23} className="shrink-0 text-[#0b8597]" strokeWidth={1.8} /><span className="flex-1">{item.title}</span><ArrowRight size={17} className="shrink-0 transition-transform group-hover:translate-x-1" /></AnalyticsLink> })}</div><Link href={`/servicios-tecnologicos-puebla-tlaxcala#${slug}`} className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-[#08718a] hover:text-[#043b66]"><ArrowLeft size={16} /> Volver a todos los servicios</Link></div>
+        </section>
+        <ServiceContact service={service.title} />
+        <ServiceFooter />
+      </ServiceMotion>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
     </main>
   )

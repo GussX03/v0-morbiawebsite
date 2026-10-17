@@ -1,133 +1,113 @@
 import type { Metadata } from "next"
-import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, BarChart3, Bot, BrainCircuit, Code2, MapPin, Workflow, Zap } from "lucide-react"
+import { ArrowDown, ArrowLeft, ArrowRight, Check, ChevronRight } from "lucide-react"
 import AnalyticsLink from "@/components/analytics-link"
-import { regionalCapabilities, regionalServiceGroups, siteUrl } from "@/lib/seo-content"
-
-const icons = [Code2, Bot, Workflow, Zap, BrainCircuit, BarChart3]
+import SiteHeader from "@/components/site-header"
+import ServiceMotion from "@/components/service-motion"
+import ServiceArtwork from "@/components/service-artwork"
+import { ServiceApproach, ServiceContact, ServiceFooter } from "@/components/service-shared"
+import { serviceIcons } from "@/components/service-icons"
+import { regionalCapabilities, regionalServiceGroups, servicePages, siteUrl } from "@/lib/seo-content"
+import { serviceStories } from "@/lib/service-stories"
+import { serviceImages } from "@/lib/service-images"
 
 export const metadata: Metadata = {
   title: "Servicios de tecnología en Puebla y Tlaxcala",
-  description: "Páginas web, chatbots con IA, RPA, automatización de procesos, flujos de trabajo y análisis de datos para empresas de Puebla y Tlaxcala.",
-  alternates: {
-    canonical: "/servicios-tecnologicos-puebla-tlaxcala",
-  },
+  description: "Descubre cómo páginas web, chatbots con IA, automatización, RPA y datos pueden ayudar a tu negocio en Puebla y Tlaxcala a trabajar mejor.",
+  alternates: { canonical: "/servicios-tecnologicos-puebla-tlaxcala" },
   openGraph: {
     title: "Servicios de tecnología en Puebla y Tlaxcala | Morbia",
-    description: "Tecnología aplicada para empresas: páginas web, chatbots, automatización, RPA, IA y datos.",
+    description: "Soluciones para atender mejor, recuperar tiempo y decidir con claridad. Encuentra el siguiente paso para tu negocio con Morbia.",
     url: `${siteUrl}/servicios-tecnologicos-puebla-tlaxcala`,
+    images: [{ url: serviceImages["inteligencia-artificial"].src, width: serviceImages["inteligencia-artificial"].width, height: serviceImages["inteligencia-artificial"].height, alt: "Tecnología con propósito. Morbia" }],
   },
 }
 
 const pageUrl = `${siteUrl}/servicios-tecnologicos-puebla-tlaxcala`
-
 const schema = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "CollectionPage",
-      "@id": `${pageUrl}#webpage`,
-      url: pageUrl,
+      "@type": "CollectionPage", "@id": `${pageUrl}#webpage`, url: pageUrl,
       name: "Servicios de tecnología en Puebla y Tlaxcala",
       description: "Capacidades de Morbia para empresas de Puebla y Tlaxcala: páginas web, chatbots, RPA, automatización, inteligencia artificial y análisis de datos.",
-      inLanguage: "es-MX",
-      isPartOf: { "@id": `${siteUrl}/#website` },
-      about: { "@id": `${siteUrl}/#organization` },
-      mainEntity: {
-        "@type": "ItemList",
-        numberOfItems: regionalCapabilities.length,
-        itemListElement: regionalCapabilities.map((name, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          name,
-        })),
-      },
+      inLanguage: "es-MX", isPartOf: { "@id": `${siteUrl}/#website` }, about: { "@id": `${siteUrl}/#organization` },
+      mainEntity: { "@type": "ItemList", numberOfItems: regionalServiceGroups.length, itemListElement: regionalServiceGroups.map((service, index) => ({ "@type": "ListItem", position: index + 1, name: service.title, url: `${siteUrl}/servicios/${service.slug}` })) },
+      mentions: { "@type": "ItemList", name: "Capacidades de los servicios de Morbia", numberOfItems: regionalCapabilities.length, itemListElement: regionalCapabilities.map((name, index) => ({ "@type": "ListItem", position: index + 1, name })) },
     },
-    {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Inicio", item: siteUrl },
-        { "@type": "ListItem", position: 2, name: "Servicios de tecnología en Puebla y Tlaxcala", item: pageUrl },
-      ],
-    },
+    { "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Inicio", item: siteUrl }, { "@type": "ListItem", position: 2, name: "Servicios de tecnología en Puebla y Tlaxcala", item: pageUrl }] },
   ],
 }
 
+const needs = [
+  { title: "Quiero que más personas entiendan lo que ofrezco", text: "Una presencia digital que presente tu negocio con claridad y facilite el contacto.", slug: "paginas-web", label: "Páginas web" },
+  { title: "Quiero responder mejor a mis clientes", text: "Un primer punto de atención para orientar consultas y darles un siguiente paso.", slug: "chatbots", label: "Chatbots" },
+  { title: "Quiero recuperar tiempo para mi equipo", text: "Revisa qué tareas, aprobaciones y seguimientos podrían avanzar con menos esfuerzo manual.", slug: "automatizacion-de-procesos", label: "Automatización" },
+  { title: "Quiero ver con claridad qué está pasando", text: "Reúne la información que necesitas para hablar de prioridades y tomar decisiones.", slug: "analisis-de-datos", label: "Análisis de datos" },
+] as const
+
 export default function ServiciosTecnologicosPueblaTlaxcalaPage() {
   return (
-    <main className="min-h-[100dvh] overflow-x-clip bg-[#f4fbff] text-[#062b52]">
-      <header className="morbia-header-scrolled relative z-10 border-b border-white/10 text-white">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 lg:px-8">
-          <Link href="/" aria-label="Ir al inicio de Morbia">
-            <Image src="/images/main-logo.png" alt="Morbia" width={160} height={50} className="h-9 w-auto brightness-0 invert" priority />
-          </Link>
-          <Link href="/#contacto" className="inline-flex items-center gap-2 rounded-full bg-[#138ba3] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Hablemos hoy <ArrowRight size={16} /></Link>
-        </div>
-      </header>
-
-      <section className="morbia-diagonal relative isolate overflow-hidden px-5 py-20 text-white sm:py-28 lg:px-8">
-        <div className="absolute inset-0 bg-[linear-gradient(105deg,rgba(3,29,61,.94),rgba(3,58,87,.74),rgba(3,89,106,.5))]" />
-        <div className="morbia-grid absolute inset-0 opacity-25" />
-        <div className="relative mx-auto max-w-5xl">
-          <p className="text-sm font-bold tracking-[.14em] text-[#68f6e8]">MORBIA PARA PUEBLA Y TLAXCALA</p>
-          <h1 className="mt-5 max-w-4xl text-4xl font-black leading-[.98] tracking-[-.05em] sm:text-6xl">Servicios de tecnología para empresas que necesitan avanzar con claridad.</h1>
-          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/80 sm:text-xl">Morbia diseña páginas web, chatbots con inteligencia artificial, automatización de procesos, RPA, flujos de trabajo y análisis de datos para empresas de Puebla y Tlaxcala.</p>
-          <div className="mt-8 flex flex-wrap gap-3 text-sm font-semibold text-white/85">
-            <span className="inline-flex items-center gap-2"><MapPin size={18} className="text-[#69f6e9]" />Puebla, Puebla</span>
-            <span className="inline-flex items-center gap-2"><MapPin size={18} className="text-[#69f6e9]" />Atención en Tlaxcala</span>
+    <main className="service-page min-h-[100dvh] overflow-x-clip bg-[#f4fbff] text-[#062b52]">
+      <SiteHeader />
+      <ServiceMotion>
+        <section className="service-hero morbia-diagonal">
+          <div className="service-container">
+            <nav className="service-breadcrumb" aria-label="Ruta de navegación"><Link href="/#servicios" className="inline-flex items-center gap-2"><ArrowLeft size={15} /> Volver a la portada</Link><ChevronRight size={13} aria-hidden="true" /><span>Servicios</span></nav>
+            <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-14">
+              <div data-service-hero-copy>
+                <p className="text-xs font-bold tracking-[.14em] text-[#6beee3] sm:text-sm">TECNOLOGÍA PARA PUEBLA Y TLAXCALA</p>
+                <h1 className="mt-5 max-w-2xl text-[2.15rem] font-black leading-[1.12] tracking-[-.045em] sm:text-5xl xl:text-[3.5rem]">Tu negocio puede <span className="text-[#65eee1]">trabajar mejor.</span></h1>
+                <p className="mt-6 max-w-xl text-lg leading-8 text-[#d5e8ed]">Atiende mejor, recupera tiempo y decide con claridad. Encuentra la tecnología que tiene sentido para tu siguiente paso.</p>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><a href="#soluciones" className="service-button">Encuentra tu solución <ArrowDown size={17} /></a><a href="#hablemos" className="service-button service-button-secondary">Hablemos hoy <ArrowRight size={17} /></a></div>
+              </div>
+              <div data-service-hero-image>
+                <ServiceArtwork image={serviceImages["inteligencia-artificial"]} alt={serviceStories["inteligencia-artificial"].imageAlt} title="Tecnología con propósito" priority />
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="px-5 py-16 sm:py-20 lg:px-8 lg:py-24">
-        <div className="mx-auto max-w-7xl">
-          <div className="max-w-3xl">
-            <h2 className="text-3xl font-black leading-tight tracking-[-.04em] sm:text-5xl">De una necesidad concreta a una solución que sí se usa.</h2>
-            <p className="mt-5 text-lg leading-relaxed text-[#496579]">Estas capacidades se organizan en seis áreas para que ubiques rápido el problema que quieres resolver. Partimos de tu operación y adaptamos la solución a la forma en que trabaja tu equipo.</p>
-          </div>
-
-          <div className="mt-14 grid gap-x-12 gap-y-14 lg:grid-cols-2">
-            {regionalServiceGroups.map((group, index) => {
-              const Icon = icons[index]!
-              return (
-                <article key={group.title} className="border-t border-[#b9dfe6] pt-6">
-                  <div className="flex items-start gap-4">
-                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[#dff8f7] text-[#067f91] shadow-[0_10px_26px_rgba(4,112,133,.12)]"><Icon size={24} strokeWidth={1.8} /></span>
-                    <div>
-                      <h2 className="text-2xl font-black tracking-[-.03em] text-[#083c67]">{group.title}</h2>
-                      <p className="mt-2 max-w-xl leading-relaxed text-[#527082]">{group.description}</p>
-                      <AnalyticsLink href={`/servicios/${group.slug}`} contentId={`service:${group.slug}:regional`} className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-[#087d91] transition hover:text-[#043b66]">Conoce este servicio <ArrowRight size={15} /></AnalyticsLink>
+        <section className="service-section" id="soluciones">
+          <div className="service-container">
+            <div data-service-reveal className="max-w-3xl"><h2 className="service-heading">Seis formas de hacer más fácil tu día a día.</h2><p className="service-lead">Una web que explica mejor. Una conversación que sí avanza. Un proceso que deja de depender de recordatorios. Explora cada servicio y descubre dónde puede ayudar a tu negocio.</p></div>
+            <nav aria-label="Explorar servicios" className="mt-8 flex flex-wrap gap-2">
+              {regionalServiceGroups.map((group) => <a key={group.slug} href={`#${group.slug}`} className="rounded-full border border-[#badce3] bg-[#edf8fa] px-4 py-2.5 text-sm font-semibold text-[#175879] transition hover:border-[#08718a] hover:bg-[#dff3f5]">{group.title}</a>)}
+            </nav>
+            <div className="mt-10 grid items-stretch gap-7 md:grid-cols-2">
+              {regionalServiceGroups.map((group) => {
+                const story = serviceStories[group.slug]
+                const Icon = serviceIcons[group.slug]
+                const service = servicePages.find((item) => item.slug === group.slug)!
+                return (
+                  <article key={group.slug} id={group.slug} data-service-reveal className="service-catalog-card flex flex-col">
+                    <div className="service-catalog-artwork"><ServiceArtwork image={serviceImages[group.slug]} alt={story.imageAlt} title={service.title} variant="catalog" /></div>
+                    <div className="flex flex-1 flex-col p-6 sm:p-8">
+                      <div className="flex items-center gap-3"><span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[#e2f5f7] text-[#087b91]"><Icon size={25} strokeWidth={1.8} /></span><h3 className="text-2xl font-black leading-tight tracking-[-.035em] text-[#073b61]"><Link href={`/servicios/${group.slug}`}>{group.title}</Link></h3></div>
+                      <p className="mt-5 text-lg font-semibold leading-7 text-[#145676]">{story.headline}</p>
+                      <p className="mt-3 leading-7 text-[#496579]">{story.audience}</p>
+                      <ul className="mb-7 mt-6 grid gap-3 sm:grid-cols-2">{group.capabilities.map((capability) => <li key={capability} className="flex items-start gap-2.5 text-sm leading-6 text-[#376076]"><Check size={17} className="mt-1 shrink-0 text-[#0b8c9c]" />{capability}</li>)}</ul>
+                      <div className="mt-auto border-t border-[#d9ecef] pt-6"><AnalyticsLink href={`/servicios/${group.slug}`} contentId={`service:${group.slug}:regional`} aria-label={`Conoce este servicio: ${service.title}`} className="service-button">Conoce este servicio <ArrowRight size={17} /></AnalyticsLink></div>
                     </div>
-                  </div>
-                  <div className="mt-7 grid gap-x-6 gap-y-3 sm:grid-cols-2">
-                    {group.capabilities.map((capability) => <p key={capability} className="border-l-2 border-[#18c8c1] pl-3 text-sm font-semibold leading-relaxed text-[#175879]">{capability}</p>)}
-                  </div>
-                </article>
-              )
-            })}
+                  </article>
+                )
+              })}
+            </div>
+            <p className="mt-5 text-xs leading-6 text-[#617e8d]">Piezas visuales de Morbia. Composiciones ilustrativas.</p>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="morbia-diagonal relative overflow-hidden px-5 py-16 text-white sm:py-20 lg:px-8">
-        <div className="absolute inset-0 bg-[#04345d]/84" />
-        <div className="relative mx-auto flex max-w-7xl flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-3xl">
-            <h2 className="text-3xl font-black leading-tight tracking-[-.04em] sm:text-5xl">Hablemos de lo que hoy frena tu operación.</h2>
-            <p className="mt-4 text-lg leading-relaxed text-white/78">Cuéntanos qué proceso consume tiempo, qué conversación se queda sin respuesta o qué información falta para decidir. Diseñamos el siguiente paso contigo.</p>
+        <section className="service-section morbia-diagonal relative isolate overflow-hidden text-white">
+          <div className="absolute inset-0 -z-10 bg-[#04345d]/90" />
+          <div className="service-container">
+            <div data-service-reveal className="max-w-3xl"><h2 className="text-3xl font-black leading-[1.08] tracking-[-.04em] sm:text-5xl">No tienes que saber qué tecnología necesitas.</h2><p className="mt-6 max-w-2xl text-lg leading-8 text-[#d4e9ed]">Empieza por lo que quieres cambiar. Estas situaciones pueden ayudarte a encontrar una primera opción; también podemos combinar servicios cuando tu operación lo necesita.</p></div>
+            <div className="mt-10 grid gap-x-12 gap-y-8 md:grid-cols-2">{needs.map((need) => <div key={need.slug} data-service-reveal className="border-t border-[#80d8dc]/25 pt-6"><h3 className="max-w-lg text-xl font-bold leading-7 text-[#f1fbfc]">{need.title}</h3><p className="mt-3 max-w-lg leading-7 text-[#c0dce5]">{need.text}</p><AnalyticsLink href={`/servicios/${need.slug}`} contentId={`service:${need.slug}:need`} className="mt-5 inline-flex items-center gap-2 rounded text-sm font-bold text-[#70f0e5] hover:text-white">Explorar {need.label.toLowerCase()} <ArrowRight size={16} /></AnalyticsLink></div>)}</div>
           </div>
-          <Link href="/#contacto" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#138ba3] px-7 py-4 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Hablemos hoy <ArrowRight size={17} /></Link>
-        </div>
-      </section>
-
-      <footer className="bg-[#042b4d] px-5 py-9 text-white lg:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 text-sm text-white/70 sm:flex-row sm:items-center sm:justify-between">
-          <span>© 2026 Morbia. Tecnología para Puebla y Tlaxcala.</span>
-          <Link href="/" className="font-semibold text-[#6cf4e7] hover:text-white">Volver a Morbia</Link>
-        </div>
-      </footer>
-
+        </section>
+        <ServiceApproach />
+        <ServiceContact />
+        <ServiceFooter />
+      </ServiceMotion>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
     </main>
   )

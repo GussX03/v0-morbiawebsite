@@ -79,10 +79,53 @@
 }
 
 .morbia-header-scrolled {
-  background: linear-gradient(90deg, rgb(3 42 73 / 0.7), rgb(0 91 108 / 0.58));
+  background: linear-gradient(90deg, rgb(3 42 73 / 0.94), rgb(0 91 108 / 0.9));
   backdrop-filter: blur(30px) saturate(125%);
   -webkit-backdrop-filter: blur(30px) saturate(125%);
 }
+
+/* Morbia service pages share the homepage palette, 24px surfaces and pill CTAs.
+   Layering: content 0, global navigation 50, image overlay 60, image dialog 70. */
+.service-container { width: 100%; max-width: 80rem; margin-inline: auto; padding-inline: 1.25rem; }
+.service-page, .site-header, .service-lightbox { font-family: var(--font-morbia), "Avenir Next", Avenir, sans-serif; }
+.service-page .font-black { font-weight: 500; }
+.service-page .font-bold { font-weight: 600; }
+.service-section { padding-block: 5rem; scroll-margin-top: 6rem; }
+.service-heading { max-width: 52rem; font-size: clamp(2rem, 3.8vw, 3.15rem); line-height: 1.16; letter-spacing: -.04em; font-weight: 500; color: #073b61; text-wrap: balance; }
+.service-lead { max-width: 44rem; margin-top: 1.5rem; font-size: 1.125rem; line-height: 1.8; color: #496579; }
+.service-button { display: inline-flex; align-items: center; justify-content: center; gap: .65rem; min-height: 3rem; border: 1px solid rgb(176 236 239 / .16); border-radius: 999px; background: #08718a; padding: .8rem 1.4rem; color: #f1fbfc; font-size: .875rem; font-weight: 700; line-height: 1.4; white-space: nowrap; box-shadow: 0 8px 22px rgb(0 63 90 / .15); transition: transform .25s, background .25s, box-shadow .25s; }
+.service-button:hover { background: #075374; transform: translateY(-2px); box-shadow: 0 12px 26px rgb(0 63 90 / .22); }
+.service-button:active { transform: translateY(0); }
+.service-button-secondary { background: rgb(239 250 250 / .08); border-color: rgb(215 238 238 / .4); color: #e2f4f5; box-shadow: none; }
+.service-button-secondary:hover { background: #0a668b; }
+.site-header-contact { display: none; }
+@media (min-width: 1024px) { .site-header-contact { display: inline-flex; } }
+.service-button:focus-visible, .service-page a:focus-visible, .service-page summary:focus-visible { outline: 3px solid #16b5bd; outline-offset: 5px; }
+.service-hero { position: relative; isolation: isolate; overflow: hidden; padding-block: 8rem 4rem; color: #edf9fa; }
+.service-hero::before { position: absolute; z-index: -1; inset: 0; content: ""; background: linear-gradient(105deg, rgb(3 29 61 / .96), rgb(3 57 86 / .87), rgb(3 89 106 / .55)); }
+.service-breadcrumb { display: flex; align-items: center; gap: .5rem; margin-bottom: 2rem; font-size: .8rem; line-height: 1.5; color: #bcdfe6; }
+.service-breadcrumb a:hover { color: #fff; }
+.service-photo { position: relative; overflow: hidden; border-radius: 1.5rem; background: #0b526d; }
+.service-photo img { object-fit: cover; }
+.service-artwork { width: min(100%, 30rem); aspect-ratio: 4/5; margin-inline: auto; }
+.service-artwork img { object-fit: contain; }
+.service-catalog-artwork { background: #e0eef1; display: grid; place-items: center; padding: 1.25rem; }
+.service-catalog-poster { width: min(100%, 22rem); aspect-ratio: 4/5; margin-inline: auto; border-radius: .75rem; }
+.service-catalog-artwork img { object-fit: contain; }
+.service-lightbox[data-state="open"], .service-lightbox-overlay[data-state="open"] { animation: service-image-enter .2s ease-out; }
+@keyframes service-image-enter { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .service-lightbox, .service-lightbox-overlay { animation: none !important; } }
+.service-catalog-card { border: 1px solid #c7e4e9; border-radius: 1.5rem; overflow: hidden; background: #fafdfe; box-shadow: 0 12px 36px rgb(4 72 104 / .06); transition: transform .3s, border-color .3s, box-shadow .3s; scroll-margin-top: 6rem; }
+.service-catalog-card:hover, .service-catalog-card:focus-within { border-color: #56b8c1; box-shadow: 0 20px 45px rgb(4 72 104 / .12); }
+.service-catalog-image img { transition: transform .7s cubic-bezier(.2,.7,.3,1); }
+.service-catalog-card:hover .service-catalog-image img { transform: scale(1.035); }
+.service-faq summary { display: flex; cursor: pointer; list-style: none; align-items: center; justify-content: space-between; gap: 1.5rem; padding-block: 1.5rem; font-weight: 700; font-size: 1.05rem; color: #073b61; }
+.service-faq summary::-webkit-details-marker { display: none; }
+.service-faq[open] summary svg { transform: rotate(45deg); }
+.service-faq summary svg { flex-shrink: 0; transition: transform .25s; color: #087e92; }
+.service-faq p { max-width: 65ch; padding-bottom: 1.5rem; color: #496579; line-height: 1.85; }
+@media (min-width: 1024px) { .service-container { padding-inline: 2rem; } .service-section { padding-block: 6rem; } .service-hero { padding-block: 7.5rem 4.5rem; } }
+@media (max-width: 639px) { .service-section { padding-block: 3.5rem; } .service-hero { padding-block: 7rem 3rem; } .service-breadcrumb { margin-bottom: 1.5rem; } }
 
 .client-marquee {
   overflow: hidden;
@@ -114,6 +157,10 @@
     grid-template-rows: 1fr !important;
     opacity: 1 !important;
   }
+}
+
+@media (max-width: 359px) {
+  [data-service-card] { height: 410px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

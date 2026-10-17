@@ -1,8 +1,11 @@
 import type React from "react"
 import type { Metadata } from "next"
 import Script from "next/script"
+import { Montserrat } from "next/font/google"
 import { servicePages, siteUrl } from "@/lib/seo-content"
 import "./globals.css"
+
+const morbiaFont = Montserrat({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-morbia", display: "swap" })
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -132,7 +135,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es-MX">
+    <html lang="es-MX" data-scroll-behavior="smooth">
       <head>
         <script
           type="application/ld+json"
@@ -152,7 +155,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body>{children}</body>
+      <body className={morbiaFont.variable}>{children}</body>
     </html>
   )
 }

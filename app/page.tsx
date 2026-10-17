@@ -1,11 +1,11 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useRef } from "react"
 import Image from "next/image"
 import {
   ArrowRight, BarChart3, Bot, BrainCircuit, ChevronRight, Code2, Download,
-  FileText, Globe2, Handshake, Mail, MapPin, Menu, MessageCircleMore, Orbit, Phone,
-  ScanSearch, Settings2, Sparkles, UsersRound, Workflow, X, Zap,
+  FileText, Globe2, Handshake, Mail, MapPin, MessageCircleMore, Orbit, Phone,
+  ScanSearch, Settings2, Sparkles, UsersRound, Workflow, Zap,
 } from "lucide-react"
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTiktok, FaWhatsapp } from "react-icons/fa6"
 import { SiNextdotjs, SiPython, SiReact, SiStripe } from "react-icons/si"
@@ -15,6 +15,7 @@ import { useGSAP } from "@gsap/react"
 import FloatingChat from "@/components/floating-chat"
 import MorbiaReviewsExplorer from "@/components/morbia-reviews-explorer"
 import AnalyticsLink from "@/components/analytics-link"
+import SiteHeader from "@/components/site-header"
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
@@ -26,7 +27,7 @@ const navItems = [
 const services = [
   { icon: Code2, title: "Aplicaciones web", href: "/servicios/paginas-web", detail: "Una plataforma que se siente hecha para tu negocio: clara para tu equipo, útil para tus clientes y preparada para crecer sin volver a empezar.", result: "Tu operación, en un solo lugar.", className: "lg:col-span-5" },
   { icon: MessageCircleMore, title: "Chatbots", href: "/servicios/chatbots", detail: "Convierte cada mensaje en una oportunidad. Tu negocio responde, orienta y acompaña a tus clientes incluso cuando tu equipo está ocupado.", result: "Atención que nunca deja esperando.", className: "lg:col-span-3" },
-  { icon: Zap, title: "Automatizaciones", href: "/servicios/automatizacion-de-procesos", detail: "Conecta tareas que hoy consumen horas y deja que los procesos avancen solos. Diseñamos flujos para recuperar hasta un 80% del tiempo invertido en tareas repetitivas.", result: "Menos tareas. Más capacidad para crecer.", className: "lg:col-span-4" },
+  { icon: Zap, title: "Automatizaciones", href: "/servicios/automatizacion-de-procesos", detail: "Conecta tareas que hoy consumen horas y deja que los procesos avancen con menos seguimiento manual. Diseñamos flujos para liberar tiempo en las tareas repetitivas de tu equipo.", result: "Menos tareas. Más capacidad para crecer.", className: "lg:col-span-4" },
   { icon: Bot, title: "RPA", href: "/servicios/rpa", detail: "Haz que las tareas manuales y repetitivas sucedan con precisión, todos los días. Tu equipo puede enfocarse en clientes, estrategia y decisiones que sí mueven el negocio.", result: "Tu equipo vuelve a lo importante.", className: "lg:col-span-4" },
   { icon: BrainCircuit, title: "Inteligencia artificial", href: "/servicios/inteligencia-artificial", detail: "Lleva respuestas, recomendaciones e ideas accionables al momento exacto. La inteligencia artificial deja de ser promesa y se convierte en una ventaja para decidir mejor.", result: "Decisiones más claras, cada día.", className: "lg:col-span-5" },
   { icon: BarChart3, title: "Análisis de datos", href: "/servicios/analisis-de-datos", detail: "Transformamos información dispersa en una lectura clara de lo que está funcionando, dónde está la oportunidad y qué decisión vale la pena tomar después.", result: "Ve con claridad hacia dónde crecer.", className: "lg:col-span-3" },
@@ -68,11 +69,7 @@ const socials = [
 ] as const
 
 export default function MorbiaWebsite() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState<(typeof navItems)[number][1]>("inicio")
   const pageRef = useRef<HTMLElement>(null)
-  const activeSectionRef = useRef<(typeof navItems)[number][1]>("inicio")
   useGSAP(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
 
@@ -143,54 +140,17 @@ export default function MorbiaWebsite() {
     return () => media.revert()
   }, { scope: pageRef })
 
-  useEffect(() => {
-    const sections = navItems.map(([, id]) => document.getElementById(id)).filter((section): section is HTMLElement => Boolean(section))
-    const updateHeader = () => {
-      setIsScrolled(window.scrollY > 18)
-      if (!sections.length) return
-      const referencePoint = window.innerHeight * 0.38
-      const closestSection = sections.reduce((closest, section) => Math.abs(section.getBoundingClientRect().top - referencePoint) < Math.abs(closest.getBoundingClientRect().top - referencePoint) ? section : closest, sections[0]!)
-      const nextSection = closestSection?.id as (typeof navItems)[number][1] | undefined
-      if (nextSection && activeSectionRef.current !== nextSection) {
-        activeSectionRef.current = nextSection
-        setActiveSection(nextSection)
-      }
-    }
-
-    updateHeader()
-    window.addEventListener("scroll", updateHeader, { passive: true })
-    return () => window.removeEventListener("scroll", updateHeader)
-  }, [])
-
   const goTo = (id: string) => {
     window.gtag?.("event", "select_content", {
       content_type: "section_navigation",
       content_id: `section:${id}`,
     })
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" })
-    activeSectionRef.current = id as (typeof navItems)[number][1]
-    setActiveSection(id as (typeof navItems)[number][1])
-    setIsMenuOpen(false)
   }
 
   return (
     <main ref={pageRef} className="overflow-x-clip bg-[#f4fbff] text-[#062b52]">
-      <header data-gsap-header className={"fixed inset-x-0 top-0 z-50 border-b transition-all duration-500 " + (isScrolled ? "morbia-header-scrolled border-white/10 shadow-[0_12px_32px_rgba(2,29,61,.24)] backdrop-blur-xl" : "border-transparent bg-transparent")}>
-        <div className={"mx-auto flex max-w-7xl items-center justify-between px-5 transition-all duration-500 lg:px-8 " + (isScrolled ? "h-16" : "h-20")}>
-          <button onClick={() => goTo("inicio")} aria-label="Ir al inicio de Morbia" className="shrink-0">
-            <Image src="/images/main-logo.png" alt="Morbia" width={160} height={50} className="h-9 w-auto brightness-0 invert" priority />
-          </button>
-          <nav className="hidden items-center gap-6 xl:gap-8 lg:flex" aria-label="Navegación principal">
-            {navItems.map(([label, id]) => <a key={id} href={`#${id}`} onClick={(event) => { event.preventDefault(); goTo(id) }} aria-current={activeSection === id ? "page" : undefined} className={"relative py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-1/2 after:h-1 after:w-1 after:-translate-x-1/2 after:rounded-full after:bg-[#65eee1] after:transition-all after:duration-300 hover:text-white " + (activeSection === id ? "text-white after:w-5" : "text-white/75 after:scale-0")}>{label}</a>)}
-          </nav>
-          <button onClick={() => goTo("contacto")} className="hidden items-center gap-2 rounded-full bg-[#138ba3] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82] lg:flex">Hablemos hoy <ArrowRight size={16} /></button>
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="rounded-xl border border-white/25 p-2 text-white lg:hidden" aria-label="Abrir menú">{isMenuOpen ? <X size={22} /> : <Menu size={22} />}</button>
-        </div>
-        {isMenuOpen && <nav className="mx-4 rounded-2xl border border-white/15 bg-[#06375f]/95 p-4 shadow-2xl backdrop-blur lg:hidden" aria-label="Navegación móvil">
-          {navItems.map(([label, id]) => <a key={id} href={`#${id}`} onClick={(event) => { event.preventDefault(); goTo(id) }} className={"block w-full rounded-xl px-4 py-3 text-left text-sm font-semibold transition " + (activeSection === id ? "bg-[#138ba3] text-white" : "text-white hover:bg-white/10")}>{label}</a>)}
-          <button onClick={() => goTo("contacto")} className="mt-2 w-full rounded-xl bg-[#138ba3] px-4 py-3 text-sm font-bold text-white transition hover:bg-[#075b82]">Hablemos hoy</button>
-        </nav>}
-      </header>
+      <SiteHeader home />
 
       <section id="inicio" data-hero className="morbia-diagonal relative isolate min-h-[760px] scroll-mt-20 overflow-hidden pt-28 text-white">
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,29,61,.92),rgba(3,49,78,.64),rgba(3,76,104,.42))]" />
@@ -268,7 +228,7 @@ export default function MorbiaWebsite() {
                 <div className="absolute inset-x-6 bottom-6">
                   <div className="flex items-center gap-3">
                     <Icon className="shrink-0 text-[#57f2e5]" size={31} />
-                    <h3 className="text-xl font-bold text-white">{service.title}</h3>
+                    <h3 className="text-xl font-bold text-white"><AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:title`} className="rounded hover:text-[#77f6eb]">{service.title}</AnalyticsLink></h3>
                   </div>
                   <div data-service-detail className="grid grid-rows-[0fr] opacity-0 transition-[grid-template-rows,opacity] duration-500 ease-out group-hover:grid-rows-[1fr] group-hover:opacity-100 group-focus-within:grid-rows-[1fr] group-focus-within:opacity-100">
                     <div className="overflow-hidden">
