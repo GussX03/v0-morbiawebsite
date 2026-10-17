@@ -1,7 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import Script from "next/script"
-import { siteUrl } from "@/lib/seo-content"
+import { servicePages, siteUrl } from "@/lib/seo-content"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -104,18 +104,12 @@ const organizationSchema = {
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: "Servicios tecnológicos de Morbia",
-        itemListElement: [
-          "Aplicaciones web",
-          "Chatbots",
-          "Automatizaciones",
-          "RPA",
-          "Inteligencia artificial",
-          "Análisis de datos",
-        ].map((name) => ({
+        itemListElement: servicePages.map((service) => ({
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name,
+            name: service.title,
+            url: `${siteUrl}/servicios/${service.slug}`,
             provider: { "@id": `${siteUrl}/#organization` },
           },
         })),

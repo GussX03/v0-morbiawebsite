@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, BarChart3, Bot, BrainCircuit, Code2, MapPin, Workflow, Zap } from "lucide-react"
+import AnalyticsLink from "@/components/analytics-link"
 import { regionalCapabilities, regionalServiceGroups, siteUrl } from "@/lib/seo-content"
 
 const icons = [Code2, Bot, Workflow, Zap, BrainCircuit, BarChart3]
@@ -96,6 +97,7 @@ export default function ServiciosTecnologicosPueblaTlaxcalaPage() {
                     <div>
                       <h2 className="text-2xl font-black tracking-[-.03em] text-[#083c67]">{group.title}</h2>
                       <p className="mt-2 max-w-xl leading-relaxed text-[#527082]">{group.description}</p>
+                      <AnalyticsLink href={`/servicios/${group.slug}`} contentId={`service:${group.slug}:regional`} className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-[#087d91] transition hover:text-[#043b66]">Conoce este servicio <ArrowRight size={15} /></AnalyticsLink>
                     </div>
                   </div>
                   <div className="mt-7 grid gap-x-6 gap-y-3 sm:grid-cols-2">

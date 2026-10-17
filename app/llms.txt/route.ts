@@ -14,6 +14,12 @@ const content = `# Morbia
 
 - Sitio: https://www.morbia.com.mx/
 - Servicios en Puebla y Tlaxcala: https://www.morbia.com.mx/servicios-tecnologicos-puebla-tlaxcala
+- Páginas web y aplicaciones: https://www.morbia.com.mx/servicios/paginas-web
+- Chatbots con IA: https://www.morbia.com.mx/servicios/chatbots
+- Automatización de procesos: https://www.morbia.com.mx/servicios/automatizacion-de-procesos
+- RPA: https://www.morbia.com.mx/servicios/rpa
+- Inteligencia artificial aplicada: https://www.morbia.com.mx/servicios/inteligencia-artificial
+- Análisis de datos: https://www.morbia.com.mx/servicios/analisis-de-datos
 - Contacto: contacto@morbia.com.mx | +52 221 526 8440
 - Ubicación y cobertura: Puebla, Puebla; atención para empresas de Puebla y Tlaxcala, México.
 - Producto relacionado: NexaCV — https://nexacv.morbia.com.mx/

@@ -21,6 +21,15 @@ Morbia incorpora inteligencia artificial para ofrecer respuestas, recomendacione
 ### Análisis de datos
 Morbia transforma información dispersa en lecturas claras sobre operación, oportunidades y siguientes decisiones.
 
+## Páginas de servicio
+
+- Páginas web y aplicaciones: https://www.morbia.com.mx/servicios/paginas-web
+- Chatbots con inteligencia artificial: https://www.morbia.com.mx/servicios/chatbots
+- Automatización de procesos: https://www.morbia.com.mx/servicios/automatizacion-de-procesos
+- RPA para tareas repetitivas: https://www.morbia.com.mx/servicios/rpa
+- Inteligencia artificial aplicada: https://www.morbia.com.mx/servicios/inteligencia-artificial
+- Análisis de datos para empresas: https://www.morbia.com.mx/servicios/analisis-de-datos
+
 ## Contacto y fuentes oficiales
 
 - Página principal: https://www.morbia.com.mx/

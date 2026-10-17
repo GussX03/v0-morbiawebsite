@@ -14,6 +14,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useGSAP } from "@gsap/react"
 import FloatingChat from "@/components/floating-chat"
 import MorbiaReviewsExplorer from "@/components/morbia-reviews-explorer"
+import AnalyticsLink from "@/components/analytics-link"
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
@@ -23,12 +24,12 @@ const navItems = [
 ] as const
 
 const services = [
-  { icon: Code2, title: "Aplicaciones web", detail: "Una plataforma que se siente hecha para tu negocio: clara para tu equipo, útil para tus clientes y preparada para crecer sin volver a empezar.", result: "Tu operación, en un solo lugar.", className: "lg:col-span-5" },
-  { icon: MessageCircleMore, title: "Chatbots", detail: "Convierte cada mensaje en una oportunidad. Tu negocio responde, orienta y acompaña a tus clientes incluso cuando tu equipo está ocupado.", result: "Atención que nunca deja esperando.", className: "lg:col-span-3" },
-  { icon: Zap, title: "Automatizaciones", detail: "Conecta tareas que hoy consumen horas y deja que los procesos avancen solos. Diseñamos flujos para recuperar hasta un 80% del tiempo invertido en tareas repetitivas.", result: "Menos tareas. Más capacidad para crecer.", className: "lg:col-span-4" },
-  { icon: Bot, title: "RPA", detail: "Haz que las tareas manuales y repetitivas sucedan con precisión, todos los días. Tu equipo puede enfocarse en clientes, estrategia y decisiones que sí mueven el negocio.", result: "Tu equipo vuelve a lo importante.", className: "lg:col-span-4" },
-  { icon: BrainCircuit, title: "Inteligencia artificial", detail: "Lleva respuestas, recomendaciones e ideas accionables al momento exacto. La inteligencia artificial deja de ser promesa y se convierte en una ventaja para decidir mejor.", result: "Decisiones más claras, cada día.", className: "lg:col-span-5" },
-  { icon: BarChart3, title: "Análisis de datos", detail: "Transformamos información dispersa en una lectura clara de lo que está funcionando, dónde está la oportunidad y qué decisión vale la pena tomar después.", result: "Ve con claridad hacia dónde crecer.", className: "lg:col-span-3" },
+  { icon: Code2, title: "Aplicaciones web", href: "/servicios/paginas-web", detail: "Una plataforma que se siente hecha para tu negocio: clara para tu equipo, útil para tus clientes y preparada para crecer sin volver a empezar.", result: "Tu operación, en un solo lugar.", className: "lg:col-span-5" },
+  { icon: MessageCircleMore, title: "Chatbots", href: "/servicios/chatbots", detail: "Convierte cada mensaje en una oportunidad. Tu negocio responde, orienta y acompaña a tus clientes incluso cuando tu equipo está ocupado.", result: "Atención que nunca deja esperando.", className: "lg:col-span-3" },
+  { icon: Zap, title: "Automatizaciones", href: "/servicios/automatizacion-de-procesos", detail: "Conecta tareas que hoy consumen horas y deja que los procesos avancen solos. Diseñamos flujos para recuperar hasta un 80% del tiempo invertido en tareas repetitivas.", result: "Menos tareas. Más capacidad para crecer.", className: "lg:col-span-4" },
+  { icon: Bot, title: "RPA", href: "/servicios/rpa", detail: "Haz que las tareas manuales y repetitivas sucedan con precisión, todos los días. Tu equipo puede enfocarse en clientes, estrategia y decisiones que sí mueven el negocio.", result: "Tu equipo vuelve a lo importante.", className: "lg:col-span-4" },
+  { icon: BrainCircuit, title: "Inteligencia artificial", href: "/servicios/inteligencia-artificial", detail: "Lleva respuestas, recomendaciones e ideas accionables al momento exacto. La inteligencia artificial deja de ser promesa y se convierte en una ventaja para decidir mejor.", result: "Decisiones más claras, cada día.", className: "lg:col-span-5" },
+  { icon: BarChart3, title: "Análisis de datos", href: "/servicios/analisis-de-datos", detail: "Transformamos información dispersa en una lectura clara de lo que está funcionando, dónde está la oportunidad y qué decisión vale la pena tomar después.", result: "Ve con claridad hacia dónde crecer.", className: "lg:col-span-3" },
 ] as const
 
 function OpenAILogo({ className }: { className?: string }) {
@@ -162,6 +163,10 @@ export default function MorbiaWebsite() {
   }, [])
 
   const goTo = (id: string) => {
+    window.gtag?.("event", "select_content", {
+      content_type: "section_navigation",
+      content_id: `section:${id}`,
+    })
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" })
     activeSectionRef.current = id as (typeof navItems)[number][1]
     setActiveSection(id as (typeof navItems)[number][1])
@@ -176,13 +181,13 @@ export default function MorbiaWebsite() {
             <Image src="/images/main-logo.png" alt="Morbia" width={160} height={50} className="h-9 w-auto brightness-0 invert" priority />
           </button>
           <nav className="hidden items-center gap-6 xl:gap-8 lg:flex" aria-label="Navegación principal">
-            {navItems.map(([label, id]) => <button key={id} onClick={() => goTo(id)} aria-current={activeSection === id ? "page" : undefined} className={"relative py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-1/2 after:h-1 after:w-1 after:-translate-x-1/2 after:rounded-full after:bg-[#65eee1] after:transition-all after:duration-300 hover:text-white " + (activeSection === id ? "text-white after:w-5" : "text-white/75 after:scale-0")}>{label}</button>)}
+            {navItems.map(([label, id]) => <a key={id} href={`#${id}`} onClick={(event) => { event.preventDefault(); goTo(id) }} aria-current={activeSection === id ? "page" : undefined} className={"relative py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-1/2 after:h-1 after:w-1 after:-translate-x-1/2 after:rounded-full after:bg-[#65eee1] after:transition-all after:duration-300 hover:text-white " + (activeSection === id ? "text-white after:w-5" : "text-white/75 after:scale-0")}>{label}</a>)}
           </nav>
           <button onClick={() => goTo("contacto")} className="hidden items-center gap-2 rounded-full bg-[#138ba3] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82] lg:flex">Hablemos hoy <ArrowRight size={16} /></button>
           <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="rounded-xl border border-white/25 p-2 text-white lg:hidden" aria-label="Abrir menú">{isMenuOpen ? <X size={22} /> : <Menu size={22} />}</button>
         </div>
         {isMenuOpen && <nav className="mx-4 rounded-2xl border border-white/15 bg-[#06375f]/95 p-4 shadow-2xl backdrop-blur lg:hidden" aria-label="Navegación móvil">
-          {navItems.map(([label, id]) => <button key={id} onClick={() => goTo(id)} className={"block w-full rounded-xl px-4 py-3 text-left text-sm font-semibold transition " + (activeSection === id ? "bg-[#138ba3] text-white" : "text-white hover:bg-white/10")}>{label}</button>)}
+          {navItems.map(([label, id]) => <a key={id} href={`#${id}`} onClick={(event) => { event.preventDefault(); goTo(id) }} className={"block w-full rounded-xl px-4 py-3 text-left text-sm font-semibold transition " + (activeSection === id ? "bg-[#138ba3] text-white" : "text-white hover:bg-white/10")}>{label}</a>)}
           <button onClick={() => goTo("contacto")} className="mt-2 w-full rounded-xl bg-[#138ba3] px-4 py-3 text-sm font-bold text-white transition hover:bg-[#075b82]">Hablemos hoy</button>
         </nav>}
       </header>
@@ -253,7 +258,7 @@ export default function MorbiaWebsite() {
             <p className="text-sm font-bold tracking-[.14em] text-[#52f3e7]">NUESTROS SERVICIOS</p>
             <h2 className="mt-4 text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Soluciones tecnológicas para un mundo en evolución.</h2>
             <p className="mt-5 text-lg leading-relaxed text-white/75">Desde Puebla, acompañamos a empresas de Puebla y Tlaxcala con páginas web, chatbots, automatización, inteligencia artificial y datos para convertir sus procesos en ventaja.</p>
-            <a href="/servicios-tecnologicos-puebla-tlaxcala" className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#73f7eb] transition hover:text-white">Explora soluciones para Puebla y Tlaxcala <ArrowRight size={16} /></a>
+            <AnalyticsLink href="/servicios-tecnologicos-puebla-tlaxcala" contentId="regional-services:home" className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#73f7eb] transition hover:text-white">Explora soluciones para Puebla y Tlaxcala <ArrowRight size={16} /></AnalyticsLink>
           </div>
           <div data-services-track className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {services.map((service) => {
@@ -269,7 +274,7 @@ export default function MorbiaWebsite() {
                     <div className="overflow-hidden">
                       <p className="mt-4 leading-relaxed text-white/80">{service.detail}</p>
                       <p className="mt-4 border-l-2 border-[#65eee1] pl-3 text-sm font-bold text-[#d9faf6]">{service.result}</p>
-                      <button onClick={() => goTo("contacto")} className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-[#64f8ec]">Hablemos de tu solución <ArrowRight size={15} /></button>
+                      <AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:home`} className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-[#64f8ec]">Conoce este servicio <ArrowRight size={15} /></AnalyticsLink>
                     </div>
                   </div>
                 </div>
@@ -306,7 +311,7 @@ export default function MorbiaWebsite() {
 
       <section id="contacto" className="morbia-diagonal relative scroll-mt-20 overflow-hidden py-20 text-white lg:py-24"><div className="absolute inset-0 bg-[#04345d]/84" /><div className="relative mx-auto flex max-w-7xl flex-col justify-between gap-10 px-5 lg:flex-row lg:items-center lg:px-8"><div className="max-w-2xl"><p className="text-sm font-bold tracking-[.14em] text-[#55f5e8]">HABLEMOS</p><h2 className="mt-4 text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Conversemos sobre tu próximo proyecto.</h2><p className="mt-5 text-lg text-white/75">Estamos listos para escuchar tus ideas y convertirlas en soluciones.</p><div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium text-white/85"><a href="mailto:contacto@morbia.com.mx" className="flex items-center gap-2 hover:text-[#62f7eb]"><Mail size={18} />contacto@morbia.com.mx</a><a href="tel:+522215268440" className="flex items-center gap-2 hover:text-[#62f7eb]"><Phone size={18} />(+52) 221 526 8440</a><span className="flex items-center gap-2"><MapPin size={18} />Puebla, Puebla. Atención en Tlaxcala.</span></div></div><a href="https://wa.me/522215268440" target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#138ba3] px-7 py-4 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Hablemos hoy <ArrowRight size={17} /></a></div></section>
 
-      <footer className="bg-[#042b4d] py-12 text-white"><div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-[1fr_auto] lg:px-8"><div><Image src="/images/main-logo.png" alt="Morbia" width={170} height={55} className="h-10 w-auto brightness-0 invert" /><p className="mt-5 text-sm font-semibold tracking-[.12em] text-[#5eece3]">INTELIGENCIA ORBITANDO TUS PROCESOS</p><p className="mt-4 text-sm text-white/55">© 2026 Morbia. Todos los derechos reservados.</p></div><div className="md:text-right"><p className="text-sm font-bold text-white/75">Síguenos</p><div className="mt-4 flex gap-3 md:justify-end">{socials.map(([label, href, Icon]) => <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-[#27e3d5] hover:bg-[#19e0d0] hover:text-[#05335c]"><Icon size={17} /></a>)}</div><div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/60 md:justify-end">{navItems.slice(1).map(([label, id]) => <button key={id} onClick={() => goTo(id)} className="hover:text-white">{label}</button>)}</div></div></div></footer>
+      <footer className="bg-[#042b4d] py-12 text-white"><div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-[1fr_auto] lg:px-8"><div><Image src="/images/main-logo.png" alt="Morbia" width={170} height={55} className="h-10 w-auto brightness-0 invert" /><p className="mt-5 text-sm font-semibold tracking-[.12em] text-[#5eece3]">INTELIGENCIA ORBITANDO TUS PROCESOS</p><p className="mt-4 text-sm text-white/55">© 2026 Morbia. Todos los derechos reservados.</p></div><div className="md:text-right"><p className="text-sm font-bold text-white/75">Síguenos</p><div className="mt-4 flex gap-3 md:justify-end">{socials.map(([label, href, Icon]) => <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-[#27e3d5] hover:bg-[#19e0d0] hover:text-[#05335c]"><Icon size={17} /></a>)}</div><div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/60 md:justify-end">{navItems.slice(1).map(([label, id]) => <a key={id} href={`#${id}`} onClick={(event) => { event.preventDefault(); goTo(id) }} className="hover:text-white">{label}</a>)}</div></div></div></footer>
       <FloatingChat />
     </main>
   )
