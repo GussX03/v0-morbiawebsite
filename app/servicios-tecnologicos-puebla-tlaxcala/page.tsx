@@ -56,7 +56,7 @@ export default function ServiciosTecnologicosPueblaTlaxcalaPage() {
             <nav className="service-breadcrumb" aria-label="Ruta de navegación"><Link href="/#servicios" className="inline-flex items-center gap-2"><ArrowLeft size={15} /> Volver a la portada</Link><ChevronRight size={13} aria-hidden="true" /><span>Servicios</span></nav>
             <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-14">
               <div data-service-hero-copy>
-                <p className="text-xs font-bold tracking-[.14em] text-[#6beee3] sm:text-sm">TECNOLOGÍA PARA PUEBLA Y TLAXCALA</p>
+                <p className="text-xs font-bold tracking-[.14em] text-[#6beee3] sm:text-sm">TECNOLOGÍA PARA TU NEGOCIO</p>
                 <h1 className="mt-5 max-w-2xl text-[2.15rem] font-black leading-[1.12] tracking-[-.045em] sm:text-5xl xl:text-[3.5rem]">Tu negocio puede <span className="text-[#65eee1]">trabajar mejor.</span></h1>
                 <p className="mt-6 max-w-xl text-lg leading-8 text-[#d5e8ed]">Atiende mejor, recupera tiempo y decide con claridad. Encuentra la tecnología que tiene sentido para tu siguiente paso.</p>
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><a href="#soluciones" className="service-button">Encuentra tu solución <ArrowDown size={17} /></a><a href="#hablemos" className="service-button service-button-secondary">Hablemos hoy <ArrowRight size={17} /></a></div>

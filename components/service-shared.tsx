@@ -24,7 +24,7 @@ export function ServiceContact({ service = "servicios" }: { service?: string }) 
       <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(3,36,68,.95),rgba(3,66,92,.8),rgba(3,103,118,.6))]" />
       <div className="service-container relative" data-service-reveal>
         <h2 className="max-w-3xl text-3xl font-black leading-[1.08] tracking-[-.04em] sm:text-5xl">Tu próximo avance empieza con una conversación.</h2>
-        <p className="mt-6 max-w-2xl text-lg leading-8 text-[#d4e9ed]">Cuéntanos qué te quita tiempo, qué necesitan tus clientes o qué quieres mejorar. Desde Puebla, acompañamos a empresas de Puebla y Tlaxcala a encontrar un punto de partida.</p>
+        <p className="mt-6 max-w-2xl text-lg leading-8 text-[#d4e9ed]">Cuéntanos qué te quita tiempo, qué necesitan tus clientes o qué quieres mejorar. Nos ubicamos en Puebla y Tlaxcala y trabajamos contigo estés donde estés.</p>
         <div className="mt-8 flex flex-col items-start gap-5 sm:flex-row sm:items-center"><AnalyticsLink href={`https://wa.me/522215268440?text=${encodeURIComponent(`Hola, me gustaría conocer las soluciones de Morbia. Me interesa: ${service}.`)}`} target="_blank" rel="noopener noreferrer" contentId={`contact:${service}:whatsapp`} contentType="contact" className="service-button">Hablemos hoy <ArrowRight size={18} /></AnalyticsLink><a href="mailto:contacto@morbia.com.mx" className="inline-flex items-center gap-2 rounded text-sm font-semibold text-[#d7eeee] transition hover:text-white"><Mail size={18} />contacto@morbia.com.mx</a></div>
       </div>
     </section>

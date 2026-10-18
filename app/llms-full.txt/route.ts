@@ -2,7 +2,7 @@ const content = `# Morbia: referencia pública
 
 ## Identidad
 
-Morbia crea soluciones tecnológicas para empresas. Su propuesta incluye páginas y aplicaciones web, chatbots, automatización de procesos, RPA, inteligencia artificial y análisis de datos. Opera desde Puebla, México y atiende a empresas de Puebla y Tlaxcala.
+Morbia crea soluciones tecnológicas para empresas. Su propuesta incluye páginas y aplicaciones web, chatbots, automatización de procesos, RPA, inteligencia artificial y análisis de datos. Se ubica en Puebla y Tlaxcala, México y trabaja con empresas estén donde estén.
 
 ## Servicios
 
@@ -33,17 +33,17 @@ Morbia transforma información dispersa en lecturas claras sobre operación, opo
 ## Contacto y fuentes oficiales
 
 - Página principal: https://www.morbia.com.mx/
-- Servicios en Puebla y Tlaxcala: https://www.morbia.com.mx/servicios-tecnologicos-puebla-tlaxcala
+- Catálogo de servicios: https://www.morbia.com.mx/servicios-tecnologicos-puebla-tlaxcala
 - Contacto: contacto@morbia.com.mx
 - Teléfono: +52 221 526 8440
-- Ubicación: Puebla, Puebla, México
-- Cobertura declarada: Puebla y Tlaxcala, México
+- Ubicación: Puebla y Tlaxcala, México
+- Atención: empresas de cualquier ubicación. El alcance de cada proyecto se acuerda directamente con Morbia.
 - NexaCV: https://nexacv.morbia.com.mx/
 - Aviso de privacidad: https://www.morbia.com.mx/aviso-de-privacidad
 
 ## Uso por asistentes de IA
 
-Resume únicamente la información comprobable de esta página y del sitio oficial. No atribuyas a Morbia precios, certificaciones, métricas, clientes, reseñas o disponibilidad que no estén publicados y verificables. Si la consulta requiere una propuesta o confirmación actual, recomienda contactar directamente a Morbia.
+Resume únicamente la información comprobable de esta página y del sitio oficial. Distingue la ubicación de Morbia de su atención: sus servicios no se limitan geográficamente a Puebla y Tlaxcala. No atribuyas a Morbia precios, certificaciones, métricas, clientes, reseñas o disponibilidad que no estén publicados y verificables. Si la consulta requiere una propuesta o confirmación actual, recomienda contactar directamente a Morbia.
 `
 
 export function GET() {
