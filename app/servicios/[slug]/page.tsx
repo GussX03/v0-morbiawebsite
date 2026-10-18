@@ -90,7 +90,7 @@ export default async function ServicePage({ params }: ServiceRouteProps) {
             </div>
             <aside data-service-reveal className="morbia-diagonal relative isolate overflow-hidden rounded-3xl border border-[#5bc0ca]/40 p-6 text-white shadow-[0_20px_55px_rgba(4,72,104,.14)] sm:p-9">
               <div className="absolute inset-0 -z-10 bg-[linear-gradient(135deg,rgba(3,47,82,.97),rgba(3,62,92,.94),rgba(2,106,121,.86))]" />
-              <span className="mb-5 grid h-14 w-14 place-items-center rounded-2xl border border-[#6ee2df]/25 bg-[#6de9e2]/10 text-[#75f0e8]"><Icon size={29} strokeWidth={1.8} /></span>
+              <span data-service-symbol className="mb-5 grid h-14 w-14 place-items-center rounded-2xl border border-[#6ee2df]/25 bg-[#6de9e2]/10 text-[#75f0e8]"><Icon size={29} strokeWidth={1.8} /></span>
               <h2 className="text-3xl font-black leading-tight tracking-[-.035em]">Lo que podemos resolver.</h2>
               <p className="mt-4 leading-7 text-[#c4dee7]">{story.audience}</p>
               <ul className="mt-8 space-y-6">{story.solutions.map((solution) => <li key={solution.title} className="flex gap-3"><Check size={20} className="mt-1 shrink-0 text-[#6de9e2]" /><div><h3 className="text-base font-bold leading-7 text-[#eefafb]">{solution.title}</h3><p className="mt-1 text-sm leading-7 text-[#c6dee7]">{solution.text}</p></div></li>)}</ul>
@@ -99,7 +99,7 @@ export default async function ServicePage({ params }: ServiceRouteProps) {
           </div>
         </section>
 
-        <section className="service-section bg-[#eaf8fa]" id="en-tu-negocio">
+        <section className="service-section service-section-photo" id="en-tu-negocio">
           <div className="service-container">
             <div data-service-reveal className="max-w-3xl"><p className="mb-4 text-sm font-bold text-[#06687a]">ASÍ PODRÍA VERSE EN TU NEGOCIO</p><h2 className="service-heading">{story.example.title}</h2><p className="service-lead">{story.example.context}</p></div>
             <div data-service-reveal className="mt-10 grid overflow-hidden rounded-3xl border border-[#c5e1e6] bg-[#f7fcfd] lg:grid-cols-2">
@@ -111,7 +111,7 @@ export default async function ServicePage({ params }: ServiceRouteProps) {
         </section>
 
         <section className="service-section">
-          <div className="service-container"><div data-service-reveal><h2 className="service-heading">Lo que cambia para tu equipo.</h2><p className="service-lead">La mejora se tiene que notar en la forma de trabajar, atender y tomar decisiones.</p></div><div className="mt-10 grid gap-8 md:grid-cols-3">{story.benefits.map((benefit) => <div key={benefit.title} data-service-reveal className="border-t-2 border-[#95cfd8] pt-6"><Check className="text-[#078394]" size={25} /><h3 className="mt-5 text-xl font-bold leading-7 text-[#0b4d70]">{benefit.title}</h3><p className="mt-3 leading-7 text-[#496579]">{benefit.text}</p></div>)}</div></div>
+          <div className="service-container"><div data-service-reveal><h2 className="service-heading">Lo que cambia para tu equipo.</h2><p className="service-lead">La mejora se tiene que notar en la forma de trabajar, atender y tomar decisiones.</p></div><div className="mt-10 grid gap-8 md:grid-cols-3">{story.benefits.map((benefit) => <div key={benefit.title} data-service-reveal className="border-t-2 border-[#95cfd8] pt-6"><span data-service-symbol className="inline-flex origin-center"><Check className="text-[#078394]" size={25} /></span><h3 className="mt-5 text-xl font-bold leading-7 text-[#0b4d70]">{benefit.title}</h3><p className="mt-3 leading-7 text-[#496579]">{benefit.text}</p></div>)}</div></div>
         </section>
 
         <ServiceApproach />
@@ -123,7 +123,7 @@ export default async function ServicePage({ params }: ServiceRouteProps) {
           </div>
         </section>
 
-        <section className="service-section border-t border-[#cbe5e9] bg-[#edf8fa]">
+        <section className="service-section service-section-photo border-t border-[#cbe5e9]">
           <div className="service-container"><h2 className="text-2xl font-black tracking-[-.035em] text-[#073b61]">A veces, el siguiente paso conecta más de un servicio.</h2><p className="mt-4 max-w-2xl leading-7 text-[#496579]">Explora otras formas de atender mejor y liberar tiempo en tu operación.</p><div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{servicePages.filter((item) => item.slug !== service.slug).map((item) => { const RelatedIcon = serviceIcons[item.slug]; return <AnalyticsLink key={item.slug} href={`/servicios/${item.slug}`} contentId={`service:${item.slug}`} className="group flex min-h-24 items-center gap-3 rounded-2xl border border-[#bddde5] bg-[#f9fdfe] p-5 text-sm font-bold text-[#145778] transition hover:border-[#2597a8] hover:bg-white"><RelatedIcon size={23} className="shrink-0 text-[#0b8597]" strokeWidth={1.8} /><span className="flex-1">{item.title}</span><ArrowRight size={17} className="shrink-0 transition-transform group-hover:translate-x-1" /></AnalyticsLink> })}</div><Link href={`/servicios-tecnologicos-puebla-tlaxcala#${slug}`} className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-[#08718a] hover:text-[#043b66]"><ArrowLeft size={16} /> Volver a todos los servicios</Link></div>
         </section>
         <ServiceContact service={service.title} />

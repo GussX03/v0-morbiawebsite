@@ -15,8 +15,16 @@ export default function ServiceMotion({ children }: { children: ReactNode }) {
     // Keep copy visible at all times; movement guides the reading order without hiding navigation or anchor destinations.
     gsap.from(select("[data-service-hero-copy] > *"), { y: 18, duration: .7, stagger: .08, ease: "power3.out" })
     gsap.from(select("[data-service-hero-image]"), { y: 24, scale: .98, duration: .85, ease: "power3.out" })
-    gsap.utils.toArray<HTMLElement>(select("[data-service-reveal]")).forEach((element) => {
-      gsap.from(element, { y: 25, duration: .65, ease: "power3.out", scrollTrigger: { trigger: element, start: "top 92%", once: true } })
+    ScrollTrigger.batch(select("[data-service-reveal]"), {
+      start: "top 88%",
+      once: true,
+      onEnter: (elements) => {
+        gsap.from(elements, { y: 26, autoAlpha: 0, duration: .68, stagger: .08, ease: "power3.out", overwrite: true })
+        elements.forEach((element) => {
+          const symbol = element.querySelector<HTMLElement>("[data-service-symbol]")
+          if (symbol) gsap.from(symbol, { scale: .76, rotation: -10, duration: .58, delay: .1, ease: "back.out(1.6)", overwrite: true })
+        })
+      },
     })
   }, { scope })
 

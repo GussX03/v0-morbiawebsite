@@ -7,7 +7,7 @@ import { serviceApproach } from "@/lib/service-stories"
 
 export function ServiceApproach() {
   return (
-    <section className="service-section bg-[#eaf8fa]" id="como-empezamos">
+    <section className="service-section service-section-photo" id="como-empezamos">
       <div className="service-container">
         <div data-service-reveal className="max-w-3xl"><h2 className="service-heading">El primer paso es entender tu negocio.</h2><p className="service-lead">No necesitas llegar con una solución elegida. Basta con contarnos qué se está volviendo difícil y qué te gustaría que funcionara mejor.</p></div>
         <ol className="mt-12 grid gap-8 md:grid-cols-3">

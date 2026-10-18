@@ -3,12 +3,11 @@
 import { useRef } from "react"
 import Image from "next/image"
 import {
-  ArrowRight, BarChart3, Bot, BrainCircuit, ChevronRight, Code2, Download,
+  ArrowRight, BarChart3, Bot, BrainCircuit, ChevronLeft, ChevronRight, Code2, Download,
   FileText, Globe2, Handshake, Mail, MapPin, MessageCircleMore, Orbit, Phone,
-  ScanSearch, Settings2, Sparkles, UsersRound, Workflow, Zap,
+  ScanSearch, Settings2, Sparkles, UsersRound, Zap,
 } from "lucide-react"
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTiktok, FaWhatsapp } from "react-icons/fa6"
-import { SiNextdotjs, SiPython, SiReact, SiStripe } from "react-icons/si"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useGSAP } from "@gsap/react"
@@ -16,12 +15,13 @@ import FloatingChat from "@/components/floating-chat"
 import MorbiaReviewsExplorer from "@/components/morbia-reviews-explorer"
 import AnalyticsLink from "@/components/analytics-link"
 import SiteHeader from "@/components/site-header"
+import HomeHorizontalStory from "@/components/home-horizontal-story"
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 const navItems = [
   ["Inicio", "inicio"], ["Nosotros", "nosotros"], ["Servicios", "servicios"],
-  ["Tecnologías", "tecnologias"], ["NexaCV", "nexacv"], ["Clientes", "clientes"],
+  ["NexaCV", "nexacv"], ["Clientes", "clientes"],
 ] as const
 
 const services = [
@@ -33,15 +33,6 @@ const services = [
   { icon: BarChart3, title: "Análisis de datos", href: "/servicios/analisis-de-datos", detail: "Transformamos información dispersa en una lectura clara de lo que está funcionando, dónde está la oportunidad y qué decisión vale la pena tomar después.", result: "Ve con claridad hacia dónde crecer.", className: "lg:col-span-3" },
 ] as const
 
-function OpenAILogo({ className }: { className?: string }) {
-  return <Image src="/images/openai.svg" alt="" width={48} height={48} className={className} />
-}
-
-const technologyIcons = [
-  ["React", SiReact], ["Next.js", SiNextdotjs], ["OpenAI", OpenAILogo],
-  ["Stripe", SiStripe], ["Power Automate", Workflow], ["Python", SiPython],
-] as const
-
 const principles = [
   { icon: UsersRound, number: "01", title: "Enfoque en personas", text: "La tecnología tiene más sentido cuando mejora la vida de las personas." },
   { icon: Settings2, number: "02", title: "Soluciones a medida", text: "Cada negocio es único; por eso creamos soluciones que se adaptan a ti." },
@@ -50,7 +41,7 @@ const principles = [
 ] as const
 
 const clientLogos = [
-  { src: "/images/sosadelbosque.png", alt: "Sosa del Bosque", href: "https://grupo.sosadelbosque.mx/", logoClass: "scale-100", surfaceClass: "bg-[#f7fcfd]" },
+  { src: "/images/sosadelbosque.png", alt: "Sosa del Bosque", href: "https://grupo.sosadelbosque.mx/", logoClass: "scale-100 translate-y-1", surfaceClass: "bg-[#f7fcfd]" },
   { src: "/images/grupo_morales_consultores.png", alt: "Grupo Morales Consultores", href: "https://grupo-morales-consultores.vercel.app/", logoClass: "scale-100", surfaceClass: "bg-[#f7fcfd]" },
   { src: "/images/sorteosramos369.png", alt: "Sorteos Ramos Tlaxcala", href: "https://www.sorteosramostlaxcala.vercel.app/", logoClass: "scale-100", surfaceClass: "bg-[#f7fcfd]" },
   { src: "/images/amanda.png", alt: "Amanda", href: "https://v0-amanda-oficial.vercel.app/", logoClass: "scale-100", surfaceClass: "bg-[#f7fcfd]" },
@@ -70,13 +61,15 @@ const socials = [
 
 export default function MorbiaWebsite() {
   const pageRef = useRef<HTMLElement>(null)
+  const clientCarouselRef = useRef<HTMLDivElement>(null)
+  const clientAutoTweenRef = useRef<gsap.core.Tween | null>(null)
+  const clientAutoResumeTimerRef = useRef<number | null>(null)
   useGSAP(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
 
     const select = gsap.utils.selector(pageRef)
     const hero = pageRef.current?.querySelector<HTMLElement>("[data-hero]")
     const aboutSection = pageRef.current?.querySelector<HTMLElement>("#nosotros")
-    const technologiesSection = pageRef.current?.querySelector<HTMLElement>("#tecnologias")
 
     gsap.from(select("[data-gsap-header]"), { autoAlpha: 0, y: -22, duration: 0.72, ease: "power3.out" })
     gsap.from(select("[data-hero-copy] > *"), { autoAlpha: 0, y: 28, duration: 0.76, stagger: 0.1, delay: 0.1, ease: "power3.out" })
@@ -103,8 +96,41 @@ export default function MorbiaWebsite() {
     gsap.set(select("[data-client-logo]"), { autoAlpha: 1 })
     ScrollTrigger.batch(select("[data-client-logo]"), {
       start: "top 86%",
-      onEnter: (elements) => gsap.from(elements, { y: 18, scale: 0.94, duration: 0.55, stagger: 0.08, ease: "power3.out", overwrite: true }),
+      onEnter: (elements) => gsap.from(elements, { autoAlpha: 0, duration: 0.55, stagger: 0.08, ease: "power3.out", overwrite: true }),
     })
+    ScrollTrigger.batch(select("[data-service-card]"), {
+      start: "top 86%",
+      onEnter: (elements) => {
+        gsap.from(elements, { y: 34, autoAlpha: 0, scale: 0.97, duration: 0.72, stagger: 0.1, ease: "power3.out", overwrite: true })
+        elements.forEach((element, index) => {
+          const icon = element.querySelector<HTMLElement>("[data-service-icon]")
+          if (icon) gsap.from(icon, { scale: 0.72, rotation: -12, duration: 0.6, delay: index * 0.1 + 0.12, ease: "back.out(1.7)", overwrite: true })
+        })
+      },
+    })
+
+    const carousel = clientCarouselRef.current
+    const carouselTrack = carousel?.querySelector<HTMLElement>(".client-carousel-track")
+    if (carousel && carouselTrack && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const getLoopDistance = () => {
+        const first = carouselTrack.children.item(0)
+        const firstClone = carouselTrack.children.item(clientLogos.length)
+        if (!(first instanceof HTMLElement) || !(firstClone instanceof HTMLElement)) return 0
+        return firstClone.offsetLeft - first.offsetLeft
+      }
+
+      clientAutoTweenRef.current = gsap.to(carousel, {
+        scrollLeft: getLoopDistance,
+        duration: 38,
+        ease: "none",
+        repeat: -1,
+        repeatRefresh: true,
+        onRepeat: () => { carousel.scrollLeft = 0 },
+        paused: true,
+      })
+      clientAutoTweenRef.current.play()
+      carousel.classList.add("client-carousel-autoplay")
+    }
 
     if (aboutSection) {
       gsap.from(select("[data-about-principle]"), {
@@ -134,10 +160,14 @@ export default function MorbiaWebsite() {
     const media = gsap.matchMedia()
     media.add("(min-width: 1024px)", () => {
       if (hero) gsap.to(select("[data-hero-orbit]"), { x: 82, y: -44, scale: 1.12, rotation: 46, ease: "none", scrollTrigger: { trigger: hero, start: "top 94%", end: "bottom 16%", scrub: 0.7 } })
-      if (technologiesSection) gsap.to(select("[data-tech-logo]"), { y: -8, duration: 1.8, stagger: 0.12, yoyo: true, repeat: -1, ease: "sine.inOut", scrollTrigger: { trigger: technologiesSection, start: "top 78%", once: true } })
     })
 
-    return () => media.revert()
+    return () => {
+      media.revert()
+      clientAutoTweenRef.current?.kill()
+      clientAutoTweenRef.current = null
+      if (clientAutoResumeTimerRef.current !== null) window.clearTimeout(clientAutoResumeTimerRef.current)
+    }
   }, { scope: pageRef })
 
   const goTo = (id: string) => {
@@ -146,6 +176,57 @@ export default function MorbiaWebsite() {
       content_id: `section:${id}`,
     })
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
+
+  const scrollClients = (direction: -1 | 1) => {
+    const carousel = clientCarouselRef.current
+    if (!carousel) return
+    clientAutoTweenRef.current?.pause()
+    carousel.classList.remove("client-carousel-autoplay")
+    if (clientAutoResumeTimerRef.current !== null) window.clearTimeout(clientAutoResumeTimerRef.current)
+    carousel.scrollBy({
+      left: direction * Math.max(280, carousel.clientWidth * 0.8),
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+    })
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      clientAutoResumeTimerRef.current = window.setTimeout(() => {
+        const track = carousel.querySelector<HTMLElement>(".client-carousel-track")
+        const first = track?.children.item(0)
+        const firstClone = track?.children.item(clientLogos.length)
+        const loopDistance = first instanceof HTMLElement && firstClone instanceof HTMLElement
+          ? firstClone.offsetLeft - first.offsetLeft
+          : 0
+        if (loopDistance > 0) carousel.scrollLeft %= loopDistance
+        carousel.classList.add("client-carousel-autoplay")
+        clientAutoTweenRef.current?.invalidate().restart()
+        clientAutoResumeTimerRef.current = null
+      }, 4500)
+    }
+  }
+
+  const pauseClientAutoplay = () => {
+    if (clientAutoResumeTimerRef.current !== null) window.clearTimeout(clientAutoResumeTimerRef.current)
+    clientAutoResumeTimerRef.current = null
+    clientAutoTweenRef.current?.pause()
+    clientCarouselRef.current?.classList.remove("client-carousel-autoplay")
+  }
+
+  const resumeClientAutoplaySoon = () => {
+    if (!clientAutoTweenRef.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    if (clientAutoResumeTimerRef.current !== null) window.clearTimeout(clientAutoResumeTimerRef.current)
+    clientAutoResumeTimerRef.current = window.setTimeout(() => {
+      const carousel = clientCarouselRef.current
+      const track = carousel?.querySelector<HTMLElement>(".client-carousel-track")
+      const first = track?.children.item(0)
+      const firstClone = track?.children.item(clientLogos.length)
+      const loopDistance = first instanceof HTMLElement && firstClone instanceof HTMLElement
+        ? firstClone.offsetLeft - first.offsetLeft
+        : 0
+      if (carousel && loopDistance > 0) carousel.scrollLeft %= loopDistance
+      carousel?.classList.add("client-carousel-autoplay")
+      clientAutoTweenRef.current?.invalidate().restart()
+      clientAutoResumeTimerRef.current = null
+    }, 4500)
   }
 
   return (
@@ -176,6 +257,8 @@ export default function MorbiaWebsite() {
           </div>
         </div>
       </section>
+
+      <HomeHorizontalStory />
 
       <section id="nosotros" className="relative isolate scroll-mt-20 overflow-hidden bg-white py-20 lg:py-28">
         <div aria-hidden="true" className="absolute -left-36 top-20 h-80 w-80 rounded-full bg-[#48dcd5]/10 blur-3xl" />
@@ -227,7 +310,7 @@ export default function MorbiaWebsite() {
                 <div className="absolute -right-14 -top-14 h-40 w-40 rounded-full bg-[#1ae0d1]/10 blur-3xl" />
                 <div className="absolute inset-x-6 bottom-6">
                   <div className="flex items-center gap-3">
-                    <Icon className="shrink-0 text-[#57f2e5]" size={31} />
+                    <span data-service-icon className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-[#79eee3]/20 bg-[#1ae0d1]/10 text-[#57f2e5] transition duration-300 group-hover:-translate-y-1 group-hover:border-[#72e8df]/60 group-hover:bg-[#1ae0d1]/20"><Icon size={25} /></span>
                     <h3 className="text-xl font-bold text-white"><AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:title`} className="rounded hover:text-[#77f6eb]">{service.title}</AnalyticsLink></h3>
                   </div>
                   <div data-service-detail className="grid grid-rows-[0fr] opacity-0 transition-[grid-template-rows,opacity] duration-500 ease-out group-hover:grid-rows-[1fr] group-hover:opacity-100 group-focus-within:grid-rows-[1fr] group-focus-within:opacity-100">
@@ -243,8 +326,6 @@ export default function MorbiaWebsite() {
           </div>
         </div>
       </section>
-
-      <section id="tecnologias" className="scroll-mt-20 bg-[#eaf9fc] py-20 lg:py-28"><div className="mx-auto max-w-7xl px-5 lg:px-8"><div data-gsap-reveal className="max-w-2xl"><p className="text-sm font-bold tracking-[.14em] text-[#008eaa]">TECNOLOGÍAS</p><h2 className="mt-4 text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Tecnología que hace posible el mañana.</h2></div><div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">{technologyIcons.map(([name, Icon]) => <div data-gsap-reveal data-tech-logo key={name} className="flex min-h-36 flex-col items-center justify-center rounded-3xl bg-white p-5 text-[#07517d] shadow-sm ring-1 ring-[#d8eef3] transition hover:-translate-y-1 hover:shadow-lg"><Icon className="h-10 w-10" /><span className="mt-4 text-sm font-bold text-[#164967]">{name}</span></div>)}</div></div></section>
 
       <section id="nexacv" className="scroll-mt-20 overflow-hidden bg-white py-20 lg:py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 lg:grid-cols-[.92fr_1.08fr] lg:px-8">
@@ -267,9 +348,25 @@ export default function MorbiaWebsite() {
 
       <section className="bg-[#f1fbfd] py-12 lg:py-14"><div className="mx-auto max-w-7xl px-5 lg:px-8"><MorbiaReviewsExplorer /></div></section>
 
-      <section id="clientes" className="scroll-mt-20 overflow-hidden bg-[#eaf8fa] py-20 lg:py-28"><div className="mx-auto max-w-7xl px-5 lg:px-8"><div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end"><div><p className="text-sm font-bold tracking-[.14em] text-[#008eaa]">NUESTROS CLIENTES</p><h2 className="mt-4 text-4xl font-black tracking-[-.045em] sm:text-5xl">Empresas que confían en nosotros.</h2></div><p className="max-w-sm text-[#527082]">Construimos tecnología útil para organizaciones que quieren moverse con claridad.</p></div><div className="client-marquee mt-12 rounded-[2rem] border border-[#b9e2e7] bg-[linear-gradient(135deg,#073b61,#087c87)] shadow-[0_20px_50px_rgba(0,92,115,0.18)]" aria-label="Clientes de Morbia"><div className="client-marquee-track">{clientCarouselLogos.map((client, index) => { const isClone = index >= clientLogos.length; return <a data-client-logo key={`${client.alt}-${index}`} href={client.href} target="_blank" rel="noopener noreferrer" aria-hidden={isClone || undefined} tabIndex={isClone ? -1 : undefined} className={"group flex h-32 w-[15rem] shrink-0 items-center justify-center overflow-hidden rounded-3xl border p-4 shadow-[0_12px_28px_rgba(0,29,56,0.2)] transition hover:-translate-y-1 hover:border-[#61e1dc] hover:shadow-xl sm:w-[17rem] " + client.surfaceClass}><Image src={client.src} alt={isClone ? "" : client.alt} width={240} height={120} className={"h-24 w-full max-w-full object-contain transition duration-300 group-hover:scale-105 " + client.logoClass} /></a> })}</div></div></div></section>
+      <section id="clientes" className="scroll-mt-20 overflow-hidden bg-[#eaf8fa] py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-5 lg:px-8">
+          <div data-gsap-reveal className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
+            <div><p className="text-sm font-bold tracking-[.14em] text-[#008eaa]">NUESTROS CLIENTES</p><h2 className="mt-4 text-4xl font-black tracking-[-.045em] sm:text-5xl">Empresas que confían en nosotros.</h2></div>
+            <div className="flex items-center justify-between gap-4 lg:justify-end">
+              <p className="max-w-sm text-[#527082]">Construimos tecnología útil para organizaciones que quieren moverse con claridad.</p>
+              <div className="flex shrink-0 gap-2" role="group" aria-label="Controles de clientes">
+                <button type="button" onClick={() => scrollClients(-1)} aria-label="Ver clientes anteriores" className="grid h-11 w-11 place-items-center rounded-full border border-[#a9d6dd] bg-white/80 text-[#07517d] transition hover:border-[#138ba3] hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#087e92]"><ChevronLeft size={20} aria-hidden="true" /></button>
+                <button type="button" onClick={() => scrollClients(1)} aria-label="Ver más clientes" className="grid h-11 w-11 place-items-center rounded-full border border-[#a9d6dd] bg-white/80 text-[#07517d] transition hover:border-[#138ba3] hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#087e92]"><ChevronRight size={20} aria-hidden="true" /></button>
+              </div>
+            </div>
+          </div>
+          <div ref={clientCarouselRef} className="client-carousel mt-8 rounded-[2rem] border border-[#b9e2e7] bg-[linear-gradient(135deg,#073b61,#087c87)] shadow-[0_20px_50px_rgba(0,92,115,0.18)]" role="region" aria-label="Clientes de Morbia. Desliza para ver más." tabIndex={0} onPointerDown={pauseClientAutoplay} onPointerUp={resumeClientAutoplaySoon} onPointerCancel={resumeClientAutoplaySoon} onMouseEnter={pauseClientAutoplay} onMouseLeave={resumeClientAutoplaySoon} onWheel={() => { pauseClientAutoplay(); resumeClientAutoplaySoon() }} onFocus={pauseClientAutoplay} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) resumeClientAutoplaySoon() }}>
+            <div className="client-carousel-track">{clientCarouselLogos.map((client, index) => { const isClone = index >= clientLogos.length; return <a data-client-logo key={`${client.alt}-${index}`} href={client.href} target="_blank" rel="noopener noreferrer" aria-hidden={isClone || undefined} tabIndex={isClone ? -1 : undefined} className={"group flex h-32 w-[15rem] shrink-0 items-center justify-center overflow-hidden rounded-3xl border p-4 shadow-[0_12px_28px_rgba(0,29,56,0.2)] transition hover:-translate-y-1 hover:border-[#61e1dc] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#83f4e9] sm:w-[17rem] " + client.surfaceClass}><Image src={client.src} alt={isClone ? "" : client.alt} width={240} height={120} className={"h-24 w-full max-w-full object-contain transition duration-300 group-hover:scale-105 " + client.logoClass} /></a> })}</div>
+          </div>
+        </div>
+      </section>
 
-      <section id="contacto" className="morbia-diagonal relative scroll-mt-20 overflow-hidden py-20 text-white lg:py-24"><div className="absolute inset-0 bg-[#04345d]/84" /><div className="relative mx-auto flex max-w-7xl flex-col justify-between gap-10 px-5 lg:flex-row lg:items-center lg:px-8"><div className="max-w-2xl"><p className="text-sm font-bold tracking-[.14em] text-[#55f5e8]">HABLEMOS</p><h2 className="mt-4 text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Conversemos sobre tu próximo proyecto.</h2><p className="mt-5 text-lg text-white/75">Estamos listos para escuchar tus ideas y convertirlas en soluciones.</p><div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium text-white/85"><a href="mailto:contacto@morbia.com.mx" className="flex items-center gap-2 hover:text-[#62f7eb]"><Mail size={18} />contacto@morbia.com.mx</a><a href="tel:+522215268440" className="flex items-center gap-2 hover:text-[#62f7eb]"><Phone size={18} />(+52) 221 526 8440</a><span className="flex items-center gap-2"><MapPin size={18} />Ubicación: Puebla y Tlaxcala</span></div></div><a href="https://wa.me/522215268440" target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#138ba3] px-7 py-4 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Hablemos hoy <ArrowRight size={17} /></a></div></section>
+      <section id="contacto" className="morbia-diagonal relative scroll-mt-20 overflow-hidden py-20 text-white lg:py-24"><div className="absolute inset-0 bg-[#04345d]/84" /><div className="relative mx-auto flex max-w-7xl flex-col justify-between gap-10 px-5 lg:flex-row lg:items-center lg:px-8"><div data-gsap-reveal className="max-w-2xl"><p className="text-sm font-bold tracking-[.14em] text-[#55f5e8]">HABLEMOS</p><h2 className="mt-4 text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Conversemos sobre tu próximo proyecto.</h2><p className="mt-5 text-lg text-white/75">Estamos listos para escuchar tus ideas y convertirlas en soluciones.</p><div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium text-white/85"><a href="mailto:contacto@morbia.com.mx" className="flex items-center gap-2 hover:text-[#62f7eb]"><Mail size={18} />contacto@morbia.com.mx</a><a href="tel:+522215268440" className="flex items-center gap-2 hover:text-[#62f7eb]"><Phone size={18} />(+52) 221 526 8440</a><span className="flex items-center gap-2"><MapPin size={18} />Ubicación: Puebla y Tlaxcala</span></div></div><a data-gsap-reveal href="https://wa.me/522215268440" target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#138ba3] px-7 py-4 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Hablemos hoy <ArrowRight size={17} /></a></div></section>
 
       <footer className="bg-[#042b4d] py-12 text-white"><div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-[1fr_auto] lg:px-8"><div><Image src="/images/main-logo.png" alt="Morbia" width={170} height={55} className="h-10 w-auto brightness-0 invert" /><p className="mt-5 text-sm font-semibold tracking-[.12em] text-[#5eece3]">INTELIGENCIA ORBITANDO TUS PROCESOS</p><p className="mt-4 text-sm text-white/55">© 2026 Morbia. Todos los derechos reservados.</p></div><div className="md:text-right"><p className="text-sm font-bold text-white/75">Síguenos</p><div className="mt-4 flex gap-3 md:justify-end">{socials.map(([label, href, Icon]) => <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-[#27e3d5] hover:bg-[#19e0d0] hover:text-[#05335c]"><Icon size={17} /></a>)}</div><div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/60 md:justify-end">{navItems.slice(1).map(([label, id]) => <a key={id} href={`#${id}`} onClick={(event) => { event.preventDefault(); goTo(id) }} className="hover:text-white">{label}</a>)}</div></div></div></footer>
       <FloatingChat />

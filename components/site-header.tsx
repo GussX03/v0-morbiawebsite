@@ -11,7 +11,7 @@ import { serviceIcons } from "@/components/service-icons"
 
 const navigation = [
   ["Inicio", "inicio"], ["Nosotros", "nosotros"], ["Servicios", "servicios"],
-  ["Tecnologías", "tecnologias"], ["NexaCV", "nexacv"], ["Clientes", "clientes"],
+  ["NexaCV", "nexacv"], ["Clientes", "clientes"],
 ] as const
 
 type SectionId = (typeof navigation)[number][1]
