@@ -15,7 +15,7 @@ export const serviceStories: Record<string, ServiceStory> = {
   "presencia-digital": {
     headline: "Una presencia digital clara, de principio a fin.",
     summary: "Conecta SEO, Google Maps, redes sociales, fotografía, video y campañas para presentar tu negocio con coherencia y facilitar el contacto.",
-    imageAlt: "Contacto fácil de encontrar. Botón turquesa en una superficie de piedra clara",
+    imageAlt: "Pin de ubicación iluminado sobre un mapa oscuro con el mensaje: Pon tu empresa en el mapa digital",
     audience: "Para negocios que quieren explicar mejor lo que ofrecen, mantener sus canales al día y entender qué acciones acercan a sus clientes.",
     overview: [
       "Una persona puede descubrir tu negocio en Google, revisar el mapa, entrar a tus redes y consultar tu sitio antes de escribirte. Si los horarios cambian, las fotos ya no representan el lugar o cada canal cuenta algo distinto, le cuesta saber qué haces y cómo continuar.",
