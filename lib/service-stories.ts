@@ -53,7 +53,7 @@ export const serviceStories: Record<string, ServiceStory> = {
   chatbots: {
     headline: "Cada conversación merece una respuesta.",
     summary: "Ayuda a tus clientes a resolver dudas y dar el siguiente paso, incluso cuando tu equipo está ocupado.",
-    imageAlt: "Cada conversación merece respuesta. Composición Morbia de dos recipientes de cristal con reflejos turquesa",
+    imageAlt: "Atención con un siguiente paso. Una ruta turquesa conecta tres piezas sobre piedra clara",
     audience: "Para negocios que reciben consultas repetidas, atienden fuera de horario o quieren dar mejor seguimiento a sus oportunidades.",
     overview: [
       "Una persona pregunta por un servicio mientras tu equipo atiende una llamada. Otra escribe después del cierre. Al día siguiente hay mensajes pendientes, dudas repetidas y conversaciones cuyo contexto se ha perdido. Mantener una atención cercana se vuelve más difícil conforme crece el negocio.",
