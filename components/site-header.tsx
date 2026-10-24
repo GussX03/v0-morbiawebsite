@@ -17,6 +17,7 @@ const navigation = [
 type SectionId = (typeof navigation)[number][1]
 
 const serviceLabels = {
+  "presencia-digital": "Presencia digital",
   "paginas-web": "Páginas web",
   chatbots: "Chatbots con IA",
   "automatizacion-de-procesos": "Automatización de procesos",

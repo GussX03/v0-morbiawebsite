@@ -1,6 +1,7 @@
-import { BarChart3, Bot, BrainCircuit, Code2, MessageCircleMore, Zap } from "lucide-react"
+import { BarChart3, Bot, BrainCircuit, Code2, Megaphone, MessageCircleMore, Zap } from "lucide-react"
 
 export const serviceIcons = {
+  "presencia-digital": Megaphone,
   "paginas-web": Code2,
   chatbots: MessageCircleMore,
   "automatizacion-de-procesos": Zap,

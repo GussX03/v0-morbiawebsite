@@ -1,3 +1,4 @@
+import presence from "@/public/images/services/presencia-digital.webp"
 import web from "@/public/images/services/paginas-web.webp"
 import chatbots from "@/public/images/services/chatbots.webp"
 import automation from "@/public/images/services/automatizacion-de-procesos.webp"
@@ -8,6 +9,7 @@ import data from "@/public/images/services/analisis-de-datos.webp"
 // Static imports produce content-hashed URLs. A changed image gets a new URL,
 // while unchanged artwork is shared across the catalog and detail pages.
 export const serviceImages = {
+  "presencia-digital": presence,
   "paginas-web": web,
   chatbots,
   "automatizacion-de-procesos": automation,

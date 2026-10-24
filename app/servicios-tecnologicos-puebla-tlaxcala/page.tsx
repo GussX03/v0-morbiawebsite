@@ -13,7 +13,7 @@ import { serviceImages } from "@/lib/service-images"
 
 export const metadata: Metadata = {
   title: "Servicios de tecnología en Puebla y Tlaxcala",
-  description: "Descubre cómo páginas web, chatbots con IA, automatización, RPA y datos pueden ayudar a tu negocio en Puebla y Tlaxcala a trabajar mejor.",
+  description: "Descubre presencia digital, SEO, Google Maps, páginas web, chatbots, automatización, RPA, inteligencia artificial y datos para tu negocio.",
   alternates: { canonical: "/servicios-tecnologicos-puebla-tlaxcala" },
   openGraph: {
     title: "Servicios de tecnología en Puebla y Tlaxcala | Morbia",
@@ -30,7 +30,7 @@ const schema = {
     {
       "@type": "CollectionPage", "@id": `${pageUrl}#webpage`, url: pageUrl,
       name: "Servicios de tecnología en Puebla y Tlaxcala",
-      description: "Capacidades de Morbia para empresas de Puebla y Tlaxcala: páginas web, chatbots, RPA, automatización, inteligencia artificial y análisis de datos.",
+      description: "Capacidades de Morbia para empresas de Puebla y Tlaxcala: presencia digital, SEO, Google Maps, páginas web, chatbots, RPA, automatización, inteligencia artificial y análisis de datos.",
       inLanguage: "es-MX", isPartOf: { "@id": `${siteUrl}/#website` }, about: { "@id": `${siteUrl}/#organization` },
       mainEntity: { "@type": "ItemList", numberOfItems: regionalServiceGroups.length, itemListElement: regionalServiceGroups.map((service, index) => ({ "@type": "ListItem", position: index + 1, name: service.title, url: `${siteUrl}/servicios/${service.slug}` })) },
       mentions: { "@type": "ItemList", name: "Capacidades de los servicios de Morbia", numberOfItems: regionalCapabilities.length, itemListElement: regionalCapabilities.map((name, index) => ({ "@type": "ListItem", position: index + 1, name })) },
@@ -40,7 +40,8 @@ const schema = {
 }
 
 const needs = [
-  { title: "Quiero que más personas entiendan lo que ofrezco", text: "Una presencia digital que presente tu negocio con claridad y facilite el contacto.", slug: "paginas-web", label: "Páginas web" },
+  { title: "Quiero que mi negocio sea más fácil de encontrar", text: "Conecta el SEO, Google Maps, las redes y el contenido visual en una estrategia con prioridades claras.", slug: "presencia-digital", label: "Presencia digital" },
+  { title: "Quiero renovar mi sitio o crear una herramienta", text: "Diseña un sitio, portal o aplicación que explique tus servicios y organice solicitudes.", slug: "paginas-web", label: "Páginas web" },
   { title: "Quiero responder mejor a mis clientes", text: "Un primer punto de atención para orientar consultas y darles un siguiente paso.", slug: "chatbots", label: "Chatbots" },
   { title: "Quiero recuperar tiempo para mi equipo", text: "Revisa qué tareas, aprobaciones y seguimientos podrían avanzar con menos esfuerzo manual.", slug: "automatizacion-de-procesos", label: "Automatización" },
   { title: "Quiero ver con claridad qué está pasando", text: "Reúne la información que necesitas para hablar de prioridades y tomar decisiones.", slug: "analisis-de-datos", label: "Análisis de datos" },
@@ -70,7 +71,7 @@ export default function ServiciosTecnologicosPueblaTlaxcalaPage() {
 
         <section className="service-section" id="soluciones">
           <div className="service-container">
-            <div data-service-reveal className="max-w-3xl"><h2 className="service-heading">Seis formas de hacer más fácil tu día a día.</h2><p className="service-lead">Una web que explica mejor. Una conversación que sí avanza. Un proceso que deja de depender de recordatorios. Explora cada servicio y descubre dónde puede ayudar a tu negocio.</p></div>
+            <div data-service-reveal className="max-w-3xl"><h2 className="service-heading">Siete formas de hacer más fácil tu día a día.</h2><p className="service-lead">Una presencia digital coherente, una web que explica mejor, una conversación que sí avanza y procesos que dependen menos de recordatorios. Explora dónde puede ayudar cada servicio.</p></div>
             <nav aria-label="Explorar servicios" className="mt-8 flex flex-wrap gap-2">
               {regionalServiceGroups.map((group) => <a key={group.slug} href={`#${group.slug}`} className="rounded-full border border-[#badce3] bg-[#edf8fa] px-4 py-2.5 text-sm font-semibold text-[#175879] transition hover:border-[#08718a] hover:bg-[#dff3f5]">{group.title}</a>)}
             </nav>

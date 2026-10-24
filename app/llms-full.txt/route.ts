@@ -2,9 +2,12 @@ const content = `# Morbia: referencia pública
 
 ## Identidad
 
-Morbia crea soluciones tecnológicas para empresas. Su propuesta incluye páginas y aplicaciones web, chatbots, automatización de procesos, RPA, inteligencia artificial y análisis de datos. Se ubica en Puebla y Tlaxcala, México y trabaja con empresas estén donde estén.
+Morbia crea soluciones tecnológicas y de presencia digital para empresas. Su propuesta incluye SEO, gestión de redes sociales, fotografía y video, Perfil de Empresa en Google para negocios elegibles, campañas digitales, páginas y aplicaciones web, chatbots, automatización de procesos, RPA, inteligencia artificial y análisis de datos. Se ubica en Puebla y Tlaxcala, México y trabaja con empresas estén donde estén.
 
 ## Servicios
+
+### Presencia digital
+Morbia ayuda a coordinar la presencia de un negocio en su sitio web, buscadores, Google Maps y redes sociales. El alcance puede incluir SEO técnico, local y de contenido; creación o mejora del Perfil de Empresa en Google para negocios que cumplan los requisitos de elegibilidad; planificación y gestión de contenido social; fotografía y producción de video; campañas en Google Ads y Meta; y medición con las herramientas disponibles, como GA4, Search Console, estadísticas del perfil y las plataformas publicitarias. El cliente conserva la propiedad de sus cuentas, aprueba el contenido y cubre por separado la inversión publicitaria. Morbia no garantiza posiciones ni citas en buscadores o asistentes de IA.
 
 ### Aplicaciones web
 Morbia diseña plataformas para que equipos y clientes trabajen con procesos claros y preparados para crecer.
@@ -23,6 +26,7 @@ Morbia transforma información dispersa en lecturas claras sobre operación, opo
 
 ## Páginas de servicio
 
+- Presencia digital para empresas: https://www.morbia.com.mx/servicios/presencia-digital
 - Páginas web y aplicaciones: https://www.morbia.com.mx/servicios/paginas-web
 - Chatbots con inteligencia artificial: https://www.morbia.com.mx/servicios/chatbots
 - Automatización de procesos: https://www.morbia.com.mx/servicios/automatizacion-de-procesos

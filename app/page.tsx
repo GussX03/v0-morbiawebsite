@@ -4,7 +4,7 @@ import { useRef } from "react"
 import Image from "next/image"
 import {
   ArrowRight, BarChart3, Bot, BrainCircuit, ChevronLeft, ChevronRight, Code2, Download,
-  FileText, Globe2, Handshake, Mail, MapPin, MessageCircleMore, Orbit, Phone,
+  FileText, Globe2, Handshake, Mail, MapPin, Megaphone, MessageCircleMore, Orbit, Phone,
   ScanSearch, Settings2, Sparkles, UsersRound, Zap,
 } from "lucide-react"
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTiktok, FaWhatsapp } from "react-icons/fa6"
@@ -26,6 +26,7 @@ const navItems = [
 
 const services = [
   { icon: Code2, title: "Aplicaciones web", href: "/servicios/paginas-web", detail: "Una plataforma que se siente hecha para tu negocio: clara para tu equipo, útil para tus clientes y preparada para crecer sin volver a empezar.", result: "Tu operación, en un solo lugar.", className: "lg:col-span-5" },
+  { icon: Megaphone, title: "Presencia digital", href: "/servicios/presencia-digital", detail: "Alinea tu sitio, Google, Maps y redes con contenido, fotografía, video y campañas que puedas medir.", result: "Una presencia coherente. Decisiones con datos.", cardClassName: "lg:col-start-2" },
   { icon: MessageCircleMore, title: "Chatbots", href: "/servicios/chatbots", detail: "Convierte cada mensaje en una oportunidad. Tu negocio responde, orienta y acompaña a tus clientes incluso cuando tu equipo está ocupado.", result: "Atención que nunca deja esperando.", className: "lg:col-span-3" },
   { icon: Zap, title: "Automatizaciones", href: "/servicios/automatizacion-de-procesos", detail: "Conecta tareas que hoy consumen horas y deja que los procesos avancen con menos seguimiento manual. Diseñamos flujos para liberar tiempo en las tareas repetitivas de tu equipo.", result: "Menos tareas. Más capacidad para crecer.", className: "lg:col-span-4" },
   { icon: Bot, title: "RPA", href: "/servicios/rpa", detail: "Haz que las tareas manuales y repetitivas sucedan con precisión, todos los días. Tu equipo puede enfocarse en clientes, estrategia y decisiones que sí mueven el negocio.", result: "Tu equipo vuelve a lo importante.", className: "lg:col-span-4" },
@@ -240,7 +241,7 @@ export default function MorbiaWebsite() {
           <div data-hero-copy className="max-w-2xl">
             <p className="mb-5 text-sm font-bold tracking-[.17em] text-[#52f3e7]">TECNOLOGÍA QUE IMPULSA PERSONAS</p>
             <h1 className="max-w-xl text-5xl font-black leading-[.96] tracking-[-.055em] sm:text-6xl lg:text-7xl">Inteligencia orbitando <span className="text-[#27e3d5]">tus procesos.</span></h1>
-            <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/80">Creamos páginas web, chatbots, automatizaciones e inteligencia artificial para que tu negocio opere con más claridad. Nos ubicamos en Puebla y Tlaxcala y te acompañamos estés donde estés.</p>
+            <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/80">Creamos páginas web, presencia digital, chatbots, automatizaciones e inteligencia artificial para que tu negocio opere con más claridad. Nos ubicamos en Puebla y Tlaxcala y te acompañamos estés donde estés.</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <button onClick={() => goTo("servicios")} className="inline-flex items-center justify-center gap-2 rounded-full bg-[#138ba3] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Explorar soluciones <ArrowRight size={17} /></button>
               <button onClick={() => goTo("nexacv")} className="inline-flex items-center justify-center gap-2 rounded-full border border-[#d7eeee] bg-white/10 px-6 py-4 text-sm font-bold text-[#e8fffb] transition hover:-translate-y-0.5 hover:bg-[#0a668b] hover:text-white">Conoce NexaCV <ChevronRight size={17} /></button>
@@ -300,13 +301,14 @@ export default function MorbiaWebsite() {
           <div data-gsap-reveal className="max-w-3xl">
             <p className="text-sm font-bold tracking-[.14em] text-[#52f3e7]">NUESTROS SERVICIOS</p>
             <h2 className="mt-4 text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Soluciones tecnológicas para un mundo en evolución.</h2>
-            <p className="mt-5 text-lg leading-relaxed text-white/75">Donde esté tu negocio, conectamos páginas web, chatbots, automatización, inteligencia artificial y datos para atender mejor y trabajar con más claridad.</p>
+            <p className="mt-5 text-lg leading-relaxed text-white/75">Donde esté tu negocio, conectamos presencia digital, páginas web, chatbots, automatización, inteligencia artificial y datos para atender mejor y trabajar con más claridad.</p>
             <AnalyticsLink href="/servicios-tecnologicos-puebla-tlaxcala" contentId="regional-services:home" className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#73f7eb] transition hover:text-white">Explora todas nuestras soluciones <ArrowRight size={16} /></AnalyticsLink>
           </div>
           <div data-services-track className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {services.map((service) => {
               const Icon = service.icon
-              return <article data-service-card key={service.title} className="group relative h-[370px] overflow-hidden rounded-3xl border border-[#79eee3]/20 bg-[linear-gradient(145deg,rgba(7,73,111,.9),rgba(4,53,92,.78))] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,.1)] backdrop-blur-sm transition-colors duration-300 hover:border-[#72e8df]/60 hover:bg-[linear-gradient(145deg,rgba(8,89,125,.94),rgba(4,58,94,.86))] focus-within:border-[#72e8df]/60 sm:h-[340px]">
+              const cardGridClass = "cardClassName" in service ? service.cardClassName : ""
+              return <article data-service-card key={service.title} className={`group relative h-[370px] overflow-hidden rounded-3xl border border-[#79eee3]/20 bg-[linear-gradient(145deg,rgba(7,73,111,.9),rgba(4,53,92,.78))] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,.1)] backdrop-blur-sm transition-colors duration-300 hover:border-[#72e8df]/60 hover:bg-[linear-gradient(145deg,rgba(8,89,125,.94),rgba(4,58,94,.86))] focus-within:border-[#72e8df]/60 sm:h-[340px] ${cardGridClass}`}>
                 <div className="absolute -right-14 -top-14 h-40 w-40 rounded-full bg-[#1ae0d1]/10 blur-3xl" />
                 <div className="absolute inset-x-6 bottom-6">
                   <div className="flex items-center gap-3">

@@ -12,10 +12,52 @@ export type ServiceStory = {
 }
 
 export const serviceStories: Record<string, ServiceStory> = {
+  "presencia-digital": {
+    headline: "Una presencia digital clara, de principio a fin.",
+    summary: "Conecta SEO, Google Maps, redes sociales, fotografía, video y campañas para presentar tu negocio con coherencia y facilitar el contacto.",
+    imageAlt: "Contacto fácil de encontrar. Botón turquesa en una superficie de piedra clara",
+    audience: "Para negocios que quieren explicar mejor lo que ofrecen, mantener sus canales al día y entender qué acciones acercan a sus clientes.",
+    overview: [
+      "Una persona puede descubrir tu negocio en Google, revisar el mapa, entrar a tus redes y consultar tu sitio antes de escribirte. Si los horarios cambian, las fotos ya no representan el lugar o cada canal cuenta algo distinto, le cuesta saber qué haces y cómo continuar.",
+      "Morbia revisa esos puntos y propone un plan que puede incluir SEO, Perfil de Empresa en Google para negocios elegibles, gestión de redes sociales, fotografía y video, campañas de Google o Meta y medición. El alcance, los canales y el calendario se acuerdan de acuerdo con tus objetivos y recursos.",
+    ],
+    signals: [
+      { title: "Cada canal presenta una versión distinta", text: "Los servicios, horarios, imágenes o formas de contacto no coinciden entre tu sitio, Google y redes sociales." },
+      { title: "Publicar se vuelve una tarea de último momento", text: "No hay una planificación de contenido y cuesta mostrar con continuidad lo que hace valioso a tu negocio." },
+      { title: "Hay actividad, pero no claridad sobre qué funciona", text: "Las visitas, mensajes y campañas se revisan por separado, sin una lectura común de las acciones importantes." },
+    ],
+    solutions: [
+      { title: "Auditoría y estrategia por canales", text: "Revisamos cómo te encuentran, qué información reciben y qué necesita lograr cada canal. Priorizamos mejoras realistas en vez de abrir perfiles o campañas sin un objetivo claro." },
+      { title: "SEO para buscadores y respuestas de IA", text: "Mejoramos la base técnica y el contenido de tu sitio para que explique con claridad tus servicios y pueda ser rastreado. Una estrategia útil también organiza la información para que los buscadores y asistentes entiendan mejor el contexto, sin fórmulas ni promesas de posición." },
+      { title: "Perfil de Empresa en Google y Maps", text: "Ayudamos a crear o reclamar el perfil, completar datos, categorías, horarios, enlaces, fotos y publicaciones, y responder a reseñas reales sin comprar opiniones ni incentivar calificaciones. Google limita estos perfiles a negocios elegibles; trabajamos con invitaciones de acceso y el negocio conserva la propiedad de su cuenta." },
+      { title: "Redes sociales con una línea editorial", text: "Definimos los canales, temas, tono, calendario, textos y piezas que tienen sentido para tu audiencia. La publicación y la atención de comentarios o mensajes se acuerdan dentro del alcance de cada proyecto." },
+      { title: "Fotografía y producción de video", text: "Planeamos imágenes de tus espacios, productos, servicios y equipo, además de videos cortos para redes o campañas. Los formatos y entregables se definen antes de cada producción." },
+      { title: "Campañas y medición de resultados", text: "Configuramos y optimizamos campañas en Google Ads o Meta, con objetivos, anuncios y seguimiento acordados. La inversión publicitaria se paga por separado a cada plataforma; con acceso autorizado revisamos Search Console, GA4, estadísticas del perfil y los paneles de anuncios." },
+    ],
+    example: {
+      title: "De canales separados a una ruta fácil de seguir.",
+      context: "Imagina un negocio de servicios que recibe preguntas desde Google, su sitio y varias redes sociales.",
+      before: "Cada perfil tiene horarios o descripciones distintas. Las fotos no muestran el servicio actual y el equipo no sabe qué publicaciones llevan a llamadas o solicitudes.",
+      after: "La información se revisa y ordena, las publicaciones siguen una línea común y las campañas se miden con eventos acordados. El equipo obtiene una base más clara para ajustar su siguiente paso.",
+    },
+    benefits: [
+      { title: "Una marca coherente en sus canales", text: "Tu negocio explica sus servicios y formas de contacto de manera consistente en los puntos donde las personas te buscan." },
+      { title: "Contenido visual propio y útil", text: "Fotos y videos muestran lo que realmente ofreces y pueden adaptarse a tus páginas, perfiles y campañas." },
+      { title: "Mejor criterio para priorizar", text: "Los datos disponibles ayudan a distinguir qué canales reciben atención y qué vale la pena probar después." },
+    ],
+    questions: [
+      { question: "¿Pueden garantizar que mi negocio aparezca primero en Google o en una respuesta de IA?", answer: "No. Google explica que la visibilidad local depende de factores como relevancia, distancia y notoriedad, y ningún proveedor puede comprar una mejor posición orgánica. En buscadores y asistentes trabajamos la información, el sitio y la medición, pero la inclusión y el orden dependen de sistemas externos." },
+      { question: "¿Cualquier negocio puede tener un perfil en Google Maps?", answer: "No. Google exige que los negocios elegibles tengan contacto presencial con sus clientes durante el horario declarado. Revisamos las reglas vigentes antes de solicitar o modificar un perfil y no creamos ubicaciones que no existen." },
+      { question: "¿Las cuentas y los perfiles quedan a nombre de Morbia?", answer: "No. El negocio conserva la propiedad de sus cuentas. Para trabajar usamos los permisos de administrador o colaborador que correspondan, sin pedir que compartas contraseñas." },
+      { question: "¿Ustedes toman las fotos y producen los videos?", answer: "Sí, cuando la producción forma parte del alcance acordado. Definimos qué contenido se necesita, dónde se realizará, los formatos y las entregas antes de programar la sesión." },
+      { question: "¿El presupuesto de anuncios está incluido?", answer: "No. Los honorarios de planeación y gestión se especifican por separado de la inversión que el cliente autoriza y paga a Google, Meta u otra plataforma." },
+      { question: "¿Cómo sabré si la estrategia funciona?", answer: "Acordamos los indicadores y, con tu autorización, revisamos el desempeño orgánico en Search Console y las visitas o acciones medibles en GA4, el perfil de Google y los paneles de anuncios. El detalle depende de los permisos y de que la medición esté configurada correctamente." },
+    ],
+  },
   "paginas-web": {
     headline: "Tu web, trabajando para tu negocio.",
     summary: "Una página que explica tu valor, genera confianza y facilita que el siguiente cliente dé el primer paso.",
-    imageAlt: "Antes del código, el proceso. Pieza de Morbia con hilos azules y turquesa conectados",
+    imageAlt: "Una página abre camino. Entrada de piedra clara hacia un jardín iluminado",
     audience: "Para negocios que quieren presentar mejor lo que hacen y empresas que necesitan ordenar su atención en línea.",
     overview: [
       "Tu página suele ser el primer encuentro con alguien que todavía no te conoce. Si la información está desactualizada, cuesta encontrar un servicio o desde el celular es difícil contactarte, esa persona puede irse sin saber lo que tu negocio realmente ofrece.",
@@ -91,7 +133,7 @@ export const serviceStories: Record<string, ServiceStory> = {
   "automatizacion-de-procesos": {
     headline: "Que el trabajo avance sin perseguirlo.",
     summary: "Conecta tareas, avisos y seguimientos para que tu equipo recupere tiempo y tenga claro qué sigue.",
-    imageAlt: "¿Dónde se detiene el proceso? Pieza de Morbia con un pasillo y puertas abiertas",
+    imageAlt: "Avisos que sostienen el avance. Tres canales en una pared de piedra con una pieza turquesa",
     audience: "Para equipos que dependen de recordatorios, capturas repetidas y seguimientos manuales para que la operación avance.",
     overview: [
       "Una solicitud llega por correo, alguien la copia en una hoja, otra persona pide una aprobación y después hay que recordar enviar el documento. Cada paso parece pequeño, pero juntos consumen atención y hacen que el proceso dependa de que nadie olvide nada.",
@@ -129,7 +171,7 @@ export const serviceStories: Record<string, ServiceStory> = {
   rpa: {
     headline: "Las tareas repetidas pueden pesar menos.",
     summary: "Deja las capturas y movimientos rutinarios en un recorrido organizado, y a tu equipo las decisiones que importan.",
-    imageAlt: "¿Y si algo se sale del plan? Pieza de Morbia con un hilo turquesa que rodea un obstáculo",
+    imageAlt: "Repite lo definido, con control. Piezas claras recorren un mecanismo circular sobre fondo oscuro",
     audience: "Para áreas administrativas y operativas que repiten los mismos pasos entre herramientas, documentos y sistemas.",
     overview: [
       "Cuando una persona pasa buena parte del día copiando datos, descargando archivos o actualizando registros, su experiencia queda atrapada en una tarea que se repite. Además, cualquier cambio, interrupción o dato inesperado puede obligarla a empezar otra vez.",
@@ -167,7 +209,7 @@ export const serviceStories: Record<string, ServiceStory> = {
   "inteligencia-artificial": {
     headline: "Tu conocimiento, más cerca de tu equipo.",
     summary: "Convierte documentos, preguntas y datos dispersos en ayuda útil para el trabajo de cada día.",
-    imageAlt: "Tecnología con propósito. Pieza de Morbia con una lente que enfoca una luz azul y turquesa",
+    imageAlt: "IA desde fuentes confiables. Paneles transparentes sobre una superficie azul oscuro",
     audience: "Para empresas que quieren usar inteligencia artificial en una necesidad concreta de atención, información o trabajo interno.",
     overview: [
       "En tu empresa ya existe mucho conocimiento: documentos, conversaciones, experiencia del equipo y respuestas que alguien ha preparado antes. El problema aparece cuando encontrar lo correcto toma demasiado tiempo o depende de preguntar siempre a la misma persona.",
@@ -205,7 +247,7 @@ export const serviceStories: Record<string, ServiceStory> = {
   "analisis-de-datos": {
     headline: "Ve lo importante. Decide con contexto.",
     summary: "Reúne la información de tu negocio en una lectura clara para saber dónde poner atención y qué hacer después.",
-    imageAlt: "Que cada paso deje rastro. Pieza de Morbia con una línea de seguimiento sobre cristal",
+    imageAlt: "Un indicador, una pregunta. Una esfera transparente sobre una placa turquesa",
     audience: "Para empresas que necesitan entender ventas, seguimiento y operación sin perseguir archivos ni preparar reportes desde cero.",
     overview: [
       "Vender, atender y operar genera información todos los días. Pero tener muchos datos no significa tener una respuesta clara: qué está avanzando, dónde se acumula trabajo o qué necesita atención antes de convertirse en un problema mayor.",

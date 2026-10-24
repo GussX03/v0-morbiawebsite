@@ -2,9 +2,22 @@ export const siteUrl = "https://www.morbia.com.mx"
 
 export const regionalServiceGroups = [
   {
+    slug: "presencia-digital",
+    title: "Presencia digital",
+    description: "SEO, Google Maps, contenido social y campañas para presentar tu negocio con coherencia y medir qué canales ayudan a conectar con tus clientes.",
+    capabilities: [
+      "Diagnóstico y estrategia de canales",
+      "SEO técnico, local y de contenidos, incluida visibilidad en respuestas de IA",
+      "Perfil de Empresa en Google, publicaciones y reseñas para negocios elegibles",
+      "Calendario y gestión de contenido en redes sociales",
+      "Fotografía y producción de video",
+      "Campañas de Google Ads y Meta Ads con medición y reportes",
+    ],
+  },
+  {
     slug: "paginas-web",
     title: "Páginas web y aplicaciones",
-    description: "Presencia digital y herramientas propias para que clientes y equipos encuentren lo que necesitan con claridad.",
+    description: "Sitios y herramientas propias para que clientes y equipos encuentren información, envíen solicitudes y trabajen con claridad.",
     capabilities: [
       "Sitios web corporativos",
       "Landing pages para campañas",
@@ -79,10 +92,18 @@ export const regionalCapabilities = regionalServiceGroups.flatMap((group) => gro
 
 export const servicePages = [
   {
+    slug: "presencia-digital",
+    title: "Presencia digital y marketing para empresas",
+    description: "Conecta SEO, Google Maps, redes sociales, fotografía, video y campañas para presentar tu negocio con coherencia y facilitar el contacto.",
+    intro: "La presencia digital reúne los lugares donde una persona descubre tu negocio, compara opciones y decide si quiere contactarte.",
+    focus: "Revisamos tu sitio, buscadores, perfil de Google y redes para priorizar SEO, contenido, fotografía y video o publicidad según tus objetivos y recursos.",
+    outcome: "Una presencia más coherente y una medición útil para decidir qué mejorar, sin prometer posiciones ni resultados fuera de nuestro control.",
+  },
+  {
     slug: "paginas-web",
     title: "Páginas web y aplicaciones web",
-    description: "Páginas web, portales y herramientas digitales para que tus clientes encuentren información clara y tu equipo opere con orden.",
-    intro: "Una presencia digital útil no se queda en verse bien: orienta a tus clientes, concentra información y abre camino a procesos más simples.",
+    description: "Sitios web, portales y herramientas digitales para que tus clientes entiendan tus servicios, encuentren información y envíen solicitudes claras.",
+    intro: "Tu sitio es el espacio propio donde explicas lo que haces, respondes dudas y ayudas a tus clientes a dar el siguiente paso.",
     focus: "Diseñamos desde sitios corporativos hasta herramientas propias que respetan la forma en que tu negocio ya trabaja y pueden evolucionar contigo.",
     outcome: "Una experiencia clara para tus clientes y un punto de partida más ordenado para tu operación.",
   },

@@ -10,10 +10,10 @@ const morbiaFont = Montserrat({ subsets: ["latin"], weight: ["400", "500", "600"
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Morbia | IA, chatbots y páginas web en Puebla y Tlaxcala",
+    default: "Morbia | Presencia digital, tecnología e IA en Puebla y Tlaxcala",
     template: "%s | Morbia",
   },
-  description: "Morbia crea páginas web, chatbots con IA, RPA, automatización de procesos, flujos de trabajo y análisis de datos para empresas en Puebla y Tlaxcala.",
+  description: "Marketing y presencia digital con SEO, Google Maps, redes, foto, video y campañas, además de páginas web, chatbots, inteligencia artificial y automatización.",
   keywords: [
     "servicios de tecnología en Puebla",
     "servicios de tecnología en Tlaxcala",
@@ -25,6 +25,9 @@ export const metadata: Metadata = {
     "inteligencia artificial Tlaxcala",
     "optimización de procesos Tlaxcala",
     "flujos de trabajo Tlaxcala",
+    "presencia digital",
+    "marketing digital",
+    "SEO local",
     "automatización de procesos",
     "inteligencia artificial para empresas",
   ],
@@ -47,8 +50,8 @@ export const metadata: Metadata = {
     locale: "es_MX",
     url: siteUrl,
     siteName: "Morbia",
-    title: "Morbia | Tecnología para empresas en Puebla y Tlaxcala",
-    description: "Páginas web, chatbots con IA, RPA, automatización de procesos y análisis de datos para empresas en Puebla y Tlaxcala.",
+    title: "Morbia | Presencia digital y tecnología para empresas",
+    description: "SEO, Google Maps, contenido para redes, foto, video, campañas, páginas web, chatbots, automatización, IA y análisis de datos.",
     images: [
       {
         url: "/images/morbia-diagonal-bg.jpg",
@@ -60,8 +63,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Morbia | Tecnología para empresas en Puebla y Tlaxcala",
-    description: "Páginas web, chatbots con IA, RPA, automatización de procesos y análisis de datos.",
+    title: "Morbia | Presencia digital y tecnología para empresas",
+    description: "SEO, Google Maps, redes sociales, fotografía, video, anuncios, páginas web, chatbots e inteligencia artificial.",
     images: ["/images/morbia-diagonal-bg.jpg"],
   },
   generator: "Morbia",
@@ -85,7 +88,7 @@ const organizationSchema = {
       name: "Morbia",
       url: siteUrl,
       logo: `${siteUrl}/images/main-logo.png`,
-      description: "Morbia crea páginas web, chatbots con IA, RPA, automatización de procesos, flujos de trabajo y análisis de datos para empresas en Puebla y Tlaxcala.",
+      description: "Morbia ofrece presencia digital, SEO, Google Maps, gestión de redes sociales, fotografía y video, campañas digitales y soluciones tecnológicas para empresas.",
       email: "contacto@morbia.com.mx",
       telephone: "+52-221-526-8440",
       address: {

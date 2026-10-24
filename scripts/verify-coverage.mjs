@@ -4,7 +4,7 @@ const base = process.argv[2] || "http://127.0.0.1:3000"
 const paths = [
   "/",
   "/servicios-tecnologicos-puebla-tlaxcala",
-  ...["paginas-web", "chatbots", "automatizacion-de-procesos", "rpa", "inteligencia-artificial", "analisis-de-datos"].map((slug) => `/servicios/${slug}`),
+  ...["presencia-digital", "paginas-web", "chatbots", "automatizacion-de-procesos", "rpa", "inteligencia-artificial", "analisis-de-datos"].map((slug) => `/servicios/${slug}`),
 ]
 
 function visibleText(html) {
