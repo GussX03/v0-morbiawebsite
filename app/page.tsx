@@ -25,14 +25,58 @@ const navItems = [
 ] as const
 
 const services = [
-  { icon: Code2, title: "Aplicaciones web", href: "/servicios/paginas-web", detail: "Una plataforma que se siente hecha para tu negocio: clara para tu equipo, útil para tus clientes y preparada para crecer sin volver a empezar.", result: "Tu operación, en un solo lugar.", className: "lg:col-span-5" },
-  { icon: Megaphone, title: "Presencia digital", href: "/servicios/presencia-digital", detail: "Alinea tu sitio, Google, Maps y redes con contenido, fotografía, video y campañas que puedas medir.", result: "Una presencia coherente. Decisiones con datos.", cardClassName: "lg:col-start-2" },
-  { icon: MessageCircleMore, title: "Chatbots", href: "/servicios/chatbots", detail: "Convierte cada mensaje en una oportunidad. Tu negocio responde, orienta y acompaña a tus clientes incluso cuando tu equipo está ocupado.", result: "Atención que nunca deja esperando.", className: "lg:col-span-3" },
-  { icon: Zap, title: "Automatizaciones", href: "/servicios/automatizacion-de-procesos", detail: "Conecta tareas que hoy consumen horas y deja que los procesos avancen con menos seguimiento manual. Diseñamos flujos para liberar tiempo en las tareas repetitivas de tu equipo.", result: "Menos tareas. Más capacidad para crecer.", className: "lg:col-span-4" },
-  { icon: Bot, title: "RPA", href: "/servicios/rpa", detail: "Haz que las tareas manuales y repetitivas sucedan con precisión, todos los días. Tu equipo puede enfocarse en clientes, estrategia y decisiones que sí mueven el negocio.", result: "Tu equipo vuelve a lo importante.", className: "lg:col-span-4" },
-  { icon: BrainCircuit, title: "Inteligencia artificial", href: "/servicios/inteligencia-artificial", detail: "Lleva respuestas, recomendaciones e ideas accionables al momento exacto. La inteligencia artificial deja de ser promesa y se convierte en una ventaja para decidir mejor.", result: "Decisiones más claras, cada día.", className: "lg:col-span-5" },
-  { icon: BarChart3, title: "Análisis de datos", href: "/servicios/analisis-de-datos", detail: "Transformamos información dispersa en una lectura clara de lo que está funcionando, dónde está la oportunidad y qué decisión vale la pena tomar después.", result: "Ve con claridad hacia dónde crecer.", className: "lg:col-span-3" },
+  { icon: Code2, title: "Aplicaciones web", href: "/servicios/paginas-web", detail: "Una plataforma que se siente hecha para tu negocio: clara para tu equipo, útil para tus clientes y preparada para crecer sin volver a empezar.", result: "Tu operación, en un solo lugar." },
+  { icon: Megaphone, title: "Presencia digital", href: "/servicios/presencia-digital", detail: "Alinea tu sitio, Google, Maps y redes con contenido, fotografía, video y campañas que puedas medir.", result: "Una presencia coherente. Decisiones con datos." },
+  { icon: MessageCircleMore, title: "Chatbots", href: "/servicios/chatbots", detail: "Convierte cada mensaje en una oportunidad. Tu negocio responde, orienta y acompaña a tus clientes incluso cuando tu equipo está ocupado.", result: "Atención que nunca deja esperando." },
+  { icon: Zap, title: "Automatizaciones", href: "/servicios/automatizacion-de-procesos", detail: "Conecta tareas que hoy consumen horas y deja que los procesos avancen con menos seguimiento manual. Diseñamos flujos para liberar tiempo en las tareas repetitivas de tu equipo.", result: "Menos tareas. Más capacidad para crecer." },
+  { icon: Bot, title: "RPA", href: "/servicios/rpa", detail: "Haz que las tareas manuales y repetitivas sucedan con precisión, todos los días. Tu equipo puede enfocarse en clientes, estrategia y decisiones que sí mueven el negocio.", result: "Tu equipo vuelve a lo importante." },
+  { icon: BrainCircuit, title: "Inteligencia artificial", href: "/servicios/inteligencia-artificial", detail: "Lleva respuestas, recomendaciones e ideas accionables al momento exacto. La inteligencia artificial deja de ser promesa y se convierte en una ventaja para decidir mejor.", result: "Decisiones más claras, cada día." },
+  { icon: BarChart3, title: "Análisis de datos", href: "/servicios/analisis-de-datos", detail: "Transformamos información dispersa en una lectura clara de lo que está funcionando, dónde está la oportunidad y qué decisión vale la pena tomar después.", result: "Ve con claridad hacia dónde crecer." },
 ] as const
+
+type HomeService = (typeof services)[number]
+
+const serviceGroups = [
+  {
+    id: "connect",
+    title: "Conecta con tus clientes",
+    description: "Presencia digital, páginas web y conversaciones que ayudan a explicar lo que haces y a dar el siguiente paso.",
+    services: services.slice(0, 3),
+  },
+  {
+    id: "operate",
+    title: "Haz que tu operación avance",
+    description: "Automatización, inteligencia artificial y datos para ordenar tareas y decidir con mejor contexto.",
+    services: services.slice(3),
+  },
+] as const
+
+function HomeServiceCard({ service }: { service: HomeService }) {
+  const Icon = service.icon
+
+  return (
+    <article data-service-card className="service-hover-card group relative flex flex-col justify-end overflow-hidden rounded-3xl border border-[#79eee3]/20 bg-[linear-gradient(145deg,rgba(7,73,111,.9),rgba(4,53,92,.78))] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,.1)] backdrop-blur-sm transition-colors duration-300 hover:border-[#72e8df]/60 hover:bg-[linear-gradient(145deg,rgba(8,89,125,.94),rgba(4,58,94,.86))] focus-within:border-[#72e8df]/60">
+      <div aria-hidden="true" className="pointer-events-none absolute -right-14 -top-14 h-40 w-40 rounded-full bg-[#1ae0d1]/10 blur-3xl" />
+      <div className="relative z-10 mt-auto">
+        <div className="flex items-center gap-3">
+          <span data-service-icon className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-[#79eee3]/20 bg-[#1ae0d1]/10 text-[#57f2e5] transition duration-300 group-hover:-translate-y-1 group-hover:border-[#72e8df]/60 group-hover:bg-[#1ae0d1]/20">
+            <Icon size={25} aria-hidden="true" />
+          </span>
+          <h4 className="text-xl font-bold text-white">
+            <AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:title`} className="rounded hover:text-[#77f6eb]">{service.title}</AnalyticsLink>
+          </h4>
+        </div>
+        <div data-service-detail className="service-hover-detail">
+          <div>
+            <p className="leading-relaxed text-white/80">{service.detail}</p>
+            <p className="mt-4 border-l-2 border-[#65eee1] pl-3 text-sm font-bold text-[#d9faf6]">{service.result}</p>
+            <AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:home`} className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-[#64f8ec]">Conoce este servicio <ArrowRight size={15} aria-hidden="true" /></AnalyticsLink>
+          </div>
+        </div>
+      </div>
+    </article>
+  )
+}
 
 const principles = [
   { icon: UsersRound, number: "01", title: "Enfoque en personas", text: "La tecnología tiene más sentido cuando mejora la vida de las personas." },
@@ -64,7 +108,43 @@ export default function MorbiaWebsite() {
   const pageRef = useRef<HTMLElement>(null)
   const clientCarouselRef = useRef<HTMLDivElement>(null)
   const clientAutoTweenRef = useRef<gsap.core.Tween | null>(null)
-  const clientAutoResumeTimerRef = useRef<number | null>(null)
+  const clientArrowTweenRef = useRef<gsap.core.Tween | null>(null)
+  const getClientLoopDistance = (carousel: HTMLElement) => {
+    const track = carousel.querySelector<HTMLElement>(".client-carousel-track")
+    const first = track?.children.item(0)
+    const firstClone = track?.children.item(clientLogos.length)
+    if (!(first instanceof HTMLElement) || !(firstClone instanceof HTMLElement)) return 0
+    return firstClone.offsetLeft - first.offsetLeft
+  }
+
+  const startClientAutoplay = (offset = 0) => {
+    const carousel = clientCarouselRef.current
+    if (!carousel) return
+    const loopDistance = getClientLoopDistance(carousel)
+    if (!loopDistance) return
+
+    const normalizedOffset = ((offset % loopDistance) + loopDistance) % loopDistance
+    carousel.scrollLeft = normalizedOffset
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    clientAutoTweenRef.current?.kill()
+    const progress = { value: 0 }
+    clientAutoTweenRef.current = gsap.to(progress, {
+      value: 1,
+      duration: 38,
+      ease: "none",
+      repeat: -1,
+      onUpdate: () => {
+        carousel.scrollLeft = (normalizedOffset + progress.value * loopDistance) % loopDistance
+      },
+      onRepeat: () => {
+        progress.value = 0
+        carousel.scrollLeft = normalizedOffset
+      },
+    })
+    carousel.classList.add("client-carousel-autoplay")
+  }
+
   useGSAP(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
 
@@ -110,28 +190,7 @@ export default function MorbiaWebsite() {
       },
     })
 
-    const carousel = clientCarouselRef.current
-    const carouselTrack = carousel?.querySelector<HTMLElement>(".client-carousel-track")
-    if (carousel && carouselTrack && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      const getLoopDistance = () => {
-        const first = carouselTrack.children.item(0)
-        const firstClone = carouselTrack.children.item(clientLogos.length)
-        if (!(first instanceof HTMLElement) || !(firstClone instanceof HTMLElement)) return 0
-        return firstClone.offsetLeft - first.offsetLeft
-      }
-
-      clientAutoTweenRef.current = gsap.to(carousel, {
-        scrollLeft: getLoopDistance,
-        duration: 38,
-        ease: "none",
-        repeat: -1,
-        repeatRefresh: true,
-        onRepeat: () => { carousel.scrollLeft = 0 },
-        paused: true,
-      })
-      clientAutoTweenRef.current.play()
-      carousel.classList.add("client-carousel-autoplay")
-    }
+    startClientAutoplay(0)
 
     if (aboutSection) {
       gsap.from(select("[data-about-principle]"), {
@@ -166,8 +225,9 @@ export default function MorbiaWebsite() {
     return () => {
       media.revert()
       clientAutoTweenRef.current?.kill()
+      clientArrowTweenRef.current?.kill()
       clientAutoTweenRef.current = null
-      if (clientAutoResumeTimerRef.current !== null) window.clearTimeout(clientAutoResumeTimerRef.current)
+      clientArrowTweenRef.current = null
     }
   }, { scope: pageRef })
 
@@ -182,52 +242,39 @@ export default function MorbiaWebsite() {
   const scrollClients = (direction: -1 | 1) => {
     const carousel = clientCarouselRef.current
     if (!carousel) return
-    clientAutoTweenRef.current?.pause()
+    const loopDistance = getClientLoopDistance(carousel)
+    const firstLogo = carousel.querySelector<HTMLElement>("[data-client-logo]")
+    if (!loopDistance || !firstLogo) return
+
+    clientAutoTweenRef.current?.kill()
+    clientArrowTweenRef.current?.kill()
     carousel.classList.remove("client-carousel-autoplay")
-    if (clientAutoResumeTimerRef.current !== null) window.clearTimeout(clientAutoResumeTimerRef.current)
-    carousel.scrollBy({
-      left: direction * Math.max(280, carousel.clientWidth * 0.8),
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-    })
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      clientAutoResumeTimerRef.current = window.setTimeout(() => {
-        const track = carousel.querySelector<HTMLElement>(".client-carousel-track")
-        const first = track?.children.item(0)
-        const firstClone = track?.children.item(clientLogos.length)
-        const loopDistance = first instanceof HTMLElement && firstClone instanceof HTMLElement
-          ? firstClone.offsetLeft - first.offsetLeft
-          : 0
-        if (loopDistance > 0) carousel.scrollLeft %= loopDistance
-        carousel.classList.add("client-carousel-autoplay")
-        clientAutoTweenRef.current?.invalidate().restart()
-        clientAutoResumeTimerRef.current = null
-      }, 4500)
+    const styles = window.getComputedStyle(carousel.querySelector<HTMLElement>(".client-carousel-track")!)
+    const gap = Number.parseFloat(styles.columnGap) || 0
+    const step = firstLogo.offsetWidth + gap
+    let current = carousel.scrollLeft
+    if (direction < 0 && current < step) {
+      current += loopDistance
+      carousel.scrollLeft = current
     }
-  }
+    const target = current + direction * step
 
-  const pauseClientAutoplay = () => {
-    if (clientAutoResumeTimerRef.current !== null) window.clearTimeout(clientAutoResumeTimerRef.current)
-    clientAutoResumeTimerRef.current = null
-    clientAutoTweenRef.current?.pause()
-    clientCarouselRef.current?.classList.remove("client-carousel-autoplay")
-  }
+    const continueAutoplay = () => startClientAutoplay(target)
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      carousel.scrollLeft = target
+      continueAutoplay()
+      return
+    }
 
-  const resumeClientAutoplaySoon = () => {
-    if (!clientAutoTweenRef.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
-    if (clientAutoResumeTimerRef.current !== null) window.clearTimeout(clientAutoResumeTimerRef.current)
-    clientAutoResumeTimerRef.current = window.setTimeout(() => {
-      const carousel = clientCarouselRef.current
-      const track = carousel?.querySelector<HTMLElement>(".client-carousel-track")
-      const first = track?.children.item(0)
-      const firstClone = track?.children.item(clientLogos.length)
-      const loopDistance = first instanceof HTMLElement && firstClone instanceof HTMLElement
-        ? firstClone.offsetLeft - first.offsetLeft
-        : 0
-      if (carousel && loopDistance > 0) carousel.scrollLeft %= loopDistance
-      carousel?.classList.add("client-carousel-autoplay")
-      clientAutoTweenRef.current?.invalidate().restart()
-      clientAutoResumeTimerRef.current = null
-    }, 4500)
+    clientArrowTweenRef.current = gsap.to(carousel, {
+      scrollLeft: target,
+      duration: 0.62,
+      ease: "power2.inOut",
+      onComplete: () => {
+        clientArrowTweenRef.current = null
+        continueAutoplay()
+      },
+    })
   }
 
   return (
@@ -304,27 +351,18 @@ export default function MorbiaWebsite() {
             <p className="mt-5 text-lg leading-relaxed text-white/75">Donde esté tu negocio, conectamos presencia digital, páginas web, chatbots, automatización, inteligencia artificial y datos para atender mejor y trabajar con más claridad.</p>
             <AnalyticsLink href="/servicios-tecnologicos-puebla-tlaxcala" contentId="regional-services:home" className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#73f7eb] transition hover:text-white">Explora todas nuestras soluciones <ArrowRight size={16} /></AnalyticsLink>
           </div>
-          <div data-services-track className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {services.map((service) => {
-              const Icon = service.icon
-              const cardGridClass = "cardClassName" in service ? service.cardClassName : ""
-              return <article data-service-card key={service.title} className={`group relative h-[370px] overflow-hidden rounded-3xl border border-[#79eee3]/20 bg-[linear-gradient(145deg,rgba(7,73,111,.9),rgba(4,53,92,.78))] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,.1)] backdrop-blur-sm transition-colors duration-300 hover:border-[#72e8df]/60 hover:bg-[linear-gradient(145deg,rgba(8,89,125,.94),rgba(4,58,94,.86))] focus-within:border-[#72e8df]/60 sm:h-[340px] ${cardGridClass}`}>
-                <div className="absolute -right-14 -top-14 h-40 w-40 rounded-full bg-[#1ae0d1]/10 blur-3xl" />
-                <div className="absolute inset-x-6 bottom-6">
-                  <div className="flex items-center gap-3">
-                    <span data-service-icon className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-[#79eee3]/20 bg-[#1ae0d1]/10 text-[#57f2e5] transition duration-300 group-hover:-translate-y-1 group-hover:border-[#72e8df]/60 group-hover:bg-[#1ae0d1]/20"><Icon size={25} /></span>
-                    <h3 className="text-xl font-bold text-white"><AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:title`} className="rounded hover:text-[#77f6eb]">{service.title}</AnalyticsLink></h3>
-                  </div>
-                  <div data-service-detail className="grid grid-rows-[0fr] opacity-0 transition-[grid-template-rows,opacity] duration-500 ease-out group-hover:grid-rows-[1fr] group-hover:opacity-100 group-focus-within:grid-rows-[1fr] group-focus-within:opacity-100">
-                    <div className="overflow-hidden">
-                      <p className="mt-4 leading-relaxed text-white/80">{service.detail}</p>
-                      <p className="mt-4 border-l-2 border-[#65eee1] pl-3 text-sm font-bold text-[#d9faf6]">{service.result}</p>
-                      <AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:home`} className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-[#64f8ec]">Conoce este servicio <ArrowRight size={15} /></AnalyticsLink>
-                    </div>
-                  </div>
+          <div className="mt-12 space-y-14">
+            {serviceGroups.map((group) => (
+              <div key={group.id}>
+                <div data-gsap-reveal className="mb-6 flex flex-col gap-2 border-l-2 border-[#3ee8db] pl-4 sm:mb-7 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
+                  <h3 className="text-2xl font-black tracking-[-.035em] text-white sm:text-3xl">{group.title}</h3>
+                  <p className="max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">{group.description}</p>
                 </div>
-              </article>
-            })}
+                <div data-services-track className={`grid gap-4 ${group.id === "connect" ? "md:grid-cols-3" : "md:grid-cols-2 xl:grid-cols-4"}`}>
+                  {group.services.map((service) => <HomeServiceCard key={service.title} service={service} />)}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -362,7 +400,7 @@ export default function MorbiaWebsite() {
               </div>
             </div>
           </div>
-          <div ref={clientCarouselRef} className="client-carousel mt-8 rounded-[2rem] border border-[#b9e2e7] bg-[linear-gradient(135deg,#073b61,#087c87)] shadow-[0_20px_50px_rgba(0,92,115,0.18)]" role="region" aria-label="Clientes de Morbia. Desliza para ver más." tabIndex={0} onPointerDown={pauseClientAutoplay} onPointerUp={resumeClientAutoplaySoon} onPointerCancel={resumeClientAutoplaySoon} onMouseEnter={pauseClientAutoplay} onMouseLeave={resumeClientAutoplaySoon} onWheel={() => { pauseClientAutoplay(); resumeClientAutoplaySoon() }} onFocus={pauseClientAutoplay} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) resumeClientAutoplaySoon() }}>
+          <div ref={clientCarouselRef} className="client-carousel mt-8 rounded-[2rem] border border-[#b9e2e7] bg-[linear-gradient(135deg,#073b61,#087c87)] shadow-[0_20px_50px_rgba(0,92,115,0.18)]" role="region" aria-label="Clientes de Morbia. Usa las flechas para recorrer los logotipos.">
             <div className="client-carousel-track">{clientCarouselLogos.map((client, index) => { const isClone = index >= clientLogos.length; return <a data-client-logo key={`${client.alt}-${index}`} href={client.href} target="_blank" rel="noopener noreferrer" aria-hidden={isClone || undefined} tabIndex={isClone ? -1 : undefined} className={"group flex h-32 w-[15rem] shrink-0 items-center justify-center overflow-hidden rounded-3xl border p-4 shadow-[0_12px_28px_rgba(0,29,56,0.2)] transition hover:-translate-y-1 hover:border-[#61e1dc] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#83f4e9] sm:w-[17rem] " + client.surfaceClass}><Image src={client.src} alt={isClone ? "" : client.alt} width={240} height={120} className={"h-24 w-full max-w-full object-contain transition duration-300 group-hover:scale-105 " + client.logoClass} /></a> })}</div>
           </div>
         </div>

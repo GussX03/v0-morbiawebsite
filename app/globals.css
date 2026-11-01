@@ -143,14 +143,10 @@
 
 .client-carousel {
   height: 12rem;
-  overflow-x: auto;
-  overscroll-behavior-inline: contain;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: 1rem;
-  scrollbar-color: rgb(118 205 210 / .85) rgb(3 54 84 / .35);
-  scrollbar-width: thin;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-x;
+  overflow: hidden;
+  overscroll-behavior: none;
+  scrollbar-width: none;
+  touch-action: pan-y;
 }
 
 .client-carousel-track {
@@ -162,8 +158,43 @@
   padding: 1rem;
 }
 
-.client-carousel-track > a { scroll-snap-align: center; }
-.client-carousel.client-carousel-autoplay { scroll-snap-type: none; }
+.client-carousel::-webkit-scrollbar { display: none; }
+
+.service-hover-card {
+  height: 24rem;
+}
+
+.service-hover-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  margin-top: 0;
+  opacity: 0;
+  transition: grid-template-rows .5s cubic-bezier(.2,.7,.3,1), margin-top .5s cubic-bezier(.2,.7,.3,1), opacity .3s ease;
+}
+
+.service-hover-card:hover .service-hover-detail,
+.service-hover-card:focus-within .service-hover-detail {
+  grid-template-rows: 1fr;
+  margin-top: 1rem;
+  opacity: 1;
+}
+
+@media (max-width: 767px) {
+  .service-hover-card {
+    height: auto;
+    min-height: 20rem;
+  }
+
+  .service-hover-detail {
+    grid-template-rows: 1fr;
+    margin-top: 1rem;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-hover-detail { transition: none; }
+}
 
 .home-story {
   min-height: 100svh;
