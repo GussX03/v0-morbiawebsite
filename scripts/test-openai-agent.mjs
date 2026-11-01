@@ -54,3 +54,36 @@ test("subscribes before sending a follow-up message", async () => {
     assert.ok(requests[1].init.headers["Idempotency-Key"])
   } finally { globalThis.fetch = originalFetch }
 })
+
+test("reports incremental text and reconciles the final text", async () => {
+  const originalFetch = globalThis.fetch
+  const updates = []
+  const sessions = []
+  globalThis.fetch = async (url) => url.includes("/vaults") ? vaultResponse(url) : stream(
+    { type: "agent.session.created", session: { id: "sess_test" } },
+    { type: "agent.session.turn.output_text.delta", item_id: "msg_1", delta: "¡Hola" },
+    { type: "agent.session.turn.output_text.delta", item_id: "msg_1", delta: "!" },
+    { type: "agent.session.turn.output_text.done", item_id: "msg_1", text: "¡Hola! ¿Cómo estás?" },
+    { type: "agent.session.turn.completed", turn: { subagent_id: null } },
+  )
+  try {
+    const result = await runAgentTurn({ ...options, onSession: (id) => sessions.push(id), onText: (text) => updates.push(text) })
+    assert.deepEqual(sessions, ["sess_test"])
+    assert.deepEqual(updates, ["¡Hola", "¡Hola!", "¡Hola! ¿Cómo estás?"])
+    assert.equal(result.text, "¡Hola! ¿Cómo estás?")
+  } finally { globalThis.fetch = originalFetch }
+})
+
+test("rejects an interrupted response rather than marking it complete", async () => {
+  const originalFetch = globalThis.fetch
+  const updates = []
+  globalThis.fetch = async (url) => url.includes("/vaults") ? vaultResponse(url) : stream(
+    { type: "agent.session.created", session: { id: "sess_test" } },
+    { type: "agent.session.turn.output_text.delta", delta: "Parcial" },
+    { type: "agent.session.turn.failed", turn: { subagent_id: null } },
+  )
+  try {
+    await assert.rejects(runAgentTurn({ ...options, onText: (text) => updates.push(text) }), /no pudo completar/)
+    assert.deepEqual(updates, ["Parcial"])
+  } finally { globalThis.fetch = originalFetch }
+})

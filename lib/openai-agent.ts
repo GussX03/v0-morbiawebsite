@@ -3,10 +3,19 @@ type AgentEvent = {
   session_id?: string
   session?: { id?: string }
   turn?: { subagent_id?: string | null }
+  item_id?: string
+  output_index?: number
+  content_index?: number
+  delta?: string
   text?: string
 }
 
-type AgentOptions = { apiKey: string; agentId: string; input: string; sessionId?: string }
+type AgentOptions = {
+  apiKey: string; agentId: string; input: string; sessionId?: string
+  signal?: AbortSignal
+  onSession?: (sessionId: string) => void
+  onText?: (text: string) => void
+}
 
 const calendarServerUrl = "https://www.morbia.com.mx/api/calendar-mcp"
 
@@ -26,13 +35,15 @@ async function responseFailure(response: Response, operation: string): Promise<E
   return new Error(`AGENT_${operation}_${response.status}_${code}_${parameter}`)
 }
 
-async function readTurn(stream: ReadableStream<Uint8Array>, existingSessionId?: string) {
+async function readTurn(stream: ReadableStream<Uint8Array>, options: AgentOptions) {
   const reader = stream.getReader()
   const decoder = new TextDecoder()
   let buffer = ""
-  let sessionId = existingSessionId
+  let sessionId = options.sessionId
   let text = ""
+  const parts = new Map<string, string>()
   let complete = false
+  if (sessionId) options.onSession?.(sessionId)
   try {
     while (!complete) {
       const chunk = await reader.read()
@@ -46,9 +57,20 @@ async function readTurn(stream: ReadableStream<Uint8Array>, existingSessionId?: 
         const data = block.split("\n").filter((line) => line.startsWith("data:")).map((line) => line.slice(5).trimStart()).join("\n")
         if (!data || data === "[DONE]") continue
         const event = JSON.parse(data) as AgentEvent
-        sessionId = event.session?.id || event.session_id || sessionId
-        if (event.type === "agent.session.turn.output_text.done" && typeof event.text === "string") text = event.text
-        if (event.type === "agent.session.requires_action" || event.type === "agent.session.failed" || event.type === "error") throw new Error("El agente no pudo completar la solicitud.")
+        const eventSessionId = event.session?.id || event.session_id
+        if (!sessionId && eventSessionId) {
+          sessionId = eventSessionId
+          options.onSession?.(sessionId)
+        }
+        if (event.type === "agent.session.turn.output_text.delta" || event.type === "agent.session.turn.output_text.done") {
+          const key = `${event.item_id || event.output_index || 0}:${event.content_index || 0}`
+          if (event.type.endsWith(".delta") && typeof event.delta === "string") parts.set(key, (parts.get(key) || "") + event.delta)
+          if (event.type.endsWith(".done") && typeof event.text === "string") parts.set(key, event.text)
+          text = Array.from(parts.values()).join("\n\n")
+          if (text.length > 100_000) throw new Error("La respuesta del agente es demasiado grande.")
+          options.onText?.(text)
+        }
+        if (event.type === "agent.session.requires_action" || event.type === "agent.session.failed" || event.type === "agent.session.environment.failed" || event.type === "error") throw new Error("El agente no pudo completar la solicitud.")
         if ((event.type === "agent.session.turn.failed" || event.type === "agent.session.turn.cancelled") && !event.turn?.subagent_id) throw new Error("El agente no pudo completar la conversación.")
         if (event.type === "agent.session.turn.completed" && !event.turn?.subagent_id) complete = true
       }
@@ -63,7 +85,8 @@ async function readTurn(stream: ReadableStream<Uint8Array>, existingSessionId?: 
 export async function runAgentTurn(options: AgentOptions) {
   const base = "https://api.openai.com/v1/agents/sessions"
   const headers = { Authorization: `Bearer ${options.apiKey}`, "OpenAI-Beta": "agents=v1", "Content-Type": "application/json" }
-  const signal = AbortSignal.timeout(55_000)
+  const timeoutSignal = AbortSignal.timeout(55_000)
+  const signal = options.signal ? AbortSignal.any([timeoutSignal, options.signal]) : timeoutSignal
   let response: Response
   if (!options.sessionId) {
     const vaultsResponse = await fetch("https://api.openai.com/v1/vaults?limit=100", { headers, signal, cache: "no-store" })
@@ -103,5 +126,5 @@ export async function runAgentTurn(options: AgentOptions) {
   }
   if (!response.ok) throw await responseFailure(response, "CREATE")
   if (!response.body) throw new Error("AGENT_CREATE_EMPTY")
-  return readTurn(response.body, options.sessionId)
+  return readTurn(response.body, options)
 }

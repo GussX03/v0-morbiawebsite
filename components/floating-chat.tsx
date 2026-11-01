@@ -11,6 +11,7 @@ gsap.registerPlugin(useGSAP)
 interface Message {
   role: "user" | "assistant"
   content: string
+  id?: string
 }
 
 const generateSessionId = () => "morbia_" + Math.random().toString(36).slice(2, 11)
@@ -190,10 +191,12 @@ export default function FloatingChat() {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [isStreaming, setIsStreaming] = useState(false)
   const [showGreeting, setShowGreeting] = useState(true)
   const chatRef = useRef<HTMLDivElement>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const activeRequest = useRef<AbortController | null>(null)
 
   useEffect(() => {
     const mobileQuery = window.matchMedia("(max-width: 767px)")
@@ -298,12 +301,15 @@ export default function FloatingChat() {
   const sendMessageDirect = async (text: string) => {
     const payload = { id: sessionId, mensaje: text }
     const controller = new AbortController()
+    activeRequest.current = controller
     const timeout = window.setTimeout(() => controller.abort(), MESSAGE_TIMEOUT_MS)
+    const messageId = crypto.randomUUID()
+    let receivedText = false
 
     try {
       const response = await fetch(CHAT_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Accept: "text/event-stream, application/json" },
         body: JSON.stringify(payload),
         signal: controller.signal,
         cache: "no-store",
@@ -311,6 +317,39 @@ export default function FloatingChat() {
 
       if (!response.ok) {
         throw new Error(`Chat request failed with status ${response.status}`)
+      }
+
+      if (response.headers.get("content-type")?.includes("text/event-stream") && response.body) {
+        const reader = response.body.getReader()
+        const decoder = new TextDecoder()
+        let buffer = ""
+        let completed = false
+        while (true) {
+          const chunk = await reader.read()
+          if (chunk.done) break
+          buffer = (buffer + decoder.decode(chunk.value, { stream: true })).replace(/\r\n/g, "\n")
+          if (buffer.length > 1_000_000) throw new Error("La respuesta es demasiado grande.")
+          let boundary: number
+          while ((boundary = buffer.indexOf("\n\n")) >= 0) {
+            const block = buffer.slice(0, boundary)
+            buffer = buffer.slice(boundary + 2)
+            const data = block.split("\n").filter((line) => line.startsWith("data:")).map((line) => line.slice(5).trimStart()).join("\n")
+            if (!data) continue
+            const event = JSON.parse(data) as { type?: string; text?: string }
+            if (event.type === "error") throw new Error("El asistente no pudo completar su respuesta.")
+            if (event.type === "done") completed = true
+            if (event.type === "text" && typeof event.text === "string" && event.text) {
+              receivedText = true
+              setIsStreaming(true)
+              const content = event.text
+              setMessages((prev) => prev.some((message) => message.id === messageId)
+                ? prev.map((message) => message.id === messageId ? { ...message, content } : message)
+                : [...prev, { id: messageId, role: "assistant", content }])
+            }
+          }
+        }
+        if (!completed || !receivedText) throw new Error("La respuesta quedó incompleta.")
+        return
       }
 
       const rawText = await response.text()
@@ -341,20 +380,27 @@ export default function FloatingChat() {
       const assistantMessage: Message = { role: "assistant", content: reply }
       setMessages((prev) => [...prev, assistantMessage])
     } catch (err) {
+      if (activeRequest.current !== controller) return
       console.error("[Morbia Chat] Fetch error:", err)
       const timedOut = err instanceof DOMException && err.name === "AbortError"
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: timedOut
-            ? "El asistente tardó más de lo esperado. Por favor intenta de nuevo."
-            : "Ocurrió un error al conectar con el asistente. Por favor intenta de nuevo.",
+          content: receivedText
+            ? "La respuesta se interrumpió. Si estabas gestionando una cita, confirma su estado antes de intentarlo de nuevo."
+            : timedOut
+              ? "El asistente tardó más de lo esperado. Por favor intenta de nuevo."
+              : "Ocurrió un error al conectar con el asistente. Por favor intenta de nuevo.",
         },
       ])
     } finally {
       window.clearTimeout(timeout)
-      setIsLoading(false)
+      if (activeRequest.current === controller) {
+        activeRequest.current = null
+        setIsLoading(false)
+        setIsStreaming(false)
+      }
     }
   }
 
@@ -378,6 +424,10 @@ export default function FloatingChat() {
   }
 
   const resetConversation = () => {
+    activeRequest.current?.abort()
+    activeRequest.current = null
+    setIsLoading(false)
+    setIsStreaming(false)
     setMessages([])
     setSessionId(generateSessionId())
   }
@@ -521,7 +571,7 @@ export default function FloatingChat() {
               </div>
             ))}
 
-            {isLoading && (
+            {isLoading && !isStreaming && (
               <div className="flex gap-2.5 sm:gap-2 items-start">
                 <div className="w-8 h-8 sm:w-7 sm:h-7 rounded-full bg-gradient-to-br from-[#19e0d0] to-[#075e8d] flex items-center justify-center flex-shrink-0 mt-1">
                   <Bot size={16} className="text-white sm:w-[14px] sm:h-[14px]" />
