@@ -57,8 +57,9 @@ export async function POST(request: Request) {
     const response = NextResponse.json({ output: result.text }, { headers: { "Cache-Control": "no-store" } })
     response.cookies.set(cookieName, `${encoded}.${sign(encoded, cookieSecret)}`, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", maxAge: cookieAge, path: "/api" })
     return response
-  } catch {
-    console.error("[Morbia Chat] La sesión de OpenAI no pudo completarse.")
+  } catch (error) {
+    const code = error instanceof Error && /^AGENT_[a-zA-Z0-9_.-]+$/.test(error.message) ? error.message : "AGENT_UNKNOWN"
+    console.error("[Morbia Chat] La sesión de OpenAI no pudo completarse:", code)
     return NextResponse.json({ error: "El asistente no está disponible en este momento." }, { status: 502 })
   }
 }

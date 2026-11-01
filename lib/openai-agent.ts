@@ -8,6 +8,18 @@ type AgentEvent = {
 
 type AgentOptions = { apiKey: string; agentId: string; input: string; sessionId?: string; spendLimitCents: number }
 
+async function responseFailure(response: Response, operation: string): Promise<Error> {
+  let code = "unknown"
+  let parameter = "none"
+  try {
+    const body = await response.json() as { error?: { code?: unknown; param?: unknown; type?: unknown } }
+    const candidate = body.error?.code || body.error?.type
+    if (typeof candidate === "string" && /^[a-zA-Z0-9_.-]{1,80}$/.test(candidate)) code = candidate
+    if (typeof body.error?.param === "string" && /^[a-zA-Z0-9_.-]{1,80}$/.test(body.error.param)) parameter = body.error.param
+  } catch { /* Do not log response bodies, which can contain private data. */ }
+  return new Error(`AGENT_${operation}_${response.status}_${code}_${parameter}`)
+}
+
 async function readTurn(stream: ReadableStream<Uint8Array>, existingSessionId?: string) {
   const reader = stream.getReader()
   const decoder = new TextDecoder()
@@ -55,16 +67,18 @@ export async function runAgentTurn(options: AgentOptions) {
   } else {
     const path = `${base}/${encodeURIComponent(options.sessionId)}/events`
     response = await fetch(path, { headers: { ...headers, Accept: "text/event-stream" }, signal, cache: "no-store" })
-    if (!response.ok || !response.body) throw new Error("No fue posible recuperar la conversación.")
+    if (!response.ok) throw await responseFailure(response, "STREAM")
+    if (!response.body) throw new Error("AGENT_STREAM_EMPTY")
     const sent = await fetch(path, {
       method: "POST", headers: { ...headers, "Idempotency-Key": crypto.randomUUID() }, signal, cache: "no-store",
       body: JSON.stringify({ events: [{ type: "agent.session.input.message", input: [{ role: "user", content: [{ type: "input_text", text: options.input }] }] }] }),
     })
     if (!sent.ok) {
       await response.body.cancel().catch(() => {})
-      throw new Error("No fue posible enviar el mensaje al agente.")
+      throw await responseFailure(sent, "SEND")
     }
   }
-  if (!response.ok || !response.body) throw new Error("El agente no está disponible.")
+  if (!response.ok) throw await responseFailure(response, "CREATE")
+  if (!response.body) throw new Error("AGENT_CREATE_EMPTY")
   return readTurn(response.body, options.sessionId)
 }
