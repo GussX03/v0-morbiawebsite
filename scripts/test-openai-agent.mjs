@@ -2,17 +2,21 @@ import assert from "node:assert/strict"
 import { test } from "node:test"
 import { runAgentTurn } from "../lib/openai-agent.ts"
 
-const options = { apiKey: "test-key", agentId: "agent-test", mcpSecret: "test-mcp-secret", input: "Hola" }
+const options = { apiKey: "test-key", agentId: "agent-test", input: "Hola" }
+const vaultResponse = (url) => url.includes("/credentials")
+  ? Response.json({ data: [{ auth: { mcp_server_url: "https://www.morbia.com.mx/api/calendar-mcp" } }], has_more: false })
+  : Response.json({ data: [{ id: "vault_test" }], has_more: false })
 const event = (value) => `data: ${JSON.stringify(value)}\n\n`
 const stream = (...values) => new Response(values.map(event).join(""), { headers: { "Content-Type": "text/event-stream" } })
 
 test("creates a session and returns the final response", async () => {
   const originalFetch = globalThis.fetch
-  globalThis.fetch = async (_url, init) => {
+  globalThis.fetch = async (url, init) => {
+    if (url.includes("/vaults")) return vaultResponse(url)
     const body = JSON.parse(init.body)
     assert.equal(body.agent_id, "agent-test")
     assert.equal(body.spend_control, undefined)
-    assert.equal(body.agent.tools[0].transport.authorization, "Bearer test-mcp-secret")
+    assert.deepEqual(body.vault_ids, ["vault_test"])
     return stream(
       { type: "agent.session.created", session: { id: "sess_test" } },
       { type: "agent.session.turn.output_text.done", text: "Hola" },
@@ -26,7 +30,7 @@ test("creates a session and returns the final response", async () => {
 
 test("rejects a session that requires unhandled action", async () => {
   const originalFetch = globalThis.fetch
-  globalThis.fetch = async () => stream({ type: "agent.session.requires_action" })
+  globalThis.fetch = async (url) => url.includes("/vaults") ? vaultResponse(url) : stream({ type: "agent.session.requires_action" })
   try {
     await assert.rejects(runAgentTurn(options), /no pudo completar/)
   } finally { globalThis.fetch = originalFetch }

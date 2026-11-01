@@ -6,7 +6,9 @@ type AgentEvent = {
   text?: string
 }
 
-type AgentOptions = { apiKey: string; agentId: string; mcpSecret: string; input: string; sessionId?: string }
+type AgentOptions = { apiKey: string; agentId: string; input: string; sessionId?: string }
+
+const calendarServerUrl = "https://www.morbia.com.mx/api/calendar-mcp"
 
 async function responseFailure(response: Response, operation: string): Promise<Error> {
   let code = "unknown"
@@ -64,16 +66,25 @@ export async function runAgentTurn(options: AgentOptions) {
   const signal = AbortSignal.timeout(55_000)
   let response: Response
   if (!options.sessionId) {
+    const vaultsResponse = await fetch("https://api.openai.com/v1/vaults?limit=100", { headers, signal, cache: "no-store" })
+    if (!vaultsResponse.ok) throw await responseFailure(vaultsResponse, "VAULTS")
+    const vaults = await vaultsResponse.json() as { data?: Array<{ id: string }>; has_more?: boolean }
+    if (!Array.isArray(vaults.data) || vaults.has_more || vaults.data.length > 20) throw new Error("AGENT_VAULTS_UNSUPPORTED")
+    const matches: string[] = []
+    for (const vault of vaults.data) {
+      if (!/^vault_[a-zA-Z0-9_-]+$/.test(vault.id)) continue
+      const credentialsResponse = await fetch(`https://api.openai.com/v1/vaults/${encodeURIComponent(vault.id)}/credentials?limit=100`, { headers, signal, cache: "no-store" })
+      if (!credentialsResponse.ok) throw await responseFailure(credentialsResponse, "CREDENTIALS")
+      const credentials = await credentialsResponse.json() as { data?: Array<{ auth?: { mcp_server_url?: string } }>; has_more?: boolean }
+      if (!Array.isArray(credentials.data) || credentials.has_more) throw new Error("AGENT_CREDENTIALS_UNSUPPORTED")
+      if (credentials.data.some((credential) => credential.auth?.mcp_server_url?.replace(/\/$/, "") === calendarServerUrl)) matches.push(vault.id)
+    }
+    if (matches.length !== 1) throw new Error("AGENT_CALENDAR_VAULT_NOT_FOUND")
     response = await fetch(base, {
       method: "POST", headers, signal, cache: "no-store",
       body: JSON.stringify({
         agent_id: options.agentId,
-        agent: { tools: [{
-          type: "mcp", server_label: "morbia_calendar", connection_origin: "service", required: true,
-          transport: { type: "http", server_url: "https://www.morbia.com.mx/api/calendar-mcp", authorization: `Bearer ${options.mcpSecret}` },
-          allowed_tools: ["consultar_disponibilidad_google_calendar", "crear_evento_google_calendar", "editar_evento_google_calendar", "cancelar_evento_google_calendar"],
-        }] },
-        environment: { type: "none" }, input: options.input, stream: true,
+        vault_ids: matches, environment: { type: "none" }, input: options.input, stream: true,
       }),
     })
   } else {
