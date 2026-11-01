@@ -31,8 +31,7 @@ export async function POST(request: Request) {
   const apiKey = process.env.OPENAI_API_KEY
   const agentId = process.env.MORBIA_OPENAI_AGENT_ID
   const cookieSecret = process.env.MORBIA_CHAT_COOKIE_SECRET
-  const limit = Number(process.env.MORBIA_CHAT_SESSION_LIMIT_CENTS)
-  if (!apiKey || !agentId || !cookieSecret || cookieSecret.length < 32 || !Number.isInteger(limit) || limit < 1 || process.env.MORBIA_CHAT_TRAFFIC_CONTROL_ENABLED !== "true") {
+  if (!apiKey || !agentId || !cookieSecret || cookieSecret.length < 32 || process.env.MORBIA_CHAT_TRAFFIC_CONTROL_ENABLED !== "true") {
     return NextResponse.json({ error: "El asistente aún no está configurado." }, { status: 503 })
   }
 
@@ -52,7 +51,7 @@ export async function POST(request: Request) {
   const cookie = cookies.find((item) => item.startsWith(`${cookieName}=`))?.slice(cookieName.length + 1)
   const existing = decodeCookie(cookie, cookieSecret, payload.id)
   try {
-    const result = await runAgentTurn({ apiKey, agentId, input: payload.mensaje.trim(), sessionId: existing, spendLimitCents: limit })
+    const result = await runAgentTurn({ apiKey, agentId, input: payload.mensaje.trim(), sessionId: existing })
     const encoded = Buffer.from(JSON.stringify({ clientId: payload.id, sessionId: result.sessionId, expires: Date.now() + cookieAge * 1_000 } satisfies SessionCookie)).toString("base64url")
     const response = NextResponse.json({ output: result.text }, { headers: { "Cache-Control": "no-store" } })
     response.cookies.set(cookieName, `${encoded}.${sign(encoded, cookieSecret)}`, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", maxAge: cookieAge, path: "/api" })

@@ -6,7 +6,7 @@ type AgentEvent = {
   text?: string
 }
 
-type AgentOptions = { apiKey: string; agentId: string; input: string; sessionId?: string; spendLimitCents: number }
+type AgentOptions = { apiKey: string; agentId: string; input: string; sessionId?: string }
 
 async function responseFailure(response: Response, operation: string): Promise<Error> {
   let code = "unknown"
@@ -62,7 +62,7 @@ export async function runAgentTurn(options: AgentOptions) {
   if (!options.sessionId) {
     response = await fetch(base, {
       method: "POST", headers, signal, cache: "no-store",
-      body: JSON.stringify({ agent_id: options.agentId, environment: { type: "none" }, input: options.input, stream: true, spend_control: { limit: options.spendLimitCents } }),
+      body: JSON.stringify({ agent_id: options.agentId, environment: { type: "none" }, input: options.input, stream: true }),
     })
   } else {
     const path = `${base}/${encodeURIComponent(options.sessionId)}/events`
