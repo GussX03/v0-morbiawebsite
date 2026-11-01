@@ -12,10 +12,14 @@ async function responseFailure(response: Response, operation: string): Promise<E
   let code = "unknown"
   let parameter = "none"
   try {
-    const body = await response.json() as { error?: { code?: unknown; param?: unknown; type?: unknown } }
+    const body = await response.json() as { error?: { code?: unknown; param?: unknown; type?: unknown; message?: unknown } }
     const candidate = body.error?.code || body.error?.type
     if (typeof candidate === "string" && /^[a-zA-Z0-9_.-]{1,80}$/.test(candidate)) code = candidate
     if (typeof body.error?.param === "string" && /^[a-zA-Z0-9_.-]{1,80}$/.test(body.error.param)) parameter = body.error.param
+    if (parameter === "none" && typeof body.error?.message === "string") {
+      const message = body.error.message.toLowerCase()
+      parameter = ["credit", "balance", "billing", "model", "agent", "organization", "project", "vault", "input", "environment", "stream", "mcp", "quota", "permission", "session"].filter((word) => message.includes(word)).join("-") || "none"
+    }
   } catch { /* Do not log response bodies, which can contain private data. */ }
   return new Error(`AGENT_${operation}_${response.status}_${code}_${parameter}`)
 }
