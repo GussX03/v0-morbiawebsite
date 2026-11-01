@@ -78,6 +78,11 @@
   background-size: cover;
 }
 
+@media (max-width: 639px) {
+  .morbia-chat-safe-top { padding-top: max(.75rem, env(safe-area-inset-top)); }
+  .morbia-chat-safe-bottom { padding-bottom: max(.75rem, env(safe-area-inset-bottom)); }
+}
+
 .morbia-header-scrolled {
   background: linear-gradient(90deg, rgb(3 42 73 / 0.94), rgb(0 91 108 / 0.9));
   backdrop-filter: blur(30px) saturate(125%);

@@ -1,7 +1,10 @@
 export const BUTTONS_START = "<morbia_buttons>"
 export const BUTTONS_END = "</morbia_buttons>"
 
-export type ChatButton = { label: string; href: string; icon: string }
+export type ChatButton = { label: string; icon: string } & (
+  | { href: string; reply?: never }
+  | { reply: string; href?: never }
+)
 
 export const publicDestinations = {
   whatsapp: { href: "https://wa.me/522215268440", label: "Escríbenos por WhatsApp", icon: "whatsapp" },
@@ -12,7 +15,32 @@ export const publicDestinations = {
   tiktok: { href: "https://www.tiktok.com/@morbiamx", label: "TikTok", icon: "tiktok" },
   linkedin: { href: "https://www.linkedin.com/company/morbia/", label: "LinkedIn", icon: "linkedin" },
   website: { href: "https://www.morbia.com.mx/", label: "Conoce Morbia", icon: "link" },
+  service_chatbots: { href: "https://www.morbia.com.mx/servicios/chatbots", label: "Ver chatbots", icon: "chat" },
+  service_automation: { href: "https://www.morbia.com.mx/servicios/automatizacion-de-procesos", label: "Ver automatizaciones", icon: "automation" },
+  service_web: { href: "https://www.morbia.com.mx/servicios/paginas-web", label: "Ver aplicaciones web", icon: "web" },
+  service_ai: { href: "https://www.morbia.com.mx/servicios/inteligencia-artificial", label: "Ver inteligencia artificial", icon: "ai" },
+  service_data: { href: "https://www.morbia.com.mx/servicios/analisis-de-datos", label: "Ver análisis de datos", icon: "data" },
+  service_rpa: { href: "https://www.morbia.com.mx/servicios/rpa", label: "Ver RPA", icon: "automation" },
+  service_presence: { href: "https://www.morbia.com.mx/servicios/presencia-digital", label: "Ver presencia digital", icon: "web" },
+  nexacv: { href: "https://nexacv.morbia.com.mx/", label: "Conocer NexaCV", icon: "file" },
 } as const
+
+// Replies are fixed server-side; model output cannot turn a button into an arbitrary message.
+export const quickReplies = {
+  schedule: { reply: "Quiero agendar una sesión con Morbia.", label: "Agendar una sesión", icon: "calendar" },
+  availability: { reply: "¿Qué horarios tienen disponibles?", label: "Ver disponibilidad", icon: "calendar" },
+  quote: { reply: "Quiero solicitar una cotización para mi proyecto.", label: "Solicitar cotización", icon: "quote" },
+  demo: { reply: "Quiero conocer una demostración de sus soluciones.", label: "Solicitar una demo", icon: "video" },
+  advisor: { reply: "Quiero hablar con un asesor de Morbia.", label: "Hablar con un asesor", icon: "chat" },
+  examples: { reply: "¿Qué tipos de proyectos puede realizar Morbia?", label: "Ver ejemplos", icon: "spark" },
+  choose_service: { reply: "Ayúdame a elegir el servicio más adecuado para mi negocio.", label: "Elegir una solución", icon: "spark" },
+  reschedule: { reply: "Quiero reprogramar mi sesión.", label: "Reprogramar sesión", icon: "calendar" },
+  cancel_session: { reply: "Quiero cancelar mi sesión.", label: "Cancelar sesión", icon: "calendar" },
+} as const
+
+export function isAllowedQuickReply(reply: string): boolean {
+  return Object.values(quickReplies).some((item) => item.reply === reply)
+}
 
 export function isAllowedButtonHref(href: string): boolean {
   if (Object.values(publicDestinations).some((item) => item.href === href)) return true

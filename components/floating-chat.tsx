@@ -1,12 +1,12 @@
 "use client"
 
 import { useState, useRef, useEffect, useMemo } from "react"
-import { MessageCircle, X, Send, RotateCcw, Bot, Phone, Mail, Instagram, Facebook, Linkedin, Music2, Globe, Video, CalendarDays } from "lucide-react"
+import { MessageCircle, X, Send, RotateCcw, Bot, Phone, Mail, Instagram, Facebook, Linkedin, Music2, Globe, Video, CalendarDays, Workflow, PanelTop, BrainCircuit, BarChart3, FileText, Sparkles, BadgeDollarSign } from "lucide-react"
 import Image from "next/image"
 import { gsap } from "gsap"
 import { useGSAP } from "@gsap/react"
 import { createProgressiveText } from "@/lib/progressive-text"
-import { isAllowedButtonHref, safeInlineHref, type ChatButton } from "@/lib/chat-buttons"
+import { isAllowedButtonHref, isAllowedQuickReply, safeInlineHref, type ChatButton } from "@/lib/chat-buttons"
 
 gsap.registerPlugin(useGSAP)
 
@@ -198,21 +198,37 @@ function FormattedMessage({ content, buttons }: { content: string; buttons: Chat
   return <>{parsed}</>
 }
 
+function isChatButton(value: unknown): value is ChatButton {
+  if (!value || typeof value !== "object") return false
+  const button = value as { label?: unknown; icon?: unknown; href?: unknown; reply?: unknown }
+  if (typeof button.label !== "string" || button.label.length > 40 || typeof button.icon !== "string") return false
+  return (typeof button.href === "string" && button.reply === undefined && isAllowedButtonHref(button.href)) ||
+    (typeof button.reply === "string" && button.href === undefined && isAllowedQuickReply(button.reply))
+}
+
 const buttonIcons: Record<string, typeof Phone> = {
   whatsapp: MessageCircle, phone: Phone, email: Mail, instagram: Instagram, facebook: Facebook,
   linkedin: Linkedin, tiktok: Music2, link: Globe, video: Video, calendar: CalendarDays,
+  chat: MessageCircle, automation: Workflow, web: PanelTop, ai: BrainCircuit, data: BarChart3,
+  file: FileText, quote: BadgeDollarSign, spark: Sparkles,
 }
 
-function ChatActions({ buttons }: { buttons: ChatButton[] }) {
+function ChatActions({ buttons, onReply, disabled }: { buttons: ChatButton[]; onReply: (reply: string) => void; disabled: boolean }) {
   if (!buttons.length) return null
   return (
     <div className="mt-3 flex flex-wrap gap-2">
       {buttons.map((button) => {
         const Icon = buttonIcons[button.icon] || Globe
+        const className = "inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-[#55f5e8]/55 bg-[#063e69] px-3 py-2 text-xs font-semibold text-[#b5fff8] transition-colors hover:bg-[#0b627e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#55f5e8] disabled:cursor-not-allowed disabled:opacity-50"
+        if (button.reply !== undefined) {
+          return <button key={button.reply} type="button" disabled={disabled} onClick={() => onReply(button.reply)} className={className}>
+            <Icon size={15} aria-hidden="true" />{button.label}
+          </button>
+        }
         const external = button.href.startsWith("https://")
         return (
           <a key={button.href} href={button.href} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined}
-            className="inline-flex min-h-10 items-center gap-1.5 rounded-lg border border-[#55f5e8]/55 bg-[#063e69] px-3 py-2 text-xs font-semibold text-[#b5fff8] transition-colors hover:bg-[#0b627e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#55f5e8]">
+            className={className}>
             <Icon size={15} aria-hidden="true" />{button.label}
           </a>
         )
@@ -232,7 +248,9 @@ export default function FloatingChat() {
   const [isStreaming, setIsStreaming] = useState(false)
   const [showGreeting, setShowGreeting] = useState(true)
   const chatRef = useRef<HTMLDivElement>(null)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
+  const messagesRef = useRef<HTMLDivElement>(null)
+  const stickToBottom = useRef(true)
   const inputRef = useRef<HTMLInputElement>(null)
   const activeRequest = useRef<AbortController | null>(null)
 
@@ -248,9 +266,14 @@ export default function FloatingChat() {
 
   useGSAP(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
-    if (isOpen) {
+    if (isOpen && !window.matchMedia("(max-width: 639px)").matches) {
       gsap.fromTo("[data-chat-panel]", { autoAlpha: 0, y: 18, scale: 0.98 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.35, ease: "power3.out" })
-    } else if (showGreeting) {
+    }
+  }, { scope: chatRef, dependencies: [isOpen], revertOnUpdate: true })
+
+  useGSAP(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    if (!isOpen && showGreeting) {
       gsap.fromTo("[data-chat-greeting]", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.32, ease: "power3.out" })
     }
   }, { scope: chatRef, dependencies: [isOpen, showGreeting], revertOnUpdate: true })
@@ -306,33 +329,75 @@ export default function FloatingChat() {
   useEffect(() => {
     if (isOpen) {
       setShowGreeting(false)
-      setTimeout(() => inputRef.current?.focus(), 100)
+      if (!window.matchMedia("(max-width: 767px)").matches) {
+        const timer = window.setTimeout(() => inputRef.current?.focus({ preventScroll: true }), 100)
+        return () => window.clearTimeout(timer)
+      }
     }
   }, [isOpen])
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    const container = messagesRef.current
+    if (container && stickToBottom.current) container.scrollTop = container.scrollHeight
   }, [messages])
 
   useEffect(() => {
+    if (isOpen) return
     const timer = setTimeout(() => {
       setShowGreeting(true)
     }, 3000)
     return () => clearTimeout(timer)
-  }, [])
+  }, [isOpen])
 
   // Lock body scroll on mobile when chat is open
   useEffect(() => {
-    if (isOpen) {
-      const isMobile = window.innerWidth < 640
-      if (isMobile) {
-        document.body.style.overflow = "hidden"
-      }
-    } else {
-      document.body.style.overflow = ""
+    if (!isOpen || !window.matchMedia("(max-width: 639px)").matches) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    return () => { document.body.style.overflow = previous }
+  }, [isOpen])
+
+  useEffect(() => {
+    if (!isOpen) return
+    const panel = panelRef.current
+    if (!panel) return
+    const viewport = window.visualViewport
+    let frame = 0
+    const update = () => {
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(() => {
+        if (viewport && window.matchMedia("(max-width: 639px)").matches) {
+          panel.style.top = `${viewport.offsetTop}px`
+          panel.style.left = `${viewport.offsetLeft}px`
+          panel.style.bottom = "auto"
+          panel.style.right = "auto"
+          panel.style.width = `${viewport.width}px`
+          panel.style.height = `${viewport.height}px`
+        } else {
+          panel.style.removeProperty("top")
+          panel.style.removeProperty("left")
+          panel.style.removeProperty("bottom")
+          panel.style.removeProperty("right")
+          panel.style.removeProperty("width")
+          panel.style.removeProperty("height")
+        }
+      })
     }
+    update()
+    viewport?.addEventListener("resize", update)
+    viewport?.addEventListener("scroll", update)
+    window.addEventListener("resize", update)
     return () => {
-      document.body.style.overflow = ""
+      cancelAnimationFrame(frame)
+      viewport?.removeEventListener("resize", update)
+      viewport?.removeEventListener("scroll", update)
+      window.removeEventListener("resize", update)
+      panel.style.removeProperty("top")
+      panel.style.removeProperty("left")
+      panel.style.removeProperty("bottom")
+      panel.style.removeProperty("right")
+      panel.style.removeProperty("width")
+      panel.style.removeProperty("height")
     }
   }, [isOpen])
 
@@ -388,10 +453,7 @@ export default function FloatingChat() {
             if (event.type === "error") throw new Error("El asistente no pudo completar su respuesta.")
             if (event.type === "done") completed = true
             if (event.type === "buttons" && Array.isArray(event.buttons)) {
-              buttons = event.buttons.filter((button): button is ChatButton =>
-                !!button && typeof button === "object" && typeof button.label === "string" && button.label.length <= 40 &&
-                typeof button.href === "string" && isAllowedButtonHref(button.href) && typeof button.icon === "string"
-              ).slice(0, 8)
+              buttons = event.buttons.filter(isChatButton).slice(0, 8)
             }
             if (event.type === "text" && typeof event.text === "string" && event.text) {
               receivedText = true
@@ -460,17 +522,20 @@ export default function FloatingChat() {
     }
   }
 
-  const sendMessage = async () => {
-    const trimmed = input.trim()
-    if (!trimmed || isLoading) return
+  const sendMessageText = async (text: string) => {
+    const trimmed = text.trim()
+    if (!trimmed || isLoading || activeRequest.current) return
 
     const userMessage: Message = { role: "user", content: trimmed }
+    stickToBottom.current = true
     setMessages((prev) => [...prev, userMessage])
     setInput("")
     setIsLoading(true)
 
     await sendMessageDirect(trimmed)
   }
+
+  const sendMessage = () => sendMessageText(input)
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -485,6 +550,7 @@ export default function FloatingChat() {
     setIsLoading(false)
     setIsStreaming(false)
     setMessages([])
+    stickToBottom.current = true
     setSessionId(generateSessionId())
   }
 
@@ -516,9 +582,10 @@ export default function FloatingChat() {
       {isOpen && (
         <div
           data-chat-panel
+          ref={panelRef}
           className={[
             // Mobile: full screen overlay
-            "fixed inset-0 sm:inset-auto",
+            "fixed inset-0 h-[100dvh] sm:inset-auto sm:h-auto",
             // Desktop: positioned and sized
             "sm:relative sm:w-[380px] sm:max-h-[560px]",
             // Shared
@@ -528,7 +595,7 @@ export default function FloatingChat() {
           ].join(" ")}
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 sm:py-3 bg-[#063e69]/85 border-b border-white/15 safe-top">
+          <div className="morbia-chat-safe-top flex items-center justify-between px-4 py-3 sm:py-3 bg-[#063e69]/85 border-b border-white/15">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 sm:w-9 sm:h-9 rounded-full bg-gradient-to-br from-[#19e0d0] to-[#075e8d] flex items-center justify-center shadow-md flex-shrink-0">
                 <Bot size={20} className="text-white sm:w-[18px] sm:h-[18px]" />
@@ -558,7 +625,10 @@ export default function FloatingChat() {
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto bg-[#052d50]/75 p-4 space-y-4 min-h-0 sm:min-h-[320px] sm:max-h-[400px]">
+          <div ref={messagesRef} onScroll={(event) => {
+            const element = event.currentTarget
+            stickToBottom.current = element.scrollHeight - element.scrollTop - element.clientHeight < 80
+          }} className="flex-1 overflow-y-auto overscroll-contain bg-[#052d50]/75 p-4 space-y-4 min-h-0 sm:min-h-[320px] sm:max-h-[400px]">
             {messages.length === 0 && (
               <div className="flex flex-col items-center justify-center h-full gap-4 py-8">
                 <div className="w-16 h-16 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-[#19e0d0]/25 to-[#075e8d]/45 border border-[#52f3e7]/35 flex items-center justify-center">
@@ -584,14 +654,7 @@ export default function FloatingChat() {
                   {["¿Qué es Morbia?", "Servicios", "Contacto"].map((suggestion) => (
                     <button
                       key={suggestion}
-                      onClick={() => {
-                        const userMessage: Message = { role: "user", content: suggestion }
-                        setMessages((prev) => [...prev, userMessage])
-                        setInput("")
-                        setIsLoading(true)
-                        // Trigger send directly
-                        sendMessageDirect(suggestion)
-                      }}
+                      onClick={() => void sendMessageText(suggestion)}
                       className="px-3 py-1.5 text-xs rounded-full border border-[#52f3e7]/40 text-[#55f5e8] hover:bg-[#19e0d0]/10 transition-colors duration-200"
                     >
                       {suggestion}
@@ -621,7 +684,7 @@ export default function FloatingChat() {
                   {msg.role === "assistant" ? (
                     <>
                       <FormattedMessage content={msg.content} buttons={msg.buttons || []} />
-                      <ChatActions buttons={msg.buttons || []} />
+                      <ChatActions buttons={msg.buttons || []} onReply={(reply) => void sendMessageText(reply)} disabled={isLoading} />
                     </>
                   ) : (
                     msg.content
@@ -643,11 +706,10 @@ export default function FloatingChat() {
               </div>
             )}
 
-            <div ref={messagesEndRef} />
           </div>
 
           {/* Input */}
-          <div className="px-3 py-3 sm:py-3 bg-[#063e69]/90 border-t border-white/15 safe-bottom">
+          <div className="morbia-chat-safe-bottom px-3 py-3 sm:py-3 bg-[#063e69]/90 border-t border-white/15">
             <div className="flex items-center gap-2 bg-[#042b4d] border border-white/15 rounded-xl px-3 py-2.5 sm:py-2 focus-within:border-[#52f3e7]/60 transition-colors duration-200">
               <input
                 ref={inputRef}
@@ -657,7 +719,7 @@ export default function FloatingChat() {
                 onKeyDown={handleKeyDown}
                 placeholder="Escribe tu mensaje..."
                 disabled={isLoading}
-                className="flex-1 bg-transparent text-white text-base sm:text-sm placeholder:text-white/40 outline-none disabled:opacity-50"
+                className="min-w-0 flex-1 bg-transparent text-white text-[16px] placeholder:text-white/40 outline-none disabled:opacity-50"
               />
               <button
                 onClick={sendMessage}

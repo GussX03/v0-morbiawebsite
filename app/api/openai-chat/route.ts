@@ -1,7 +1,7 @@
 import { createHmac, timingSafeEqual } from "node:crypto"
 import { NextResponse } from "next/server"
 import { runAgentTurn } from "@/lib/openai-agent"
-import { publicDestinations, splitButtonMetadata } from "@/lib/chat-buttons"
+import { publicDestinations, quickReplies, splitButtonMetadata } from "@/lib/chat-buttons"
 import { validatedChatButtons } from "@/lib/chat-buttons-server"
 
 export const runtime = "nodejs"
@@ -79,7 +79,7 @@ export async function POST(request: Request) {
           const { text, metadata } = splitButtonMetadata(result.text)
           if (!text.trim()) throw new Error("AGENT_EMPTY_MESSAGE")
           if (text !== lastText) send({ type: "text", text })
-          const buttons = validatedChatButtons(metadata, process.env.MORBIA_CALENDAR_MCP_SECRET || "", publicDestinations)
+          const buttons = validatedChatButtons(metadata, process.env.MORBIA_CALENDAR_MCP_SECRET || "", publicDestinations, Date.now(), quickReplies)
           if (buttons.length) send({ type: "buttons", buttons })
           send({ type: "done" })
           controller.close()
@@ -107,7 +107,7 @@ export async function POST(request: Request) {
     const result = await runAgentTurn({ apiKey, agentId, input: payload.mensaje.trim(), sessionId: existing })
     const encoded = Buffer.from(JSON.stringify({ clientId: payload.id, sessionId: result.sessionId, expires: Date.now() + cookieAge * 1_000 } satisfies SessionCookie)).toString("base64url")
     const { text, metadata } = splitButtonMetadata(result.text)
-    const buttons = validatedChatButtons(metadata, process.env.MORBIA_CALENDAR_MCP_SECRET || "", publicDestinations)
+    const buttons = validatedChatButtons(metadata, process.env.MORBIA_CALENDAR_MCP_SECRET || "", publicDestinations, Date.now(), quickReplies)
     const response = NextResponse.json({ output: text, buttons }, { headers: { "Cache-Control": "no-store" } })
     response.cookies.set(cookieName, `${encoded}.${sign(encoded, cookieSecret)}`, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", maxAge: cookieAge, path: "/api" })
     return response
