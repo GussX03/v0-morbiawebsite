@@ -9,6 +9,8 @@ type CalendarEvent = {
   start?: { dateTime?: string }
   end?: { dateTime?: string }
   attendees?: Array<{ email?: string }>
+  hangoutLink?: string
+  conferenceData?: { createRequest?: { status?: { statusCode?: string } }; entryPoints?: Array<{ entryPointType?: string; uri?: string }> }
 }
 
 type CalendarCredentials = {
@@ -166,9 +168,19 @@ export async function createCalendarEvent(input: { start: string; end: string; e
     }),
   })
   if (!response.ok) throw new Error("No fue posible crear la reunión.")
-  const event = await response.json() as CalendarEvent & { hangoutLink?: string }
+  let event = await response.json() as CalendarEvent
   if (!event.id) throw new Error("Google Calendar no confirmó la creación.")
-  return { id: event.id, start: event.start?.dateTime, end: event.end?.dateTime, meet: event.hangoutLink }
+  const confirmedId = event.id
+  const meetLink = (item: CalendarEvent) => item.hangoutLink || item.conferenceData?.entryPoints?.find((entry) => entry.entryPointType === "video")?.uri
+  for (let attempt = 0; attempt < 2 && !meetLink(event) && event.conferenceData?.createRequest?.status?.statusCode === "pending"; attempt++) {
+    await new Promise((resolve) => setTimeout(resolve, 600))
+    try {
+      const refreshed = await eventRequest(`/${encodeURIComponent(confirmedId)}`)
+      if (!refreshed.ok) break
+      event = await refreshed.json() as CalendarEvent
+    } catch { break }
+  }
+  return { id: confirmedId, start: event.start?.dateTime || input.start, end: event.end?.dateTime || input.end, meet: meetLink(event) }
 }
 
 export async function moveCalendarEvent(input: { eventId: string; email: string; start: string; end: string }) {

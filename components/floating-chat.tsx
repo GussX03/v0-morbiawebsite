@@ -1,11 +1,12 @@
 "use client"
 
 import { useState, useRef, useEffect, useMemo } from "react"
-import { MessageCircle, X, Send, RotateCcw, Bot } from "lucide-react"
+import { MessageCircle, X, Send, RotateCcw, Bot, Phone, Mail, Instagram, Facebook, Linkedin, Music2, Globe, Video, CalendarDays } from "lucide-react"
 import Image from "next/image"
 import { gsap } from "gsap"
 import { useGSAP } from "@gsap/react"
 import { createProgressiveText } from "@/lib/progressive-text"
+import { isAllowedButtonHref, safeInlineHref, type ChatButton } from "@/lib/chat-buttons"
 
 gsap.registerPlugin(useGSAP)
 
@@ -13,6 +14,7 @@ interface Message {
   role: "user" | "assistant"
   content: string
   id?: string
+  buttons?: ChatButton[]
 }
 
 const generateSessionId = () => "morbia_" + Math.random().toString(36).slice(2, 11)
@@ -24,7 +26,7 @@ const MESSAGE_TIMEOUT_MS = 60000
  * Parse basic markdown: **bold**, *italic*, `code`, newlines, and bullet lists.
  * Returns React elements.
  */
-function parseMarkdown(text: string): React.ReactNode[] {
+function parseMarkdown(text: string, buttons: ChatButton[]): React.ReactNode[] {
   // Split by double newlines first (paragraphs), then handle inline formatting
   const paragraphs = text.split(/\n{2,}/)
 
@@ -49,7 +51,7 @@ function parseMarkdown(text: string): React.ReactNode[] {
           return (
             <li key={`li-${pIdx}-${lIdx}`} className="flex items-start gap-1.5 py-0.5">
               <span className="text-[#55f5e8] mt-1 flex-shrink-0 text-xs">●</span>
-              <span>{parseInlineMarkdown(content, `${pIdx}-${lIdx}`)}</span>
+              <span>{parseInlineMarkdown(content, `${pIdx}-${lIdx}`, buttons)}</span>
             </li>
           )
         })
@@ -74,7 +76,7 @@ function parseMarkdown(text: string): React.ReactNode[] {
                 <span className="text-[#55f5e8] font-semibold flex-shrink-0 text-xs min-w-[1rem] text-right">
                   {lIdx + 1}.
                 </span>
-                <span>{parseInlineMarkdown(content, `${pIdx}-${lIdx}`)}</span>
+                <span>{parseInlineMarkdown(content, `${pIdx}-${lIdx}`, buttons)}</span>
               </li>
             )
           })
@@ -92,7 +94,7 @@ function parseMarkdown(text: string): React.ReactNode[] {
           }
           result.push(
             <span key={`line-${pIdx}-${lIdx}`}>
-              {parseInlineMarkdown(line, `${pIdx}-${lIdx}`)}
+              {parseInlineMarkdown(line, `${pIdx}-${lIdx}`, buttons)}
             </span>
           )
         })
@@ -103,7 +105,7 @@ function parseMarkdown(text: string): React.ReactNode[] {
   return result
 }
 
-function parseInlineMarkdown(text: string, keyPrefix: string): React.ReactNode[] {
+function parseInlineMarkdown(text: string, keyPrefix: string, buttons: ChatButton[]): React.ReactNode[] {
   // Match [link](url), **bold**, *italic*, `code`, or bare URLs
   const regex = /(\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|\*\*(.+?)\*\*|\*(.+?)\*|`(.+?)`|(https?:\/\/[^\s<>,;)]+))/g
   const nodes: React.ReactNode[] = []
@@ -117,11 +119,17 @@ function parseInlineMarkdown(text: string, keyPrefix: string): React.ReactNode[]
     }
 
     if (match[2] && match[3]) {
+      const href = safeInlineHref(match[3], buttons)
+      if (!href) {
+        nodes.push(match[2])
+        lastIndex = match.index + match[0].length
+        continue
+      }
       // [text](url) markdown link
       nodes.push(
         <a
           key={`${keyPrefix}-a-${match.index}`}
-          href={match[3]}
+          href={href}
           target="_blank"
           rel="noopener noreferrer"
           className="text-[#55f5e8] underline underline-offset-2 decoration-[#55f5e8]/40 hover:decoration-[#55f5e8] transition-colors duration-200"
@@ -154,11 +162,17 @@ function parseInlineMarkdown(text: string, keyPrefix: string): React.ReactNode[]
         </code>
       )
     } else if (match[7]) {
+      const href = safeInlineHref(match[7], buttons)
+      if (!href) {
+        nodes.push(match[7])
+        lastIndex = match.index + match[0].length
+        continue
+      }
       // Bare URL (https://...)
       nodes.push(
         <a
           key={`${keyPrefix}-u-${match.index}`}
-          href={match[7]}
+          href={href}
           target="_blank"
           rel="noopener noreferrer"
           className="text-[#55f5e8] underline underline-offset-2 decoration-[#55f5e8]/40 hover:decoration-[#55f5e8] transition-colors duration-200 break-all"
@@ -179,9 +193,32 @@ function parseInlineMarkdown(text: string, keyPrefix: string): React.ReactNode[]
   return nodes
 }
 
-function FormattedMessage({ content }: { content: string }) {
-  const parsed = useMemo(() => parseMarkdown(content), [content])
+function FormattedMessage({ content, buttons }: { content: string; buttons: ChatButton[] }) {
+  const parsed = useMemo(() => parseMarkdown(content, buttons), [content, buttons])
   return <>{parsed}</>
+}
+
+const buttonIcons: Record<string, typeof Phone> = {
+  whatsapp: MessageCircle, phone: Phone, email: Mail, instagram: Instagram, facebook: Facebook,
+  linkedin: Linkedin, tiktok: Music2, link: Globe, video: Video, calendar: CalendarDays,
+}
+
+function ChatActions({ buttons }: { buttons: ChatButton[] }) {
+  if (!buttons.length) return null
+  return (
+    <div className="mt-3 flex flex-wrap gap-2">
+      {buttons.map((button) => {
+        const Icon = buttonIcons[button.icon] || Globe
+        const external = button.href.startsWith("https://")
+        return (
+          <a key={button.href} href={button.href} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined}
+            className="inline-flex min-h-10 items-center gap-1.5 rounded-lg border border-[#55f5e8]/55 bg-[#063e69] px-3 py-2 text-xs font-semibold text-[#b5fff8] transition-colors hover:bg-[#0b627e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#55f5e8]">
+            <Icon size={15} aria-hidden="true" />{button.label}
+          </a>
+        )
+      })}
+    </div>
+  )
 }
 
 export default function FloatingChat() {
@@ -335,6 +372,7 @@ export default function FloatingChat() {
         const decoder = new TextDecoder()
         let buffer = ""
         let completed = false
+        let buttons: ChatButton[] = []
         while (true) {
           const chunk = await reader.read()
           if (chunk.done) break
@@ -346,9 +384,15 @@ export default function FloatingChat() {
             buffer = buffer.slice(boundary + 2)
             const data = block.split("\n").filter((line) => line.startsWith("data:")).map((line) => line.slice(5).trimStart()).join("\n")
             if (!data) continue
-            const event = JSON.parse(data) as { type?: string; text?: string }
+            const event = JSON.parse(data) as { type?: string; text?: string; buttons?: unknown }
             if (event.type === "error") throw new Error("El asistente no pudo completar su respuesta.")
             if (event.type === "done") completed = true
+            if (event.type === "buttons" && Array.isArray(event.buttons)) {
+              buttons = event.buttons.filter((button): button is ChatButton =>
+                !!button && typeof button === "object" && typeof button.label === "string" && button.label.length <= 40 &&
+                typeof button.href === "string" && isAllowedButtonHref(button.href) && typeof button.icon === "string"
+              ).slice(0, 8)
+            }
             if (event.type === "text" && typeof event.text === "string" && event.text) {
               receivedText = true
               progress.update(event.text)
@@ -357,6 +401,9 @@ export default function FloatingChat() {
         }
         if (!completed || !receivedText) throw new Error("La respuesta quedó incompleta.")
         await progress.finish()
+        if (buttons.length && activeRequest.current === controller) {
+          setMessages((prev) => prev.map((message) => message.id === messageId ? { ...message, buttons } : message))
+        }
         return
       }
 
@@ -572,7 +619,10 @@ export default function FloatingChat() {
                   }`}
                 >
                   {msg.role === "assistant" ? (
-                    <FormattedMessage content={msg.content} />
+                    <>
+                      <FormattedMessage content={msg.content} buttons={msg.buttons || []} />
+                      <ChatActions buttons={msg.buttons || []} />
+                    </>
                   ) : (
                     msg.content
                   )}

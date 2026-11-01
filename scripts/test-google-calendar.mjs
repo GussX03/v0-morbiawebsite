@@ -112,3 +112,36 @@ test("creates an event only after checking availability", async () => {
     globalThis.fetch = originalFetch
   }
 })
+
+test("retrieves a pending conference after creating the event", async () => {
+  const originalFetch = globalThis.fetch
+  let eventLookups = 0
+  globalThis.fetch = async (url, options = {}) => {
+    if (url === "https://oauth2.googleapis.com/token") return Response.json({ access_token: "test-access" })
+    if (url.endsWith("/freeBusy")) return Response.json({ calendars: { "calendar@example.com": { busy: [] } } })
+    if (options.method === "POST") return Response.json({ id: "event123", start: { dateTime: start }, end: { dateTime: end }, conferenceData: { createRequest: { status: { statusCode: "pending" } } } })
+    eventLookups++
+    return Response.json({ id: "event123", start: { dateTime: start }, end: { dateTime: end }, hangoutLink: "https://meet.google.com/abc-defg-hij" })
+  }
+  try {
+    const result = await createCalendarEvent({ start, end, email: "person@example.com", name: "Example", summary: "Reunion", description: "" })
+    assert.equal(result.id, "event123")
+    assert.equal(result.meet, "https://meet.google.com/abc-defg-hij")
+    assert.equal(eventLookups, 1)
+  } finally { globalThis.fetch = originalFetch }
+})
+
+test("keeps a confirmed event when the pending conference cannot be fetched", async () => {
+  const originalFetch = globalThis.fetch
+  globalThis.fetch = async (url, options = {}) => {
+    if (url === "https://oauth2.googleapis.com/token") return Response.json({ access_token: "test-access" })
+    if (url.endsWith("/freeBusy")) return Response.json({ calendars: { "calendar@example.com": { busy: [] } } })
+    if (options.method === "POST") return Response.json({ id: "event123", conferenceData: { createRequest: { status: { statusCode: "pending" } } } })
+    return new Response(null, { status: 503 })
+  }
+  try {
+    const result = await createCalendarEvent({ start, end, email: "person@example.com", name: "Example", summary: "Reunion", description: "" })
+    assert.equal(result.id, "event123")
+    assert.equal(result.meet, undefined)
+  } finally { globalThis.fetch = originalFetch }
+})

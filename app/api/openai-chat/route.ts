@@ -1,6 +1,8 @@
 import { createHmac, timingSafeEqual } from "node:crypto"
 import { NextResponse } from "next/server"
 import { runAgentTurn } from "@/lib/openai-agent"
+import { publicDestinations, splitButtonMetadata } from "@/lib/chat-buttons"
+import { validatedChatButtons } from "@/lib/chat-buttons-server"
 
 export const runtime = "nodejs"
 export const maxDuration = 60
@@ -58,6 +60,7 @@ export async function POST(request: Request) {
     let rejectSession!: (error: unknown) => void
     const sessionReady = new Promise<string>((resolve, reject) => { resolveSession = resolve; rejectSession = reject })
     let sessionReported = false
+    let lastText = ""
     const body = new ReadableStream<Uint8Array>({
       start(controller) {
         const send = (event: object) => controller.enqueue(encoder.encode(`data: ${JSON.stringify(event)}\n\n`))
@@ -68,8 +71,16 @@ export async function POST(request: Request) {
             sessionReported = true
             resolveSession(id)
           },
-          onText(text) { send({ type: "text", text }) },
-        }).then(() => {
+          onText(raw) {
+            const { text } = splitButtonMetadata(raw)
+            if (text && text !== lastText) { lastText = text; send({ type: "text", text }) }
+          },
+        }).then((result) => {
+          const { text, metadata } = splitButtonMetadata(result.text)
+          if (!text.trim()) throw new Error("AGENT_EMPTY_MESSAGE")
+          if (text !== lastText) send({ type: "text", text })
+          const buttons = validatedChatButtons(metadata, process.env.MORBIA_CALENDAR_MCP_SECRET || "", publicDestinations)
+          if (buttons.length) send({ type: "buttons", buttons })
           send({ type: "done" })
           controller.close()
         }).catch((error: unknown) => {
@@ -95,7 +106,9 @@ export async function POST(request: Request) {
   try {
     const result = await runAgentTurn({ apiKey, agentId, input: payload.mensaje.trim(), sessionId: existing })
     const encoded = Buffer.from(JSON.stringify({ clientId: payload.id, sessionId: result.sessionId, expires: Date.now() + cookieAge * 1_000 } satisfies SessionCookie)).toString("base64url")
-    const response = NextResponse.json({ output: result.text }, { headers: { "Cache-Control": "no-store" } })
+    const { text, metadata } = splitButtonMetadata(result.text)
+    const buttons = validatedChatButtons(metadata, process.env.MORBIA_CALENDAR_MCP_SECRET || "", publicDestinations)
+    const response = NextResponse.json({ output: text, buttons }, { headers: { "Cache-Control": "no-store" } })
     response.cookies.set(cookieName, `${encoded}.${sign(encoded, cookieSecret)}`, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", maxAge: cookieAge, path: "/api" })
     return response
   } catch (error) {

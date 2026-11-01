@@ -1,6 +1,7 @@
 import { createHash, timingSafeEqual } from "node:crypto"
 import { z } from "zod"
 import { cancelCalendarEvent, createCalendarEvent, findCalendarEvents, getCalendarBusyTimes, moveCalendarEvent } from "@/lib/google-calendar"
+import { createMeetingProof } from "@/lib/chat-buttons-server"
 
 export const runtime = "nodejs"
 export const maxDuration = 60
@@ -58,7 +59,12 @@ export async function POST(request: Request) {
         result = input.email ? await findCalendarEvents(input.email, input.start, input.end) : await getCalendarBusyTimes(input.start, input.end)
         break
       }
-      case "crear_evento_google_calendar": result = await createCalendarEvent(schemas.crear_evento_google_calendar.parse(args)); break
+      case "crear_evento_google_calendar": {
+        const event = await createCalendarEvent(schemas.crear_evento_google_calendar.parse(args))
+        const proof = event.meet ? createMeetingProof(event.meet, process.env.MORBIA_CALENDAR_MCP_SECRET || "") : undefined
+        result = { ...event, ...(event.meet && proof ? { boton_reunion: { url: event.meet, proof } } : {}) }
+        break
+      }
       case "editar_evento_google_calendar": result = await moveCalendarEvent(schemas.editar_evento_google_calendar.parse(args)); break
       case "cancelar_evento_google_calendar": {
         const input = schemas.cancelar_evento_google_calendar.parse(args)
