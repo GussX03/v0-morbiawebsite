@@ -5,6 +5,7 @@ import { MessageCircle, X, Send, RotateCcw, Bot } from "lucide-react"
 import Image from "next/image"
 import { gsap } from "gsap"
 import { useGSAP } from "@gsap/react"
+import { createProgressiveText } from "@/lib/progressive-text"
 
 gsap.registerPlugin(useGSAP)
 
@@ -305,6 +306,16 @@ export default function FloatingChat() {
     const timeout = window.setTimeout(() => controller.abort(), MESSAGE_TIMEOUT_MS)
     const messageId = crypto.randomUUID()
     let receivedText = false
+    const progress = createProgressiveText({
+      signal: controller.signal,
+      onUpdate(content) {
+        if (activeRequest.current !== controller) return
+        setIsStreaming(true)
+        setMessages((prev) => prev.some((message) => message.id === messageId)
+          ? prev.map((message) => message.id === messageId ? { ...message, content } : message)
+          : [...prev, { id: messageId, role: "assistant", content }])
+      },
+    })
 
     try {
       const response = await fetch(CHAT_ENDPOINT, {
@@ -340,15 +351,12 @@ export default function FloatingChat() {
             if (event.type === "done") completed = true
             if (event.type === "text" && typeof event.text === "string" && event.text) {
               receivedText = true
-              setIsStreaming(true)
-              const content = event.text
-              setMessages((prev) => prev.some((message) => message.id === messageId)
-                ? prev.map((message) => message.id === messageId ? { ...message, content } : message)
-                : [...prev, { id: messageId, role: "assistant", content }])
+              progress.update(event.text)
             }
           }
         }
         if (!completed || !receivedText) throw new Error("La respuesta quedó incompleta.")
+        await progress.finish()
         return
       }
 
@@ -395,6 +403,7 @@ export default function FloatingChat() {
         },
       ])
     } finally {
+      progress.dispose()
       window.clearTimeout(timeout)
       if (activeRequest.current === controller) {
         activeRequest.current = null
