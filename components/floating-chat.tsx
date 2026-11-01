@@ -16,6 +16,7 @@ interface Message {
 const generateSessionId = () => "morbia_" + Math.random().toString(36).slice(2, 11)
 const CHAT_ENDPOINT = "/api/chat"
 const AVAILABILITY_TIMEOUT_MS = 30000
+const MESSAGE_TIMEOUT_MS = 60000
 
 /**
  * Parse basic markdown: **bold**, *italic*, `code`, newlines, and bullet lists.
@@ -297,7 +298,7 @@ export default function FloatingChat() {
   const sendMessageDirect = async (text: string) => {
     const payload = { id: sessionId, mensaje: text }
     const controller = new AbortController()
-    const timeout = window.setTimeout(() => controller.abort(), AVAILABILITY_TIMEOUT_MS)
+    const timeout = window.setTimeout(() => controller.abort(), MESSAGE_TIMEOUT_MS)
 
     try {
       const response = await fetch(CHAT_ENDPOINT, {

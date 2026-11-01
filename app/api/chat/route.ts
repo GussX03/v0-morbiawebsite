@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server"
+import { POST as openAiChat } from "../openai-chat/route"
 
 const DEFAULT_N8N_CHAT_WEBHOOK_URL = "https://n8n.morbia.com.mx/webhook/4fc39209-5fb5-46ba-9877-f54a40c5404e"
 const CHAT_TIMEOUT_MS = 30_000
 
-export const maxDuration = 35
+export const maxDuration = 60
 
 type ChatPayload = {
   id?: unknown
@@ -11,6 +12,8 @@ type ChatPayload = {
 }
 
 export async function POST(request: Request) {
+  if (process.env.MORBIA_CHAT_PROVIDER === "openai") return openAiChat(request)
+
   let payload: ChatPayload
 
   try {
