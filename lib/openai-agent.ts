@@ -6,7 +6,7 @@ type AgentEvent = {
   text?: string
 }
 
-type AgentOptions = { apiKey: string; agentId: string; input: string; sessionId?: string }
+type AgentOptions = { apiKey: string; agentId: string; mcpSecret: string; input: string; sessionId?: string }
 
 async function responseFailure(response: Response, operation: string): Promise<Error> {
   let code = "unknown"
@@ -66,7 +66,15 @@ export async function runAgentTurn(options: AgentOptions) {
   if (!options.sessionId) {
     response = await fetch(base, {
       method: "POST", headers, signal, cache: "no-store",
-      body: JSON.stringify({ agent_id: options.agentId, environment: { type: "none" }, input: options.input, stream: true }),
+      body: JSON.stringify({
+        agent_id: options.agentId,
+        agent: { tools: [{
+          type: "mcp", server_label: "morbia_calendar", connection_origin: "service", required: true,
+          transport: { type: "http", server_url: "https://www.morbia.com.mx/api/calendar-mcp", authorization: `Bearer ${options.mcpSecret}` },
+          allowed_tools: ["consultar_disponibilidad_google_calendar", "crear_evento_google_calendar", "editar_evento_google_calendar", "cancelar_evento_google_calendar"],
+        }] },
+        environment: { type: "none" }, input: options.input, stream: true,
+      }),
     })
   } else {
     const path = `${base}/${encodeURIComponent(options.sessionId)}/events`

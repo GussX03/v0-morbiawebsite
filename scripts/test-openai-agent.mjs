@@ -2,7 +2,7 @@ import assert from "node:assert/strict"
 import { test } from "node:test"
 import { runAgentTurn } from "../lib/openai-agent.ts"
 
-const options = { apiKey: "test-key", agentId: "agent-test", input: "Hola" }
+const options = { apiKey: "test-key", agentId: "agent-test", mcpSecret: "test-mcp-secret", input: "Hola" }
 const event = (value) => `data: ${JSON.stringify(value)}\n\n`
 const stream = (...values) => new Response(values.map(event).join(""), { headers: { "Content-Type": "text/event-stream" } })
 
@@ -12,6 +12,7 @@ test("creates a session and returns the final response", async () => {
     const body = JSON.parse(init.body)
     assert.equal(body.agent_id, "agent-test")
     assert.equal(body.spend_control, undefined)
+    assert.equal(body.agent.tools[0].transport.authorization, "Bearer test-mcp-secret")
     return stream(
       { type: "agent.session.created", session: { id: "sess_test" } },
       { type: "agent.session.turn.output_text.done", text: "Hola" },
