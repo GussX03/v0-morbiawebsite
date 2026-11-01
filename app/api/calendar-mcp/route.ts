@@ -67,8 +67,10 @@ export async function POST(request: Request) {
       }
       default: throw new Error("Herramienta desconocida.")
     }
+    console.info("[Morbia Calendar] Tool completed:", name)
     return rpc(message.id, { content: [{ type: "text", text: JSON.stringify(result) }] })
   } catch (error) {
+    console.error("[Morbia Calendar] Tool failed")
     const text = error instanceof z.ZodError ? "Los argumentos de la herramienta no son válidos." : error instanceof Error ? error.message : "No fue posible completar la operación."
     return rpc(message.id, { content: [{ type: "text", text }], isError: true })
   }
