@@ -27,6 +27,7 @@ function decodeCookie(value: string | undefined, secret: string, clientId: strin
 }
 
 export async function POST(request: Request) {
+  if (new URL(request.url).pathname !== "/api/chat") return new Response(null, { status: 404 })
   const apiKey = process.env.OPENAI_API_KEY
   const agentId = process.env.MORBIA_OPENAI_AGENT_ID
   const cookieSecret = process.env.MORBIA_CHAT_COOKIE_SECRET
