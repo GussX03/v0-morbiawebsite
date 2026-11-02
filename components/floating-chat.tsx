@@ -408,16 +408,30 @@ export default function FloatingChat() {
     const timeout = window.setTimeout(() => controller.abort(), MESSAGE_TIMEOUT_MS)
     const messageId = crypto.randomUUID()
     let receivedText = false
-    const progress = createProgressiveText({
-      signal: controller.signal,
-      onUpdate(content) {
-        if (activeRequest.current !== controller) return
-        setIsStreaming(true)
-        setMessages((prev) => prev.some((message) => message.id === messageId)
-          ? prev.map((message) => message.id === messageId ? { ...message, content } : message)
-          : [...prev, { id: messageId, role: "assistant", content }])
-      },
-    })
+    const progressByMessageId = new Map<string, ReturnType<typeof createProgressiveText>>()
+    const localMessageIds = new Map<string, string>()
+    let lastAssistantMessageId: string | undefined
+    let buttonsMessageId: string | undefined
+
+    const progressFor = (streamMessageId: string) => {
+      const existing = progressByMessageId.get(streamMessageId)
+      if (existing) return existing
+
+      const localMessageId = `${messageId}:${streamMessageId}`
+      localMessageIds.set(streamMessageId, localMessageId)
+      const progress = createProgressiveText({
+        signal: controller.signal,
+        onUpdate(content) {
+          if (activeRequest.current !== controller) return
+          setIsStreaming(true)
+          setMessages((prev) => prev.some((message) => message.id === localMessageId)
+            ? prev.map((message) => message.id === localMessageId ? { ...message, content } : message)
+            : [...prev, { id: localMessageId, role: "assistant", content }])
+        },
+      })
+      progressByMessageId.set(streamMessageId, progress)
+      return progress
+    }
 
     try {
       const response = await fetch(CHAT_ENDPOINT, {
@@ -449,53 +463,82 @@ export default function FloatingChat() {
             buffer = buffer.slice(boundary + 2)
             const data = block.split("\n").filter((line) => line.startsWith("data:")).map((line) => line.slice(5).trimStart()).join("\n")
             if (!data) continue
-            const event = JSON.parse(data) as { type?: string; text?: string; buttons?: unknown }
+            const event = JSON.parse(data) as { type?: string; messageId?: string; text?: string; buttons?: unknown }
             if (event.type === "error") throw new Error("El asistente no pudo completar su respuesta.")
             if (event.type === "done") completed = true
             if (event.type === "buttons" && Array.isArray(event.buttons)) {
               buttons = event.buttons.filter(isChatButton).slice(0, 8)
+              if (typeof event.messageId === "string") buttonsMessageId = event.messageId
             }
+            if (event.type === "message" && typeof event.messageId === "string" && typeof event.text === "string" && event.text) {
+              receivedText = true
+              lastAssistantMessageId = event.messageId
+              progressFor(event.messageId).update(event.text)
+            }
+            // Keep compatibility with n8n and older deployments that stream a single text event.
             if (event.type === "text" && typeof event.text === "string" && event.text) {
               receivedText = true
-              progress.update(event.text)
+              lastAssistantMessageId = "legacy"
+              progressFor("legacy").update(event.text)
             }
           }
         }
         if (!completed || !receivedText) throw new Error("La respuesta quedó incompleta.")
-        await progress.finish()
-        if (buttons.length && activeRequest.current === controller) {
-          setMessages((prev) => prev.map((message) => message.id === messageId ? { ...message, buttons } : message))
+        await Promise.all(Array.from(progressByMessageId.values(), (progress) => progress.finish()))
+        const targetMessageId = localMessageIds.get(buttonsMessageId || lastAssistantMessageId || "")
+        if (buttons.length && targetMessageId && activeRequest.current === controller) {
+          setMessages((prev) => prev.map((message) => message.id === targetMessageId ? { ...message, buttons } : message))
         }
         return
       }
 
       const rawText = await response.text()
       let reply = ""
+      let parsedJson: unknown
 
       try {
-        let json = JSON.parse(rawText)
+        parsedJson = JSON.parse(rawText)
 
         // If the response is an array, take the first element
-        if (Array.isArray(json)) {
-          json = json[0] ?? {}
+        if (Array.isArray(parsedJson)) {
+          parsedJson = parsedJson[0] ?? {}
         }
 
-        reply =
-          json.output ||
-          json.message ||
-          json.respuesta ||
-          json.text ||
-          json.reply ||
-          (typeof json === "string" ? json : "")
       } catch {
+        parsedJson = null
         reply = rawText
+      }
+
+      if (typeof parsedJson === "string") reply = parsedJson
+      else if (parsedJson && typeof parsedJson === "object") {
+        const data = parsedJson as Record<string, unknown>
+        const candidate = data.output || data.message || data.respuesta || data.text || data.reply
+        if (typeof candidate === "string") reply = candidate
       }
 
       // Ensure literal \n sequences are converted to real newlines
       reply = reply.replace(/\\n/g, "\n").trim()
 
-      const assistantMessage: Message = { role: "assistant", content: reply }
-      setMessages((prev) => [...prev, assistantMessage])
+      const data = parsedJson && typeof parsedJson === "object" ? parsedJson as Record<string, unknown> : undefined
+      const rawMessages = Array.isArray(data?.messages)
+        ? data.messages.filter((message: unknown) => message && typeof message === "object" && typeof (message as { text?: unknown }).text === "string") as Array<{ id?: unknown; text: string }>
+        : [{ text: reply }]
+      const localIdsByServerId = new Map<string, string>()
+      const buttons = Array.isArray(data?.buttons) ? data.buttons.filter(isChatButton).slice(0, 8) : []
+      const resolvedMessages = rawMessages
+        .map((message) => {
+          const serverId = typeof message.id === "string" ? message.id : crypto.randomUUID()
+          const localId = `${messageId}:${serverId}`
+          localIdsByServerId.set(serverId, localId)
+          return { id: localId, role: "assistant" as const, content: message.text.trim() }
+        })
+        .filter((message) => message.content.length > 0)
+      const rawButtonsMessageId = typeof data?.buttonsMessageId === "string" ? data.buttonsMessageId : undefined
+      const targetMessageId = localIdsByServerId.get(rawButtonsMessageId || "") || resolvedMessages.at(-1)?.id
+      const resolvedWithButtons = resolvedMessages.map((message) =>
+        message.id === targetMessageId && buttons.length ? { ...message, buttons } : message,
+      )
+      setMessages((prev) => [...prev, ...resolvedWithButtons])
     } catch (err) {
       if (activeRequest.current !== controller) return
       console.error("[Morbia Chat] Fetch error:", err)
@@ -512,7 +555,7 @@ export default function FloatingChat() {
         },
       ])
     } finally {
-      progress.dispose()
+      for (const progress of progressByMessageId.values()) progress.dispose()
       window.clearTimeout(timeout)
       if (activeRequest.current === controller) {
         activeRequest.current = null
@@ -666,7 +709,7 @@ export default function FloatingChat() {
 
             {messages.map((msg, i) => (
               <div
-                key={i}
+                key={msg.id || i}
                 className={`flex gap-2.5 sm:gap-2 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}
               >
                 {msg.role === "assistant" && (

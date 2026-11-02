@@ -3,6 +3,7 @@ import { NextResponse } from "next/server"
 import { runAgentTurn } from "@/lib/openai-agent"
 import { publicDestinations, quickReplies, splitButtonMetadata } from "@/lib/chat-buttons"
 import { validatedChatButtons } from "@/lib/chat-buttons-server"
+import { createAgentStreamEvents, splitVisibleAgentOutput } from "@/lib/chat-response"
 
 export const runtime = "nodejs"
 export const maxDuration = 60
@@ -60,10 +61,16 @@ export async function POST(request: Request) {
     let rejectSession!: (error: unknown) => void
     const sessionReady = new Promise<string>((resolve, reject) => { resolveSession = resolve; rejectSession = reject })
     let sessionReported = false
-    let lastText = ""
+    const lastTextByMessage = new Map<string, string>()
     const body = new ReadableStream<Uint8Array>({
       start(controller) {
         const send = (event: object) => controller.enqueue(encoder.encode(`data: ${JSON.stringify(event)}\n\n`))
+        const sendMessage = (messageId: string, rawText: string) => {
+          const { text } = splitButtonMetadata(rawText)
+          if (!text.trim() || text === lastTextByMessage.get(messageId)) return
+          lastTextByMessage.set(messageId, text)
+          send({ type: "message", messageId, text })
+        }
         void runAgentTurn({
           apiKey, agentId, input: payload.mensaje!.toString().trim(), sessionId: existing, signal: abort.signal,
           onSession(id) {
@@ -71,17 +78,20 @@ export async function POST(request: Request) {
             sessionReported = true
             resolveSession(id)
           },
-          onText(raw) {
-            const { text } = splitButtonMetadata(raw)
-            if (text && text !== lastText) { lastText = text; send({ type: "text", text }) }
+          onMessage(message) {
+            sendMessage(message.id, message.text)
           },
         }).then((result) => {
-          const { text, metadata } = splitButtonMetadata(result.text)
-          if (!text.trim()) throw new Error("AGENT_EMPTY_MESSAGE")
-          if (text !== lastText) send({ type: "text", text })
-          const buttons = validatedChatButtons(metadata, process.env.MORBIA_CALENDAR_MCP_SECRET || "", publicDestinations, Date.now(), quickReplies)
-          if (buttons.length) send({ type: "buttons", buttons })
-          send({ type: "done" })
+          const output = splitVisibleAgentOutput(result.messages, splitButtonMetadata)
+          if (!output.text.trim()) throw new Error("AGENT_EMPTY_MESSAGE")
+          const buttons = validatedChatButtons(output.metadata, process.env.MORBIA_CALENDAR_MCP_SECRET || "", publicDestinations, Date.now(), quickReplies)
+          for (const event of createAgentStreamEvents(output.messages, buttons)) {
+            if (event.type === "message" && typeof event.messageId === "string" && typeof event.text === "string") {
+              sendMessage(event.messageId, event.text)
+            } else {
+              send(event)
+            }
+          }
           controller.close()
         }).catch((error: unknown) => {
           if (!sessionReported) rejectSession(error)
@@ -105,10 +115,16 @@ export async function POST(request: Request) {
   }
   try {
     const result = await runAgentTurn({ apiKey, agentId, input: payload.mensaje.trim(), sessionId: existing })
+    const output = splitVisibleAgentOutput(result.messages, splitButtonMetadata)
+    if (!output.text.trim()) throw new Error("AGENT_EMPTY_MESSAGE")
     const encoded = Buffer.from(JSON.stringify({ clientId: payload.id, sessionId: result.sessionId, expires: Date.now() + cookieAge * 1_000 } satisfies SessionCookie)).toString("base64url")
-    const { text, metadata } = splitButtonMetadata(result.text)
-    const buttons = validatedChatButtons(metadata, process.env.MORBIA_CALENDAR_MCP_SECRET || "", publicDestinations, Date.now(), quickReplies)
-    const response = NextResponse.json({ output: text, buttons }, { headers: { "Cache-Control": "no-store" } })
+    const buttons = validatedChatButtons(output.metadata, process.env.MORBIA_CALENDAR_MCP_SECRET || "", publicDestinations, Date.now(), quickReplies)
+    const response = NextResponse.json({
+      output: output.text,
+      messages: output.messages.map(({ id, text }) => ({ id, text })),
+      buttons,
+      buttonsMessageId: output.messages.at(-1)?.id,
+    }, { headers: { "Cache-Control": "no-store" } })
     response.cookies.set(cookieName, `${encoded}.${sign(encoded, cookieSecret)}`, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", maxAge: cookieAge, path: "/api" })
     return response
   } catch (error) {

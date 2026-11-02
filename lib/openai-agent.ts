@@ -10,11 +10,13 @@ type AgentEvent = {
   text?: string
 }
 
+export type AgentOutputMessage = { id: string; outputIndex: number; text: string }
+
 type AgentOptions = {
   apiKey: string; agentId: string; input: string; sessionId?: string
   signal?: AbortSignal
   onSession?: (sessionId: string) => void
-  onText?: (text: string) => void
+  onMessage?: (message: AgentOutputMessage, done: boolean) => void
 }
 
 const calendarServerUrl = "https://www.morbia.com.mx/api/calendar-mcp"
@@ -40,10 +42,42 @@ async function readTurn(stream: ReadableStream<Uint8Array>, options: AgentOption
   const decoder = new TextDecoder()
   let buffer = ""
   let sessionId = options.sessionId
-  let text = ""
-  const parts = new Map<string, string>()
+  let totalTextLength = 0
+  const outputs = new Map<string, { id: string; outputIndex: number; parts: Map<number, string>; text: string }>()
   let complete = false
   if (sessionId) options.onSession?.(sessionId)
+
+  const updateOutput = (event: AgentEvent, incomingText: string, final: boolean) => {
+    const outputIndex = Number.isSafeInteger(event.output_index) && (event.output_index ?? -1) >= 0
+      ? event.output_index!
+      : undefined
+    const id = typeof event.item_id === "string" && event.item_id
+      ? event.item_id
+      : outputIndex === undefined ? "output_0" : `output_${outputIndex}`
+    let output = outputs.get(id)
+    if (!output) {
+      output = { id, outputIndex: outputIndex ?? outputs.size, parts: new Map(), text: "" }
+      outputs.set(id, output)
+    } else if (outputIndex !== undefined) {
+      output.outputIndex = outputIndex
+    }
+
+    const contentIndex = Number.isSafeInteger(event.content_index) && (event.content_index ?? -1) >= 0
+      ? event.content_index!
+      : 0
+    const previousPart = output.parts.get(contentIndex) || ""
+    const nextPart = final ? incomingText : previousPart + incomingText
+    totalTextLength += nextPart.length - previousPart.length
+    if (totalTextLength > 100_000) throw new Error("La respuesta del agente es demasiado grande.")
+
+    output.parts.set(contentIndex, nextPart)
+    output.text = Array.from(output.parts.entries())
+      .sort(([left], [right]) => left - right)
+      .map(([, partText]) => partText)
+      .join("")
+    options.onMessage?.({ id: output.id, outputIndex: output.outputIndex, text: output.text }, final)
+  }
+
   try {
     while (!complete) {
       const chunk = await reader.read()
@@ -63,12 +97,8 @@ async function readTurn(stream: ReadableStream<Uint8Array>, options: AgentOption
           options.onSession?.(sessionId)
         }
         if (event.type === "agent.session.turn.output_text.delta" || event.type === "agent.session.turn.output_text.done") {
-          const key = `${event.item_id || event.output_index || 0}:${event.content_index || 0}`
-          if (event.type.endsWith(".delta") && typeof event.delta === "string") parts.set(key, (parts.get(key) || "") + event.delta)
-          if (event.type.endsWith(".done") && typeof event.text === "string") parts.set(key, event.text)
-          text = Array.from(parts.values()).join("\n\n")
-          if (text.length > 100_000) throw new Error("La respuesta del agente es demasiado grande.")
-          options.onText?.(text)
+          if (event.type.endsWith(".delta") && typeof event.delta === "string") updateOutput(event, event.delta, false)
+          if (event.type.endsWith(".done") && typeof event.text === "string") updateOutput(event, event.text, true)
         }
         if (event.type === "agent.session.requires_action" || event.type === "agent.session.failed" || event.type === "agent.session.environment.failed" || event.type === "error") throw new Error("El agente no pudo completar la solicitud.")
         if ((event.type === "agent.session.turn.failed" || event.type === "agent.session.turn.cancelled") && !event.turn?.subagent_id) throw new Error("El agente no pudo completar la conversación.")
@@ -78,8 +108,13 @@ async function readTurn(stream: ReadableStream<Uint8Array>, options: AgentOption
   } finally {
     await reader.cancel().catch(() => {})
   }
+  const messages: AgentOutputMessage[] = Array.from(outputs.values())
+    .sort((left, right) => left.outputIndex - right.outputIndex)
+    .map(({ id, outputIndex, text }) => ({ id, outputIndex, text: text.trim() }))
+    .filter((message) => message.text.length > 0)
+  const text = messages.map((message) => message.text).join("\n\n")
   if (!complete || !sessionId || !text.trim()) throw new Error("El agente no devolvió una respuesta completa.")
-  return { sessionId, text: text.trim() }
+  return { sessionId, text, messages }
 }
 
 export async function runAgentTurn(options: AgentOptions) {
