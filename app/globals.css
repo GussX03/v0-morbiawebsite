@@ -61,14 +61,6 @@
   mask-image: linear-gradient(to bottom, black, transparent 78%);
 }
 
-.morbia-glass {
-  border: 1px solid rgba(198, 255, 250, 0.28);
-  border-radius: 1.35rem;
-  background: linear-gradient(135deg, rgba(73, 226, 220, 0.24), rgba(5, 61, 101, 0.62));
-  box-shadow: 0 18px 50px rgba(0, 20, 47, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(16px);
-}
-
 .morbia-chat-surface {
   background-color: #05345b;
   background-image:

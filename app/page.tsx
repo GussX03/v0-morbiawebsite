@@ -52,7 +52,7 @@ const serviceGroups = [
 
 function HomeServiceCard({ service }: { service: HomeService }) {
   return (
-    <article data-service-card className="service-hover-card group relative flex flex-col justify-end overflow-hidden rounded-3xl border border-[#79eee3]/20 bg-[linear-gradient(145deg,rgba(7,73,111,.9),rgba(4,53,92,.78))] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,.1)] backdrop-blur-sm transition-colors duration-300 hover:border-[#72e8df]/60 hover:bg-[linear-gradient(145deg,rgba(8,89,125,.94),rgba(4,58,94,.86))] focus-within:border-[#72e8df]/60">
+    <article data-service-card className="service-hover-card group relative flex flex-col justify-end overflow-hidden rounded-3xl border border-[#79eee3]/20 bg-[linear-gradient(145deg,rgba(7,73,111,.9),rgba(4,53,92,.78))] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,.1)] transition-colors duration-300 hover:border-[#72e8df]/60 hover:bg-[linear-gradient(145deg,rgba(8,89,125,.94),rgba(4,58,94,.86))] focus-within:border-[#72e8df]/60">
       <div className="relative z-10 mt-auto">
         <h4 className="text-xl font-bold text-white sm:text-2xl">
           <AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:title`} className="rounded hover:text-[#77f6eb]">{service.title}</AnalyticsLink>
@@ -286,7 +286,7 @@ export default function MorbiaWebsite() {
             <div data-globe-shell className="relative grid h-44 w-44 place-items-center sm:h-60 sm:w-60">
               <Globe2 data-globe-world className="h-full w-full text-[#65f7eb] drop-shadow-[0_0_24px_rgba(101,247,235,.42)]" strokeWidth={0.95} />
             </div>
-            <span className="absolute bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-white/20 bg-[#063d66]/70 px-4 py-2 text-xs font-bold tracking-[.16em] text-[#79fff1] backdrop-blur sm:bottom-4">MORBIA EN ÓRBITA</span>
+            <span className="absolute bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-white/20 bg-[#063d66]/90 px-4 py-2 text-xs font-bold tracking-[.16em] text-[#79fff1] sm:bottom-4">MORBIA EN ÓRBITA</span>
           </div>
         </div>
       </section>
