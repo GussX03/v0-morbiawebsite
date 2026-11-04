@@ -266,7 +266,7 @@ export default function MorbiaWebsite() {
   }
 
   return (
-    <main ref={pageRef} className="overflow-x-clip bg-[#f4fbff] text-[#062b52]">
+    <main ref={pageRef} className="home-page overflow-x-clip bg-[#f4fbff] text-[#062b52]">
       <SiteHeader home />
 
       <section id="inicio" data-hero className="morbia-diagonal relative isolate min-h-[760px] scroll-mt-20 overflow-hidden pt-28 text-white">

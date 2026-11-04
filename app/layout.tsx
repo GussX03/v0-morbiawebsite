@@ -1,11 +1,12 @@
 import type React from "react"
 import type { Metadata } from "next"
 import Script from "next/script"
-import { Montserrat } from "next/font/google"
+import { Instrument_Serif, Montserrat } from "next/font/google"
 import { servicePages, siteUrl } from "@/lib/seo-content"
 import "./globals.css"
 
 const morbiaFont = Montserrat({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-morbia", display: "swap" })
+const morbiaDisplayFont = Instrument_Serif({ subsets: ["latin"], weight: "400", variable: "--font-morbia-display", display: "swap" })
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -158,7 +159,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className={morbiaFont.variable}>{children}</body>
+      <body className={`${morbiaFont.variable} ${morbiaDisplayFont.variable}`}>{children}</body>
     </html>
   )
 }
