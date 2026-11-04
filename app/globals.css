@@ -4,6 +4,9 @@
 
 @layer base {
   :root {
+    --morbia-radius-control: 0.5rem;
+    --morbia-radius-panel: 0.75rem;
+    --morbia-radius-feature: 1rem;
     --background: 197 66% 98%;
     --foreground: 209 88% 18%;
     --card: 0 0% 100%;
@@ -86,6 +89,7 @@
 .service-container { width: 100%; max-width: 80rem; margin-inline: auto; padding-inline: 1.25rem; }
 .service-page, .site-header, .service-lightbox { font-family: var(--font-morbia), "Avenir Next", Avenir, sans-serif; }
 .home-page :is(h1, h2, h3, h4), .service-page :is(h1, h2, h3, h4) { font-family: var(--font-morbia-display), Georgia, serif; font-weight: 400; letter-spacing: -.025em; }
+.service-hover-card { border-radius: var(--morbia-radius-feature); }
 .service-page .font-black { font-weight: 500; }
 .service-page .font-bold { font-weight: 600; }
 .service-section { padding-block: 5rem; scroll-margin-top: 6rem; }
@@ -104,17 +108,17 @@
 .service-hero::before { position: absolute; z-index: -1; inset: 0; content: ""; background: linear-gradient(105deg, rgb(3 29 61 / .96), rgb(3 57 86 / .87), rgb(3 89 106 / .55)); }
 .service-breadcrumb { display: flex; align-items: center; gap: .5rem; margin-bottom: 2rem; font-size: .8rem; line-height: 1.5; color: #bcdfe6; }
 .service-breadcrumb a:hover { color: #fff; }
-.service-photo { position: relative; overflow: hidden; border-radius: 1.5rem; background: #0b526d; }
+.service-photo { position: relative; overflow: hidden; border-radius: var(--morbia-radius-feature); background: #0b526d; }
 .service-photo img { object-fit: cover; }
 .service-artwork { width: min(100%, 30rem); aspect-ratio: 4/5; margin-inline: auto; }
 .service-artwork img { object-fit: contain; }
 .service-catalog-artwork { background: #e0eef1; display: grid; place-items: center; padding: 1.25rem; }
-.service-catalog-poster { width: min(100%, 22rem); aspect-ratio: 4/5; margin-inline: auto; border-radius: .75rem; }
+.service-catalog-poster { width: min(100%, 22rem); aspect-ratio: 4/5; margin-inline: auto; border-radius: var(--morbia-radius-control); }
 .service-catalog-artwork img { object-fit: contain; }
 .service-lightbox[data-state="open"], .service-lightbox-overlay[data-state="open"] { animation: service-image-enter .2s ease-out; }
 @keyframes service-image-enter { from { opacity: 0; } to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .service-lightbox, .service-lightbox-overlay { animation: none !important; } }
-.service-catalog-card { border: 1px solid #c7e4e9; border-radius: 1.5rem; overflow: hidden; background: #fafdfe; box-shadow: 0 12px 36px rgb(4 72 104 / .06); transition: transform .3s, border-color .3s, box-shadow .3s; scroll-margin-top: 6rem; }
+.service-catalog-card { border: 1px solid #c7e4e9; border-radius: var(--morbia-radius-panel); overflow: hidden; background: #fafdfe; box-shadow: 0 12px 36px rgb(4 72 104 / .06); transition: transform .3s, border-color .3s, box-shadow .3s; scroll-margin-top: 6rem; }
 .service-catalog-card:hover, .service-catalog-card:focus-within { border-color: #56b8c1; box-shadow: 0 20px 45px rgb(4 72 104 / .12); }
 .service-catalog-image img { transition: transform .7s cubic-bezier(.2,.7,.3,1); }
 .service-catalog-card:hover .service-catalog-image img { transform: scale(1.035); }

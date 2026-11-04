@@ -52,7 +52,7 @@ const serviceGroups = [
 
 function HomeServiceCard({ service }: { service: HomeService }) {
   return (
-    <article data-service-card className="service-hover-card group relative flex flex-col justify-end overflow-hidden rounded-3xl border border-[#79eee3]/20 bg-[linear-gradient(145deg,rgba(7,73,111,.9),rgba(4,53,92,.78))] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,.1)] transition-colors duration-300 hover:border-[#72e8df]/60 hover:bg-[linear-gradient(145deg,rgba(8,89,125,.94),rgba(4,58,94,.86))] focus-within:border-[#72e8df]/60">
+    <article data-service-card className="service-hover-card group relative flex flex-col justify-end overflow-hidden border border-[#79eee3]/20 bg-[linear-gradient(145deg,rgba(7,73,111,.9),rgba(4,53,92,.78))] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,.1)] transition-colors duration-300 hover:border-[#72e8df]/60 hover:bg-[linear-gradient(145deg,rgba(8,89,125,.94),rgba(4,58,94,.86))] focus-within:border-[#72e8df]/60">
       <div className="relative z-10 mt-auto">
         <h4 className="text-xl font-bold text-white sm:text-2xl">
           <AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:title`} className="rounded hover:text-[#77f6eb]">{service.title}</AnalyticsLink>
@@ -349,9 +349,9 @@ export default function MorbiaWebsite() {
 
       <section id="nexacv" className="scroll-mt-20 overflow-hidden bg-white py-20 lg:py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 lg:grid-cols-[.92fr_1.08fr] lg:px-8">
-          <div data-gsap-reveal className="relative order-2 overflow-hidden rounded-[2rem] bg-[linear-gradient(135deg,#063a69,#007f9e_55%,#09c8bd)] p-4 shadow-2xl shadow-[#057893]/20 lg:order-1">
-            <div className="absolute inset-0 rounded-[2rem] opacity-60 [background-image:linear-gradient(135deg,transparent_0%,transparent_47%,rgba(255,255,255,.16)_48%,transparent_50%)]" />
-            <div className="relative grid min-h-[25rem] place-items-center rounded-[1.5rem] border border-white/15 bg-[radial-gradient(circle_at_50%_34%,#0c91ac_0%,#06416b_49%,#032e55_100%)] p-6 sm:min-h-[31rem] sm:p-10">
+          <div data-gsap-reveal className="relative order-2 overflow-hidden rounded-2xl bg-[linear-gradient(135deg,#063a69,#007f9e_55%,#09c8bd)] p-4 shadow-2xl shadow-[#057893]/20 lg:order-1">
+            <div className="absolute inset-0 rounded-2xl opacity-60 [background-image:linear-gradient(135deg,transparent_0%,transparent_47%,rgba(255,255,255,.16)_48%,transparent_50%)]" />
+            <div className="relative grid min-h-[25rem] place-items-center rounded-xl border border-white/15 bg-[radial-gradient(circle_at_50%_34%,#0c91ac_0%,#06416b_49%,#032e55_100%)] p-6 sm:min-h-[31rem] sm:p-10">
               <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(135deg,transparent_0%,transparent_47%,rgba(91,244,230,.22)_48%,transparent_50%)]" />
               <Image src="/images/nexacv-logo.png" alt="NexaCV by Morbia" width={1254} height={1254} className="relative h-auto w-full max-w-md drop-shadow-[0_18px_28px_rgba(0,0,0,.35)]" />
             </div>
@@ -359,7 +359,7 @@ export default function MorbiaWebsite() {
           <div data-gsap-reveal className="order-1 lg:order-2">
             <h3 className="text-3xl font-black leading-tight tracking-[-.035em]">Tu siguiente oportunidad empieza con un CV mejor.</h3>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-[#496579]">NexaCV te ayuda a redactar tu currículum, adaptar tu experiencia a una vacante y revisar su lectura ante filtros ATS antes de descargarlo en PDF.</p>
-            <div className="mt-8 grid gap-3 sm:grid-cols-2">{[[FileText, "Crea tu CV profesional"], [Sparkles, "Optimiza con IA"], [ScanSearch, "Puntuación ATS en tiempo real"], [Download, "Exporta y comparte"]].map(([Icon, label]) => { const FeatureIcon = Icon as typeof FileText; return <div key={label as string} className="flex items-center gap-3 rounded-2xl bg-[#effbfc] p-4 font-semibold text-[#0b5578]"><FeatureIcon className="text-[#00bcb9]" size={22} />{label as string}</div> })}</div>
+            <div className="mt-8 grid gap-3 sm:grid-cols-2">{[[FileText, "Crea tu CV profesional"], [Sparkles, "Optimiza con IA"], [ScanSearch, "Puntuación ATS en tiempo real"], [Download, "Exporta y comparte"]].map(([Icon, label]) => { const FeatureIcon = Icon as typeof FileText; return <div key={label as string} className="flex items-center gap-3 rounded-lg bg-[#effbfc] p-4 font-semibold text-[#0b5578]"><FeatureIcon className="text-[#00bcb9]" size={22} />{label as string}</div> })}</div>
             <a href="https://nexacv.morbia.com.mx" target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#138ba3] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Conoce NexaCV <ArrowRight size={17} /></a>
           </div>
         </div>
@@ -379,8 +379,8 @@ export default function MorbiaWebsite() {
               </div>
             </div>
           </div>
-          <div ref={clientCarouselRef} className="client-carousel mt-8 rounded-[2rem] border border-[#b9e2e7] bg-[linear-gradient(135deg,#073b61,#087c87)] shadow-[0_20px_50px_rgba(0,92,115,0.18)]" role="region" aria-label="Clientes de Morbia. Usa las flechas para recorrer los logotipos.">
-            <div className="client-carousel-track">{clientCarouselLogos.map((client, index) => { const isClone = index >= clientLogos.length; return <a data-client-logo key={`${client.alt}-${index}`} href={client.href} target="_blank" rel="noopener noreferrer" aria-hidden={isClone || undefined} tabIndex={isClone ? -1 : undefined} className={"group flex h-32 w-[15rem] shrink-0 items-center justify-center overflow-hidden rounded-3xl border p-4 shadow-[0_12px_28px_rgba(0,29,56,0.2)] transition hover:-translate-y-1 hover:border-[#61e1dc] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#83f4e9] sm:w-[17rem] " + client.surfaceClass}><Image src={client.src} alt={isClone ? "" : client.alt} width={240} height={120} className={"h-24 w-full max-w-full object-contain transition duration-300 group-hover:scale-105 " + client.logoClass} /></a> })}</div>
+          <div ref={clientCarouselRef} className="client-carousel mt-8 rounded-xl border border-[#b9e2e7] bg-[linear-gradient(135deg,#073b61,#087c87)] shadow-[0_20px_50px_rgba(0,92,115,0.18)]" role="region" aria-label="Clientes de Morbia. Usa las flechas para recorrer los logotipos.">
+            <div className="client-carousel-track">{clientCarouselLogos.map((client, index) => { const isClone = index >= clientLogos.length; return <a data-client-logo key={`${client.alt}-${index}`} href={client.href} target="_blank" rel="noopener noreferrer" aria-hidden={isClone || undefined} tabIndex={isClone ? -1 : undefined} className={"group flex h-32 w-[15rem] shrink-0 items-center justify-center overflow-hidden rounded-lg border p-4 shadow-[0_12px_28px_rgba(0,29,56,0.2)] transition hover:-translate-y-1 hover:border-[#61e1dc] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#83f4e9] sm:w-[17rem] " + client.surfaceClass}><Image src={client.src} alt={isClone ? "" : client.alt} width={240} height={120} className={"h-24 w-full max-w-full object-contain transition duration-300 group-hover:scale-105 " + client.logoClass} /></a> })}</div>
           </div>
         </div>
       </section>

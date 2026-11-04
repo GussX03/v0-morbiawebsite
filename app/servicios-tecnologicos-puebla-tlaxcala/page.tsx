@@ -83,7 +83,7 @@ export default function ServiciosTecnologicosPueblaTlaxcalaPage() {
                   <article key={group.slug} id={group.slug} data-service-reveal className="service-catalog-card flex flex-col">
                     <div className="service-catalog-artwork"><ServiceArtwork image={serviceImages[group.slug]} alt={story.imageAlt} title={service.title} variant="catalog" /></div>
                     <div className="flex flex-1 flex-col p-6 sm:p-8">
-                      <div className="flex items-center gap-3"><span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[#e2f5f7] text-[#087b91]"><Icon size={25} strokeWidth={1.8} /></span><h3 className="text-2xl font-black leading-tight tracking-[-.035em] text-[#073b61]"><Link href={`/servicios/${group.slug}`}>{group.title}</Link></h3></div>
+                      <div className="flex items-center gap-3"><span className="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-[#e2f5f7] text-[#087b91]"><Icon size={25} strokeWidth={1.8} /></span><h3 className="text-2xl font-black leading-tight tracking-[-.035em] text-[#073b61]"><Link href={`/servicios/${group.slug}`}>{group.title}</Link></h3></div>
                       <p className="mt-5 text-lg font-semibold leading-7 text-[#145676]">{story.headline}</p>
                       <p className="mt-3 leading-7 text-[#496579]">{story.audience}</p>
                       <ul className="mb-7 mt-6 grid gap-3 sm:grid-cols-2">{group.capabilities.map((capability) => <li key={capability} className="flex items-start gap-2.5 text-sm leading-6 text-[#376076]"><Check size={17} className="mt-1 shrink-0 text-[#0b8c9c]" />{capability}</li>)}</ul>

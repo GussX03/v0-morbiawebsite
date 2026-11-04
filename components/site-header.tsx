@@ -142,7 +142,7 @@ export default function SiteHeader({ home = false }: { home?: boolean }) {
             </NavigationMenu.List>
           </nav>
           <Link href={home ? "#contacto" : "/#contacto"} onClick={(event) => { if (home) event.preventDefault(); navigate("contacto") }} className="service-button site-header-contact">Hablemos hoy <ArrowRight size={16} /></Link>
-          <button ref={mobileMenuButton} type="button" onClick={() => setIsMenuOpen((open) => !open)} className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-white/25 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#65eee1] lg:hidden" aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"} aria-expanded={isMenuOpen} aria-controls="mobile-navigation">{isMenuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}</button>
+          <button ref={mobileMenuButton} type="button" onClick={() => setIsMenuOpen((open) => !open)} className="grid h-11 w-11 shrink-0 place-items-center rounded-lg border border-white/25 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#65eee1] lg:hidden" aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"} aria-expanded={isMenuOpen} aria-controls="mobile-navigation">{isMenuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}</button>
         </div>
             <NavigationMenu.Viewport className="site-services-viewport hidden border-t border-white/10 lg:block" />
           </div>
