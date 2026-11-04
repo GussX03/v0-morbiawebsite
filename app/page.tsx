@@ -53,7 +53,6 @@ const serviceGroups = [
 function HomeServiceCard({ service }: { service: HomeService }) {
   return (
     <article data-service-card className="service-hover-card group relative flex flex-col justify-end overflow-hidden rounded-3xl border border-[#79eee3]/20 bg-[linear-gradient(145deg,rgba(7,73,111,.9),rgba(4,53,92,.78))] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,.1)] backdrop-blur-sm transition-colors duration-300 hover:border-[#72e8df]/60 hover:bg-[linear-gradient(145deg,rgba(8,89,125,.94),rgba(4,58,94,.86))] focus-within:border-[#72e8df]/60">
-      <div aria-hidden="true" className="pointer-events-none absolute -right-14 -top-14 h-40 w-40 rounded-full bg-[#1ae0d1]/10 blur-3xl" />
       <div className="relative z-10 mt-auto">
         <h4 className="text-xl font-bold text-white sm:text-2xl">
           <AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:title`} className="rounded hover:text-[#77f6eb]">{service.title}</AnalyticsLink>
@@ -282,7 +281,6 @@ export default function MorbiaWebsite() {
             </div>
           </div>
           <div data-hero-visual data-hero-orbit aria-hidden="true" className="relative mx-auto -mt-2 flex min-h-[350px] w-full max-w-[25rem] self-center justify-self-center items-center justify-center sm:mt-0 sm:min-h-[470px] sm:max-w-xl">
-            <div className="absolute h-[14rem] w-[14rem] rounded-full bg-[#18d8d0]/15 blur-3xl sm:h-[20rem] sm:w-[20rem]" />
             <div data-orbit-ring-a className="absolute h-[17rem] w-[17rem] rounded-full border border-[#51f4e8]/35 sm:h-[25rem] sm:w-[25rem]"><span data-orbit-node className="absolute -right-2 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-[#69fff0] shadow-[0_0_28px_#69fff0]" /></div>
             <div data-orbit-ring-b className="absolute h-[12rem] w-[24rem] rotate-[-32deg] rounded-[50%] border border-[#7efbf2]/40 sm:h-[16rem] sm:w-[32rem]"><span data-orbit-node className="absolute left-8 top-4 h-3 w-3 rounded-full bg-[#40e4db] shadow-[0_0_22px_#40e4db]" /></div>
             <div data-globe-shell className="relative grid h-44 w-44 place-items-center sm:h-60 sm:w-60">
@@ -296,7 +294,6 @@ export default function MorbiaWebsite() {
       <HomeHorizontalStory />
 
       <section id="nosotros" className="relative isolate scroll-mt-20 overflow-hidden bg-white py-20 lg:py-28">
-        <div aria-hidden="true" className="absolute -left-36 top-20 h-80 w-80 rounded-full bg-[#48dcd5]/10 blur-3xl" />
         <div aria-hidden="true" className="absolute right-[-9rem] top-14 hidden h-72 w-72 rounded-full border border-[#7ae8e0]/35 lg:block" />
         <div className="relative mx-auto grid max-w-7xl gap-14 px-5 lg:grid-cols-[.78fr_1.22fr] lg:items-start lg:px-8">
           <div data-gsap-reveal className="lg:sticky lg:top-28">
