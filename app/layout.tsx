@@ -1,12 +1,12 @@
 import type React from "react"
 import type { Metadata } from "next"
 import Script from "next/script"
-import { Instrument_Serif, Montserrat } from "next/font/google"
+import { Figtree, Source_Serif_4 } from "next/font/google"
 import { servicePages, siteUrl } from "@/lib/seo-content"
 import "./globals.css"
 
-const morbiaFont = Montserrat({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-morbia", display: "swap" })
-const morbiaDisplayFont = Instrument_Serif({ subsets: ["latin"], weight: "400", variable: "--font-morbia-display", display: "swap" })
+const morbiaFont = Figtree({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-morbia", display: "swap" })
+const morbiaDisplayFont = Source_Serif_4({ subsets: ["latin"], weight: ["500", "600", "700"], variable: "--font-morbia-display", display: "swap" })
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

@@ -39,6 +39,7 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-morbia), "Avenir Next", Avenir, sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
@@ -88,9 +89,9 @@
    Layering: content 0, global navigation 50, image overlay 60, image dialog 70. */
 .service-container { width: 100%; max-width: 80rem; margin-inline: auto; padding-inline: 1.25rem; }
 .service-page, .site-header, .service-lightbox { font-family: var(--font-morbia), "Avenir Next", Avenir, sans-serif; }
-.home-page :is(h1, h2, h3, h4), .service-page :is(h1, h2, h3, h4) { font-family: var(--font-morbia-display), Georgia, serif; font-weight: 400; letter-spacing: -.025em; }
+.home-page :is(h1, h2, h3, h4), .service-page :is(h1, h2, h3, h4) { font-family: var(--font-morbia-display), Georgia, serif; font-weight: 600; letter-spacing: -.025em; }
 .service-hover-card { border-radius: var(--morbia-radius-feature); }
-.service-page .font-black { font-weight: 500; }
+.service-page .font-black { font-weight: 600; }
 .service-page .font-bold { font-weight: 600; }
 .service-section { padding-block: 5rem; scroll-margin-top: 6rem; }
 .service-section-photo { background-color: #eaf8fa; background-image: linear-gradient(120deg, rgb(239 250 251 / .92), rgb(226 245 247 / .95)), url("/images/morbia-diagonal-bg.jpg"); background-position: center; background-size: cover; }
