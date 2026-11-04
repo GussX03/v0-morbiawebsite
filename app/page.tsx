@@ -3,9 +3,8 @@
 import { useRef } from "react"
 import Image from "next/image"
 import {
-  ArrowRight, BarChart3, Bot, BrainCircuit, ChevronLeft, ChevronRight, Code2, Download,
-  FileText, Globe2, Handshake, Mail, MapPin, Megaphone, MessageCircleMore, Orbit, Phone,
-  ScanSearch, Settings2, Sparkles, UsersRound, Zap,
+  ArrowRight, ChevronLeft, ChevronRight, Download, FileText, Globe2, Mail, MapPin, Orbit, Phone,
+  ScanSearch, Sparkles,
 } from "lucide-react"
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTiktok, FaWhatsapp } from "react-icons/fa6"
 import { gsap } from "gsap"
@@ -25,13 +24,13 @@ const navItems = [
 ] as const
 
 const services = [
-  { icon: Code2, title: "Aplicaciones web", href: "/servicios/paginas-web", detail: "Una plataforma que se siente hecha para tu negocio: clara para tu equipo, útil para tus clientes y preparada para crecer sin volver a empezar.", result: "Tu operación, en un solo lugar." },
-  { icon: Megaphone, title: "Presencia digital", href: "/servicios/presencia-digital", detail: "Alinea tu sitio, Google, Maps y redes con contenido, fotografía, video y campañas que puedas medir.", result: "Una presencia coherente. Decisiones con datos." },
-  { icon: MessageCircleMore, title: "Chatbots", href: "/servicios/chatbots", detail: "Convierte cada mensaje en una oportunidad. Tu negocio responde, orienta y acompaña a tus clientes incluso cuando tu equipo está ocupado.", result: "Atención que nunca deja esperando." },
-  { icon: Zap, title: "Automatizaciones", href: "/servicios/automatizacion-de-procesos", detail: "Conecta tareas que hoy consumen horas y deja que los procesos avancen con menos seguimiento manual. Diseñamos flujos para liberar tiempo en las tareas repetitivas de tu equipo.", result: "Menos tareas. Más capacidad para crecer." },
-  { icon: Bot, title: "RPA", href: "/servicios/rpa", detail: "Haz que las tareas manuales y repetitivas sucedan con precisión, todos los días. Tu equipo puede enfocarse en clientes, estrategia y decisiones que sí mueven el negocio.", result: "Tu equipo vuelve a lo importante." },
-  { icon: BrainCircuit, title: "Inteligencia artificial", href: "/servicios/inteligencia-artificial", detail: "Lleva respuestas, recomendaciones e ideas accionables al momento exacto. La inteligencia artificial deja de ser promesa y se convierte en una ventaja para decidir mejor.", result: "Decisiones más claras, cada día." },
-  { icon: BarChart3, title: "Análisis de datos", href: "/servicios/analisis-de-datos", detail: "Transformamos información dispersa en una lectura clara de lo que está funcionando, dónde está la oportunidad y qué decisión vale la pena tomar después.", result: "Ve con claridad hacia dónde crecer." },
+  { title: "Aplicaciones web", href: "/servicios/paginas-web", detail: "Una plataforma que se siente hecha para tu negocio: clara para tu equipo, útil para tus clientes y preparada para crecer sin volver a empezar.", result: "Tu operación, en un solo lugar." },
+  { title: "Presencia digital", href: "/servicios/presencia-digital", detail: "Alinea tu sitio, Google, Maps y redes con contenido, fotografía, video y campañas que puedas medir.", result: "Una presencia coherente. Decisiones con datos." },
+  { title: "Chatbots", href: "/servicios/chatbots", detail: "Convierte cada mensaje en una oportunidad. Tu negocio responde, orienta y acompaña a tus clientes incluso cuando tu equipo está ocupado.", result: "Atención que nunca deja esperando." },
+  { title: "Automatizaciones", href: "/servicios/automatizacion-de-procesos", detail: "Conecta tareas que hoy consumen horas y deja que los procesos avancen con menos seguimiento manual. Diseñamos flujos para liberar tiempo en las tareas repetitivas de tu equipo.", result: "Menos tareas. Más capacidad para crecer." },
+  { title: "RPA", href: "/servicios/rpa", detail: "Haz que las tareas manuales y repetitivas sucedan con precisión, todos los días. Tu equipo puede enfocarse en clientes, estrategia y decisiones que sí mueven el negocio.", result: "Tu equipo vuelve a lo importante." },
+  { title: "Inteligencia artificial", href: "/servicios/inteligencia-artificial", detail: "Lleva respuestas, recomendaciones e ideas accionables al momento exacto. La inteligencia artificial deja de ser promesa y se convierte en una ventaja para decidir mejor.", result: "Decisiones más claras, cada día." },
+  { title: "Análisis de datos", href: "/servicios/analisis-de-datos", detail: "Transformamos información dispersa en una lectura clara de lo que está funcionando, dónde está la oportunidad y qué decisión vale la pena tomar después.", result: "Ve con claridad hacia dónde crecer." },
 ] as const
 
 type HomeService = (typeof services)[number]
@@ -52,20 +51,13 @@ const serviceGroups = [
 ] as const
 
 function HomeServiceCard({ service }: { service: HomeService }) {
-  const Icon = service.icon
-
   return (
     <article data-service-card className="service-hover-card group relative flex flex-col justify-end overflow-hidden rounded-3xl border border-[#79eee3]/20 bg-[linear-gradient(145deg,rgba(7,73,111,.9),rgba(4,53,92,.78))] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,.1)] backdrop-blur-sm transition-colors duration-300 hover:border-[#72e8df]/60 hover:bg-[linear-gradient(145deg,rgba(8,89,125,.94),rgba(4,58,94,.86))] focus-within:border-[#72e8df]/60">
       <div aria-hidden="true" className="pointer-events-none absolute -right-14 -top-14 h-40 w-40 rounded-full bg-[#1ae0d1]/10 blur-3xl" />
       <div className="relative z-10 mt-auto">
-        <div className="flex items-center gap-3">
-          <span data-service-icon className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-[#79eee3]/20 bg-[#1ae0d1]/10 text-[#57f2e5] transition duration-300 group-hover:-translate-y-1 group-hover:border-[#72e8df]/60 group-hover:bg-[#1ae0d1]/20">
-            <Icon size={25} aria-hidden="true" />
-          </span>
-          <h4 className="text-xl font-bold text-white">
-            <AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:title`} className="rounded hover:text-[#77f6eb]">{service.title}</AnalyticsLink>
-          </h4>
-        </div>
+        <h4 className="text-xl font-bold text-white sm:text-2xl">
+          <AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:title`} className="rounded hover:text-[#77f6eb]">{service.title}</AnalyticsLink>
+        </h4>
         <div data-service-detail className="service-hover-detail">
           <div>
             <p className="leading-relaxed text-white/80">{service.detail}</p>
@@ -79,10 +71,10 @@ function HomeServiceCard({ service }: { service: HomeService }) {
 }
 
 const principles = [
-  { icon: UsersRound, number: "01", title: "Enfoque en personas", text: "La tecnología tiene más sentido cuando mejora la vida de las personas." },
-  { icon: Settings2, number: "02", title: "Soluciones a medida", text: "Cada negocio es único; por eso creamos soluciones que se adaptan a ti." },
-  { icon: BarChart3, number: "03", title: "Resultados reales", text: "Nos enfocamos en generar valor medible y sostenible." },
-  { icon: Handshake, number: "04", title: "Alianzas a largo plazo", text: "Construimos relaciones duraderas basadas en confianza y crecimiento." },
+  { number: "01", title: "Enfoque en personas", text: "La tecnología tiene más sentido cuando mejora la vida de las personas." },
+  { number: "02", title: "Soluciones a medida", text: "Cada negocio es único; por eso creamos soluciones que se adaptan a ti." },
+  { number: "03", title: "Resultados reales", text: "Nos enfocamos en generar valor medible y sostenible." },
+  { number: "04", title: "Alianzas a largo plazo", text: "Construimos relaciones duraderas basadas en confianza y crecimiento." },
 ] as const
 
 const clientLogos = [
@@ -183,10 +175,6 @@ export default function MorbiaWebsite() {
       start: "top 86%",
       onEnter: (elements) => {
         gsap.from(elements, { y: 34, autoAlpha: 0, scale: 0.97, duration: 0.72, stagger: 0.1, ease: "power3.out", overwrite: true })
-        elements.forEach((element, index) => {
-          const icon = element.querySelector<HTMLElement>("[data-service-icon]")
-          if (icon) gsap.from(icon, { scale: 0.72, rotation: -12, duration: 0.6, delay: index * 0.1 + 0.12, ease: "back.out(1.7)", overwrite: true })
-        })
       },
     })
 
@@ -322,11 +310,10 @@ export default function MorbiaWebsite() {
             <div data-about-path aria-hidden="true" className="absolute bottom-10 left-[1.75rem] top-10 w-px bg-[linear-gradient(#20cbc5,rgba(32,203,197,.12))] sm:left-[2.25rem]" />
             <Orbit data-about-orbit aria-hidden="true" className="absolute -right-2 top-1 hidden text-[#0fbab7]/25 sm:block" size={88} strokeWidth={1} />
             <div className="relative">
-              {principles.map(({ icon: FeatureIcon, number, title, text }, index) => (
+              {principles.map(({ number, title, text }) => (
                 <article data-about-principle key={title} className="group grid grid-cols-[3.5rem_1fr] gap-x-5 border-b border-[#cae6ea] py-8 first:pt-0 last:border-b-0 last:pb-0 sm:grid-cols-[4.5rem_1fr] sm:gap-x-7">
-                  <div className="relative flex flex-col items-center gap-3">
-                    <span className="text-xs font-black tracking-[.18em] text-[#079aaa]">{number}</span>
-                    <span className="grid h-11 w-11 place-items-center rounded-full border border-[#74dad7] bg-white text-[#078c9c] shadow-[0_10px_24px_rgba(0,125,145,.12)] transition duration-500 group-hover:scale-110 group-hover:border-[#0dbdb9] group-hover:bg-[#0d8e9d] group-hover:text-white"><FeatureIcon size={21} strokeWidth={1.8} /></span>
+                  <div className="pt-1">
+                    <span className="text-2xl font-black leading-none tracking-tight text-[#079aaa]">{number}</span>
                   </div>
                   <div className="pb-1 pt-1">
                     <div className="flex items-start justify-between gap-4">
