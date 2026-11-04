@@ -2,7 +2,7 @@
 
 import Image, { type StaticImageData } from "next/image"
 import * as Dialog from "@radix-ui/react-dialog"
-import { ExternalLink, Maximize2, X } from "lucide-react"
+import { TbExternalLink as ExternalLink, TbMaximize as Maximize2, TbX as X } from "react-icons/tb"
 
 type ServiceArtworkProps = {
   image: StaticImageData

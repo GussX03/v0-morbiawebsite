@@ -1,11 +1,11 @@
-import { BarChart3, Bot, BrainCircuit, Code2, Megaphone, MessageCircleMore, Zap } from "lucide-react"
+import { TbChartBar, TbRobot, TbBrain, TbCode, TbSpeakerphone, TbMessageCircle, TbBolt } from "react-icons/tb"
 
 export const serviceIcons = {
-  "presencia-digital": Megaphone,
-  "paginas-web": Code2,
-  chatbots: MessageCircleMore,
-  "automatizacion-de-procesos": Zap,
-  rpa: Bot,
-  "inteligencia-artificial": BrainCircuit,
-  "analisis-de-datos": BarChart3,
+  "presencia-digital": TbSpeakerphone,
+  "paginas-web": TbCode,
+  chatbots: TbMessageCircle,
+  "automatizacion-de-procesos": TbBolt,
+  rpa: TbRobot,
+  "inteligencia-artificial": TbBrain,
+  "analisis-de-datos": TbChartBar,
 } as const

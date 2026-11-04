@@ -3,9 +3,10 @@
 import { useRef } from "react"
 import Image from "next/image"
 import {
-  ArrowRight, ChevronLeft, ChevronRight, Download, FileText, Globe2, Mail, MapPin, Orbit, Phone,
-  ScanSearch, Sparkles,
-} from "lucide-react"
+  TbArrowRight as ArrowRight, TbChevronLeft as ChevronLeft, TbChevronRight as ChevronRight,
+  TbDownload as Download, TbFileText as FileText, TbWorld as Globe2, TbMail as Mail,
+  TbMapPin as MapPin, TbPhone as Phone, TbZoomScan as ScanSearch, TbSparkles as Sparkles,
+} from "react-icons/tb"
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTiktok, FaWhatsapp } from "react-icons/fa6"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -302,7 +303,6 @@ export default function MorbiaWebsite() {
           </div>
           <div className="relative">
             <div data-about-path aria-hidden="true" className="absolute bottom-10 left-[1.75rem] top-10 w-px bg-[linear-gradient(#20cbc5,rgba(32,203,197,.12))] sm:left-[2.25rem]" />
-            <Orbit data-about-orbit aria-hidden="true" className="absolute -right-2 top-1 hidden text-[#0fbab7]/25 sm:block" size={88} strokeWidth={1} />
             <div className="relative">
               {principles.map(({ number, title, text }) => (
                 <article data-about-principle key={title} className="group grid grid-cols-[3.5rem_1fr] gap-x-5 border-b border-[#cae6ea] py-8 first:pt-0 last:border-b-0 last:pb-0 sm:grid-cols-[4.5rem_1fr] sm:gap-x-7">

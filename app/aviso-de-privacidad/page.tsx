@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { Clock, FileText, HelpCircle, Mail, MapPin, Phone, Settings, ShieldCheck, Trash2 } from "lucide-react"
+import { TbClock as Clock, TbFileText as FileText, TbHelpCircle as HelpCircle, TbMail as Mail, TbMapPin as MapPin, TbPhone as Phone, TbSettings as Settings, TbShieldCheck as ShieldCheck, TbTrash as Trash2 } from "react-icons/tb"
 
 export const metadata: Metadata = {
   title: "Aviso de Privacidad - FinZen | Morbia",

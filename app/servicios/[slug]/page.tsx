@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import Link from "next/link"
-import { ArrowDown, ArrowLeft, ArrowRight, Check, ChevronRight, Plus } from "lucide-react"
+import { TbArrowDown as ArrowDown, TbArrowLeft as ArrowLeft, TbArrowRight as ArrowRight, TbCheck as Check, TbChevronRight as ChevronRight, TbPlus as Plus } from "react-icons/tb"
 import AnalyticsLink from "@/components/analytics-link"
 import SiteHeader from "@/components/site-header"
 import ServiceMotion from "@/components/service-motion"

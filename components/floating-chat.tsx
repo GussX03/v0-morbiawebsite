@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useRef, useEffect, useMemo } from "react"
-import { MessageCircle, X, Send, RotateCcw, Bot, Phone, Mail, Instagram, Facebook, Linkedin, Music2, Globe, Video, CalendarDays, Workflow, PanelTop, BrainCircuit, BarChart3, FileText, Sparkles, BadgeDollarSign } from "lucide-react"
+import { TbMessageCircle as MessageCircle, TbX as X, TbSend as Send, TbRefresh as RotateCcw, TbRobot as Bot, TbPhone as Phone, TbMail as Mail, TbWorld as Globe, TbVideo as Video, TbCalendarEvent as CalendarDays, TbAutomation as Workflow, TbLayoutDashboard as PanelTop, TbBrain as BrainCircuit, TbChartBar as BarChart3, TbFileText as FileText, TbSparkles as Sparkles, TbRosetteDiscount as BadgeDollarSign } from "react-icons/tb"
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTiktok, FaWhatsapp } from "react-icons/fa6"
 import Image from "next/image"
 import { gsap } from "gsap"
 import { useGSAP } from "@gsap/react"
@@ -207,8 +208,8 @@ function isChatButton(value: unknown): value is ChatButton {
 }
 
 const buttonIcons: Record<string, typeof Phone> = {
-  whatsapp: MessageCircle, phone: Phone, email: Mail, instagram: Instagram, facebook: Facebook,
-  linkedin: Linkedin, tiktok: Music2, link: Globe, video: Video, calendar: CalendarDays,
+  whatsapp: FaWhatsapp, phone: Phone, email: Mail, instagram: FaInstagram, facebook: FaFacebookF,
+  linkedin: FaLinkedinIn, tiktok: FaTiktok, link: Globe, video: Video, calendar: CalendarDays,
   chat: MessageCircle, automation: Workflow, web: PanelTop, ai: BrainCircuit, data: BarChart3,
   file: FileText, quote: BadgeDollarSign, spark: Sparkles,
 }

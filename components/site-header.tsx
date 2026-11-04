@@ -5,7 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import * as NavigationMenu from "@radix-ui/react-navigation-menu"
-import { ArrowRight, ChevronDown, Menu, X } from "lucide-react"
+import { TbArrowRight as ArrowRight, TbChevronDown as ChevronDown, TbMenu2 as Menu, TbX as X } from "react-icons/tb"
 import { servicePages } from "@/lib/seo-content"
 import { serviceIcons } from "@/components/service-icons"
 

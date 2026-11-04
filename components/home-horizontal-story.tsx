@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef } from "react"
-import { ArrowRight, BarChart3, BadgeCheck, GitBranch, Globe2, Gauge, Sparkles, Workflow } from "lucide-react"
+import { TbArrowRight as ArrowRight, TbChartBar as BarChart3, TbRosetteDiscountCheck as BadgeCheck, TbGitFork as GitBranch, TbWorld as Globe2, TbGauge as Gauge, TbSparkles as Sparkles, TbAutomation as Workflow } from "react-icons/tb"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useGSAP } from "@gsap/react"

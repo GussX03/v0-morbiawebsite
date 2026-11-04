@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, Mail, Phone } from "lucide-react"
+import { TbArrowRight as ArrowRight, TbMail as Mail, TbPhone as Phone } from "react-icons/tb"
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTiktok, FaWhatsapp } from "react-icons/fa6"
 import AnalyticsLink from "@/components/analytics-link"
 import { serviceApproach } from "@/lib/service-stories"

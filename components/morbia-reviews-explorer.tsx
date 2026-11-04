@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useGSAP } from "@gsap/react"
-import { ArrowUpRight, ChevronLeft, ChevronRight, Star } from "lucide-react"
+import { TbArrowUpRight as ArrowUpRight, TbChevronLeft as ChevronLeft, TbChevronRight as ChevronRight, TbStar as Star } from "react-icons/tb"
 import { FcGoogle } from "react-icons/fc"
 import type { MorbiaReview, MorbiaReviewsData } from "@/lib/morbia-reviews"
 
