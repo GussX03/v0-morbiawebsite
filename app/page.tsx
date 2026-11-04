@@ -36,33 +36,34 @@ const services = [
 
 type HomeService = (typeof services)[number]
 
-const serviceGroups = [
-  {
-    id: "connect",
-    title: "Conecta con tus clientes",
-    description: "Presencia digital, páginas web y conversaciones que ayudan a explicar lo que haces y a dar el siguiente paso.",
-    services: services.slice(0, 3),
-  },
-  {
-    id: "operate",
-    title: "Haz que tu operación avance",
-    description: "Automatización, inteligencia artificial y datos para ordenar tareas y decidir con mejor contexto.",
-    services: services.slice(3),
-  },
-] as const
-
-function HomeServiceCard({ service }: { service: HomeService }) {
+function HomeServiceRow({ service }: { service: HomeService }) {
   return (
-    <article className="service-hover-card group relative flex flex-col justify-end overflow-hidden border border-[#79eee3]/20 bg-[linear-gradient(145deg,rgba(7,73,111,.9),rgba(4,53,92,.78))] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,.1)] transition-colors duration-300 hover:border-[#72e8df]/60 hover:bg-[linear-gradient(145deg,rgba(8,89,125,.94),rgba(4,58,94,.86))] focus-within:border-[#72e8df]/60">
-      <div className="relative z-10 mt-auto">
-        <h4 className="text-xl font-bold text-white sm:text-2xl">
-          <AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:title`} className="rounded hover:text-[#77f6eb]">{service.title}</AnalyticsLink>
-        </h4>
-        <div data-service-detail className="service-hover-detail">
-          <div>
-            <p className="leading-relaxed text-[#eaf6f7]">{service.detail}</p>
-            <p className="mt-4 text-sm font-bold text-[#d9faf6]">{service.result}</p>
-            <AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:home`} className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-[#64f8ec]">Conoce este servicio <ArrowRight size={15} aria-hidden="true" /></AnalyticsLink>
+    <article className="service-hover-row group">
+      <h4 className="text-xl font-bold text-white sm:text-2xl">
+        <AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:title`} className="rounded hover:text-[#77f6eb]">{service.title}</AnalyticsLink>
+      </h4>
+      <div className="service-hover-detail service-hover-row-detail"><div><p className="leading-relaxed text-[#eaf6f7]">{service.detail}</p></div></div>
+    </article>
+  )
+}
+
+function HomeServiceFeature({ service }: { service: HomeService }) {
+  return (
+    <article className="service-hover-feature group grid overflow-hidden rounded-xl border border-white/15 bg-[#042b4d] text-white md:grid-cols-[.8fr_1.2fr]">
+      <div className="relative aspect-[4/5] bg-[#042b4d]">
+        <Image src="/images/services/presencia-digital.webp" alt="" fill sizes="(max-width: 767px) 100vw, (max-width: 1023px) 48vw, 38vw" className="object-cover" />
+      </div>
+      <div className="relative flex flex-col justify-end p-6 sm:p-8 md:min-h-[33rem]">
+        <div className="mt-auto">
+          <h4 className="text-2xl font-bold text-white sm:text-3xl">
+            <AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:title`} className="rounded hover:text-[#77f6eb]">{service.title}</AnalyticsLink>
+          </h4>
+          <div className="service-hover-detail service-hover-feature-detail">
+            <div>
+              <p className="leading-relaxed text-[#eaf6f7]">{service.detail}</p>
+              <p className="mt-3 text-sm font-bold text-[#d9faf6]">{service.result}</p>
+              <AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:home`} className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-[#64f8ec]">Conoce este servicio <ArrowRight size={15} aria-hidden="true" /></AnalyticsLink>
+            </div>
           </div>
         </div>
       </div>
@@ -306,18 +307,31 @@ export default function MorbiaWebsite() {
             <p className="mt-5 text-lg leading-relaxed text-[#eaf6f7]">Desde una página que explica tus servicios y recibe solicitudes hasta flujos que actualizan registros o asistentes que contestan preguntas frecuentes: elegimos el alcance según la tarea que quieres mejorar.</p>
             <AnalyticsLink href="/servicios-tecnologicos-puebla-tlaxcala" contentId="regional-services:home" className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#73f7eb] transition hover:text-white">Explora todas nuestras soluciones <ArrowRight size={16} /></AnalyticsLink>
           </div>
-          <div className="mt-12 space-y-14">
-            {serviceGroups.map((group) => (
-              <div key={group.id}>
-                <div className="mb-6 flex flex-col gap-2 sm:mb-7 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
-                  <h3 className="text-2xl font-black tracking-[-.035em] text-white sm:text-3xl">{group.title}</h3>
-                  <p className="max-w-2xl text-sm leading-relaxed text-[#eaf6f7] sm:text-base">{group.description}</p>
+          <div className="mt-12">
+            <div className="grid items-start gap-8 lg:grid-cols-[1.05fr_.95fr] lg:gap-12">
+              <div>
+                <div className="mb-5 max-w-xl">
+                  <h3 className="text-2xl font-black tracking-[-.035em] text-white sm:text-3xl">Conecta con tus clientes.</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-[#eaf6f7] sm:text-base">Haz que te encuentren, entiendan lo que ofreces y sepan cómo contactarte.</p>
                 </div>
-                <div data-services-track className={`grid gap-4 ${group.id === "connect" ? "md:grid-cols-3" : "md:grid-cols-2 xl:grid-cols-4"}`}>
-                  {group.services.map((service) => <HomeServiceCard key={service.title} service={service} />)}
-                </div>
+                <HomeServiceFeature service={services[1]} />
               </div>
-            ))}
+              <div className="lg:pt-16">
+                <HomeServiceRow service={services[0]} />
+                <HomeServiceRow service={services[2]} />
+                <p className="mt-8 max-w-md text-xl font-semibold leading-snug text-[#d9faf6] sm:text-2xl">Una buena primera impresión también puede responder preguntas y recibir solicitudes.</p>
+              </div>
+            </div>
+            <div className="mt-20 grid gap-8 border-t border-white/20 pt-10 lg:grid-cols-[.75fr_1.25fr] lg:gap-14">
+              <div className="max-w-lg">
+                <h3 className="text-2xl font-black tracking-[-.035em] text-white sm:text-3xl">Haz que tu operación avance.</h3>
+                <p className="mt-5 text-3xl font-semibold leading-tight tracking-[-.035em] text-[#76eee4] sm:text-4xl">Menos pasos repetidos. Más espacio para decidir.</p>
+                <p className="mt-5 leading-relaxed text-[#eaf6f7]">Automatiza una captura, conecta tareas entre sistemas o reúne tus datos para saber qué atender primero.</p>
+              </div>
+              <div className="grid gap-x-10 sm:grid-cols-2">
+                {services.slice(3).map((service) => <HomeServiceRow key={service.title} service={service} />)}
+              </div>
+            </div>
           </div>
         </div>
       </section>

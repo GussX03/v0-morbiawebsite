@@ -90,7 +90,6 @@
 .service-container { width: 100%; max-width: 80rem; margin-inline: auto; padding-inline: 1.25rem; }
 .service-page, .site-header, .service-lightbox { font-family: var(--font-morbia), "Avenir Next", Avenir, sans-serif; }
 .home-page :is(h1, h2, h3, h4), .service-page :is(h1, h2, h3, h4) { font-family: var(--font-morbia-display), Georgia, serif; font-weight: 600; letter-spacing: -.025em; }
-.service-hover-card { border-radius: var(--morbia-radius-feature); }
 .service-page .font-black { font-weight: 600; }
 .service-page .font-bold { font-weight: 600; }
 .service-section { padding-block: 5rem; scroll-margin-top: 6rem; }
@@ -150,9 +149,16 @@
 
 .client-carousel::-webkit-scrollbar { display: none; }
 
-.service-hover-card {
-  height: 24rem;
+.service-hover-row {
+  position: relative;
+  height: 9.5rem;
+  border-top: 1px solid rgba(198, 255, 250, 0.24);
+  padding-block: 1.2rem;
 }
+
+.service-hover-row h4 { position: absolute; bottom: 1.2rem; left: 0; }
+.service-hover-row-detail { position: absolute; inset: 1.1rem 0 auto; margin-top: 0; transform: translateY(.25rem); }
+.service-hover-row-detail > div { max-height: 4.4rem; }
 
 .service-hover-detail {
   display: grid;
@@ -162,28 +168,39 @@
   transition: grid-template-rows .5s cubic-bezier(.2,.7,.3,1), margin-top .5s cubic-bezier(.2,.7,.3,1), opacity .3s ease;
 }
 
-.service-hover-card:hover .service-hover-detail,
-.service-hover-card:focus-within .service-hover-detail {
+.service-hover-detail > div { min-height: 0; overflow: hidden; }
+
+.service-hover-feature:hover .service-hover-detail,
+.service-hover-feature:focus-within .service-hover-detail {
   grid-template-rows: 1fr;
-  margin-top: 1rem;
+  margin-top: .75rem;
   opacity: 1;
 }
 
+.service-hover-row:hover .service-hover-row-detail,
+.service-hover-row:focus-within .service-hover-row-detail { grid-template-rows: 1fr; opacity: 1; transform: none; }
+
 @media (max-width: 767px) {
-  .service-hover-card {
+  .service-hover-row {
     height: auto;
-    min-height: 20rem;
+    min-height: 0;
+    padding-block: 1.2rem;
   }
 
-  .service-hover-detail {
+  .service-hover-row h4 { position: static; }
+  .service-hover-row-detail {
+    position: static;
+    transform: none;
     grid-template-rows: 1fr;
-    margin-top: 1rem;
+    margin-top: .65rem;
     opacity: 1;
   }
+  .service-hover-row-detail > div { max-height: none; }
+  .service-hover-feature .service-hover-detail { grid-template-rows: 1fr; margin-top: .75rem; opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .service-hover-detail { transition: none; }
+  .service-hover-detail, .service-hover-row-detail { transition: none; }
 }
 
 .home-story {
