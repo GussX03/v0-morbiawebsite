@@ -11,7 +11,7 @@ export function ServiceApproach() {
       <div className="service-container">
         <div data-service-reveal className="max-w-3xl"><h2 className="service-heading">El primer paso es entender tu negocio.</h2><p className="service-lead">No necesitas llegar con una solución elegida. Basta con contarnos qué se está volviendo difícil y qué te gustaría que funcionara mejor.</p></div>
         <ol className="mt-12 grid gap-8 md:grid-cols-3">
-          {serviceApproach.map((step, index) => <li key={step.title} data-service-reveal className="relative border-t-2 border-[#a5d8df] pt-6"><span className="mb-5 block text-3xl font-black tracking-[-.04em] text-[#0b7e95]" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span><h3 className="text-xl font-bold text-[#073b61]">{step.title}</h3><p className="mt-3 leading-7 text-[#496579]">{step.text}</p></li>)}
+          {serviceApproach.map((step, index) => <li key={step.title} data-service-reveal className="relative pt-6"><span className="mb-5 block text-3xl font-black tracking-[-.04em] text-[#0b7e95]" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span><h3 className="text-xl font-bold text-[#073b61]">{step.title}</h3><p className="mt-3 leading-7 text-[#496579]">{step.text}</p></li>)}
         </ol>
       </div>
     </section>

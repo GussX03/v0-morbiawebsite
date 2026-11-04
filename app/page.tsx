@@ -60,7 +60,7 @@ function HomeServiceCard({ service }: { service: HomeService }) {
         <div data-service-detail className="service-hover-detail">
           <div>
             <p className="leading-relaxed text-white/80">{service.detail}</p>
-            <p className="mt-4 border-l-2 border-[#65eee1] pl-3 text-sm font-bold text-[#d9faf6]">{service.result}</p>
+            <p className="mt-4 text-sm font-bold text-[#d9faf6]">{service.result}</p>
             <AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:home`} className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-[#64f8ec]">Conoce este servicio <ArrowRight size={15} aria-hidden="true" /></AnalyticsLink>
           </div>
         </div>
@@ -298,7 +298,7 @@ export default function MorbiaWebsite() {
           <div data-gsap-reveal className="lg:sticky lg:top-28">
             <h2 className="max-w-md text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Todo en órbita, <span className="text-[#00aeb7]">nada al azar.</span></h2>
             <p className="mt-6 max-w-md text-lg leading-relaxed text-[#496579]">Empezamos por entender qué se atasca: una solicitud que nadie retoma, información repartida o datos que se capturan dos veces. Después definimos si conviene una página, una integración, automatización o asistencia con IA.</p>
-            <blockquote className="mt-9 max-w-sm border-l-4 border-[#11c8c5] pl-5 text-xl font-semibold leading-snug text-[#0a4771]">La tecnología es más poderosa cuando impulsa personas.</blockquote>
+            <blockquote className="mt-9 max-w-sm text-xl font-semibold leading-snug text-[#0a4771]">La tecnología es más poderosa cuando impulsa personas.</blockquote>
           </div>
           <div className="relative">
             <div data-about-path aria-hidden="true" className="absolute bottom-10 left-[1.75rem] top-10 w-px bg-[linear-gradient(#20cbc5,rgba(32,203,197,.12))] sm:left-[2.25rem]" />
@@ -334,7 +334,7 @@ export default function MorbiaWebsite() {
           <div className="mt-12 space-y-14">
             {serviceGroups.map((group) => (
               <div key={group.id}>
-                <div data-gsap-reveal className="mb-6 flex flex-col gap-2 border-l-2 border-[#3ee8db] pl-4 sm:mb-7 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
+                <div data-gsap-reveal className="mb-6 flex flex-col gap-2 sm:mb-7 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
                   <h3 className="text-2xl font-black tracking-[-.035em] text-white sm:text-3xl">{group.title}</h3>
                   <p className="max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">{group.description}</p>
                 </div>

@@ -86,7 +86,7 @@ export default async function ServicePage({ params }: ServiceRouteProps) {
           <div className="service-container grid items-start gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
             <div>
               <div data-service-reveal><h2 className="service-heading">¿Te pasa algo de esto?</h2>{story.overview.map((paragraph) => <p key={paragraph} className="mt-6 text-[1.05rem] leading-8 text-[#496579]">{paragraph}</p>)}</div>
-              <div className="mt-10 space-y-7">{story.signals.map((signal) => <div key={signal.title} data-service-reveal className="border-l-2 border-[#8ecdd5] pl-5"><h3 className="text-lg font-bold leading-7 text-[#0b4d70]">{signal.title}</h3><p className="mt-2 leading-7 text-[#527082]">{signal.text}</p></div>)}</div>
+              <div className="mt-10 space-y-7">{story.signals.map((signal) => <div key={signal.title} data-service-reveal><h3 className="text-lg font-bold leading-7 text-[#0b4d70]">{signal.title}</h3><p className="mt-2 leading-7 text-[#527082]">{signal.text}</p></div>)}</div>
             </div>
             <aside data-service-reveal className="morbia-diagonal relative isolate overflow-hidden rounded-2xl border border-[#5bc0ca]/40 p-6 text-white shadow-[0_20px_55px_rgba(4,72,104,.14)] sm:p-9">
               <div className="absolute inset-0 -z-10 bg-[linear-gradient(135deg,rgba(3,47,82,.97),rgba(3,62,92,.94),rgba(2,106,121,.86))]" />
@@ -111,7 +111,7 @@ export default async function ServicePage({ params }: ServiceRouteProps) {
         </section>
 
         <section className="service-section">
-          <div className="service-container"><div data-service-reveal><h2 className="service-heading">Lo que cambia para tu equipo.</h2><p className="service-lead">La mejora se tiene que notar en la forma de trabajar, atender y tomar decisiones.</p></div><div className="mt-10 grid gap-8 md:grid-cols-3">{story.benefits.map((benefit) => <div key={benefit.title} data-service-reveal className="border-t-2 border-[#95cfd8] pt-6"><span data-service-symbol className="inline-flex origin-center"><Check className="text-[#078394]" size={25} /></span><h3 className="mt-5 text-xl font-bold leading-7 text-[#0b4d70]">{benefit.title}</h3><p className="mt-3 leading-7 text-[#496579]">{benefit.text}</p></div>)}</div></div>
+          <div className="service-container"><div data-service-reveal><h2 className="service-heading">Lo que cambia para tu equipo.</h2><p className="service-lead">La mejora se tiene que notar en la forma de trabajar, atender y tomar decisiones.</p></div><div className="mt-10 grid gap-8 md:grid-cols-3">{story.benefits.map((benefit) => <div key={benefit.title} data-service-reveal className="pt-3"><span data-service-symbol className="inline-flex origin-center"><Check className="text-[#078394]" size={25} /></span><h3 className="mt-5 text-xl font-bold leading-7 text-[#0b4d70]">{benefit.title}</h3><p className="mt-3 leading-7 text-[#496579]">{benefit.text}</p></div>)}</div></div>
         </section>
 
         <ServiceApproach />
