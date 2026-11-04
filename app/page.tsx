@@ -270,7 +270,6 @@ export default function MorbiaWebsite() {
 
       <section id="inicio" data-hero className="morbia-diagonal relative isolate min-h-[760px] scroll-mt-20 overflow-hidden pt-28 text-white">
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,29,61,.92),rgba(3,49,78,.64),rgba(3,76,104,.42))]" />
-        <div className="morbia-grid absolute inset-0 opacity-30" />
         <div className="relative mx-auto grid min-h-[632px] max-w-7xl items-center gap-12 px-5 pb-16 pt-10 lg:grid-cols-[1.02fr_.98fr] lg:px-8">
           <div data-hero-copy className="max-w-2xl">
             <h1 className="max-w-xl text-5xl font-black leading-[.96] tracking-[-.055em] sm:text-6xl lg:text-7xl">Inteligencia orbitando <span className="text-[#27e3d5]">tus procesos.</span></h1>

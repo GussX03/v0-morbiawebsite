@@ -53,14 +53,6 @@
   background-size: cover;
 }
 
-.morbia-grid {
-  background-image:
-    linear-gradient(rgba(123, 255, 245, 0.13) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(123, 255, 245, 0.13) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: linear-gradient(to bottom, black, transparent 78%);
-}
-
 .morbia-chat-surface {
   background-color: #05345b;
   background-image:
