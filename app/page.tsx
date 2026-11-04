@@ -274,7 +274,6 @@ export default function MorbiaWebsite() {
         <div className="morbia-grid absolute inset-0 opacity-30" />
         <div className="relative mx-auto grid min-h-[632px] max-w-7xl items-center gap-12 px-5 pb-16 pt-10 lg:grid-cols-[1.02fr_.98fr] lg:px-8">
           <div data-hero-copy className="max-w-2xl">
-            <p className="mb-5 text-sm font-bold tracking-[.17em] text-[#52f3e7]">TECNOLOGÍA QUE IMPULSA PERSONAS</p>
             <h1 className="max-w-xl text-5xl font-black leading-[.96] tracking-[-.055em] sm:text-6xl lg:text-7xl">Inteligencia orbitando <span className="text-[#27e3d5]">tus procesos.</span></h1>
             <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/80">Creamos páginas web, presencia digital, chatbots, automatizaciones e inteligencia artificial para que tu negocio opere con más claridad. Nos ubicamos en Puebla y Tlaxcala y te acompañamos estés donde estés.</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -301,8 +300,7 @@ export default function MorbiaWebsite() {
         <div aria-hidden="true" className="absolute right-[-9rem] top-14 hidden h-72 w-72 rounded-full border border-[#7ae8e0]/35 lg:block" />
         <div className="relative mx-auto grid max-w-7xl gap-14 px-5 lg:grid-cols-[.78fr_1.22fr] lg:items-start lg:px-8">
           <div data-gsap-reveal className="lg:sticky lg:top-28">
-            <p className="text-sm font-bold tracking-[.14em] text-[#008eaa]">ACERCA DE NOSOTROS</p>
-            <h2 className="mt-4 max-w-md text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Todo en órbita, <span className="text-[#00aeb7]">nada al azar.</span></h2>
+            <h2 className="max-w-md text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Todo en órbita, <span className="text-[#00aeb7]">nada al azar.</span></h2>
             <p className="mt-6 max-w-md text-lg leading-relaxed text-[#496579]">En Morbia creemos en un futuro donde la tecnología impulse el potencial de las personas. Diseñamos soluciones a la medida con estrategia, innovación y cercanía.</p>
             <blockquote className="mt-9 max-w-sm border-l-4 border-[#11c8c5] pl-5 text-xl font-semibold leading-snug text-[#0a4771]">La tecnología es más poderosa cuando impulsa personas.</blockquote>
           </div>
@@ -333,8 +331,7 @@ export default function MorbiaWebsite() {
         <div className="absolute inset-0 bg-[#06345c]/82" />
         <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
           <div data-gsap-reveal className="max-w-3xl">
-            <p className="text-sm font-bold tracking-[.14em] text-[#52f3e7]">NUESTROS SERVICIOS</p>
-            <h2 className="mt-4 text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Soluciones tecnológicas para un mundo en evolución.</h2>
+            <h2 className="text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Soluciones tecnológicas para un mundo en evolución.</h2>
             <p className="mt-5 text-lg leading-relaxed text-white/75">Donde esté tu negocio, conectamos presencia digital, páginas web, chatbots, automatización, inteligencia artificial y datos para atender mejor y trabajar con más claridad.</p>
             <AnalyticsLink href="/servicios-tecnologicos-puebla-tlaxcala" contentId="regional-services:home" className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#73f7eb] transition hover:text-white">Explora todas nuestras soluciones <ArrowRight size={16} /></AnalyticsLink>
           </div>
@@ -364,8 +361,7 @@ export default function MorbiaWebsite() {
             </div>
           </div>
           <div data-gsap-reveal className="order-1 lg:order-2">
-            <p className="text-sm font-bold tracking-[.14em] text-[#008eaa]">NUESTRA APP</p>
-            <h3 className="mt-4 text-3xl font-black leading-tight tracking-[-.035em]">Tu siguiente oportunidad empieza con un CV mejor.</h3>
+            <h3 className="text-3xl font-black leading-tight tracking-[-.035em]">Tu siguiente oportunidad empieza con un CV mejor.</h3>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-[#496579]">Crea, optimiza y potencia tu CV con inteligencia artificial. Una plataforma simple, profesional y lista para ayudarte a alcanzar nuevas oportunidades.</p>
             <div className="mt-8 grid gap-3 sm:grid-cols-2">{[[FileText, "Crea tu CV profesional"], [Sparkles, "Optimiza con IA"], [ScanSearch, "Puntuación ATS en tiempo real"], [Download, "Exporta y comparte"]].map(([Icon, label]) => { const FeatureIcon = Icon as typeof FileText; return <div key={label as string} className="flex items-center gap-3 rounded-2xl bg-[#effbfc] p-4 font-semibold text-[#0b5578]"><FeatureIcon className="text-[#00bcb9]" size={22} />{label as string}</div> })}</div>
             <a href="https://nexacv.morbia.com.mx" target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#138ba3] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Conoce NexaCV <ArrowRight size={17} /></a>
@@ -378,7 +374,7 @@ export default function MorbiaWebsite() {
       <section id="clientes" className="scroll-mt-20 overflow-hidden bg-[#eaf8fa] py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-5 lg:px-8">
           <div data-gsap-reveal className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
-            <div><p className="text-sm font-bold tracking-[.14em] text-[#008eaa]">NUESTROS CLIENTES</p><h2 className="mt-4 text-4xl font-black tracking-[-.045em] sm:text-5xl">Empresas que confían en nosotros.</h2></div>
+            <div><h2 className="text-4xl font-black tracking-[-.045em] sm:text-5xl">Empresas que confían en nosotros.</h2></div>
             <div className="flex items-center justify-between gap-4 lg:justify-end">
               <p className="max-w-sm text-[#527082]">Construimos tecnología útil para organizaciones que quieren moverse con claridad.</p>
               <div className="flex shrink-0 gap-2" role="group" aria-label="Controles de clientes">
@@ -393,7 +389,7 @@ export default function MorbiaWebsite() {
         </div>
       </section>
 
-      <section id="contacto" className="morbia-diagonal relative scroll-mt-20 overflow-hidden py-20 text-white lg:py-24"><div className="absolute inset-0 bg-[#04345d]/84" /><div className="relative mx-auto flex max-w-7xl flex-col justify-between gap-10 px-5 lg:flex-row lg:items-center lg:px-8"><div data-gsap-reveal className="max-w-2xl"><p className="text-sm font-bold tracking-[.14em] text-[#55f5e8]">HABLEMOS</p><h2 className="mt-4 text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Conversemos sobre tu próximo proyecto.</h2><p className="mt-5 text-lg text-white/75">Estamos listos para escuchar tus ideas y convertirlas en soluciones.</p><div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium text-white/85"><a href="mailto:contacto@morbia.com.mx" className="flex items-center gap-2 hover:text-[#62f7eb]"><Mail size={18} />contacto@morbia.com.mx</a><a href="tel:+522215268440" className="flex items-center gap-2 hover:text-[#62f7eb]"><Phone size={18} />(+52) 221 526 8440</a><span className="flex items-center gap-2"><MapPin size={18} />Ubicación: Puebla y Tlaxcala</span></div></div><a data-gsap-reveal href="https://wa.me/522215268440" target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#138ba3] px-7 py-4 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Hablemos hoy <ArrowRight size={17} /></a></div></section>
+      <section id="contacto" className="morbia-diagonal relative scroll-mt-20 overflow-hidden py-20 text-white lg:py-24"><div className="absolute inset-0 bg-[#04345d]/84" /><div className="relative mx-auto flex max-w-7xl flex-col justify-between gap-10 px-5 lg:flex-row lg:items-center lg:px-8"><div data-gsap-reveal className="max-w-2xl"><h2 className="text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Conversemos sobre tu próximo proyecto.</h2><p className="mt-5 text-lg text-white/75">Estamos listos para escuchar tus ideas y convertirlas en soluciones.</p><div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium text-white/85"><a href="mailto:contacto@morbia.com.mx" className="flex items-center gap-2 hover:text-[#62f7eb]"><Mail size={18} />contacto@morbia.com.mx</a><a href="tel:+522215268440" className="flex items-center gap-2 hover:text-[#62f7eb]"><Phone size={18} />(+52) 221 526 8440</a><span className="flex items-center gap-2"><MapPin size={18} />Ubicación: Puebla y Tlaxcala</span></div></div><a data-gsap-reveal href="https://wa.me/522215268440" target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#138ba3] px-7 py-4 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Hablemos hoy <ArrowRight size={17} /></a></div></section>
 
       <footer className="bg-[#042b4d] py-12 text-white"><div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-[1fr_auto] lg:px-8"><div><Image src="/images/main-logo.png" alt="Morbia" width={170} height={55} className="h-10 w-auto brightness-0 invert" /><p className="mt-5 text-sm font-semibold tracking-[.12em] text-[#5eece3]">INTELIGENCIA ORBITANDO TUS PROCESOS</p><p className="mt-4 text-sm text-white/55">© 2026 Morbia. Todos los derechos reservados.</p></div><div className="md:text-right"><p className="text-sm font-bold text-white/75">Síguenos</p><div className="mt-4 flex gap-3 md:justify-end">{socials.map(([label, href, Icon]) => <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-[#27e3d5] hover:bg-[#19e0d0] hover:text-[#05335c]"><Icon size={17} /></a>)}</div><div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/60 md:justify-end">{navItems.slice(1).map(([label, id]) => <a key={id} href={`#${id}`} onClick={(event) => { event.preventDefault(); goTo(id) }} className="hover:text-white">{label}</a>)}</div></div></div></footer>
       <FloatingChat />
