@@ -24,13 +24,13 @@ const navItems = [
 ] as const
 
 const services = [
-  { title: "Aplicaciones web", href: "/servicios/paginas-web", detail: "Una plataforma que se siente hecha para tu negocio: clara para tu equipo, útil para tus clientes y preparada para crecer sin volver a empezar.", result: "Tu operación, en un solo lugar." },
-  { title: "Presencia digital", href: "/servicios/presencia-digital", detail: "Alinea tu sitio, Google, Maps y redes con contenido, fotografía, video y campañas que puedas medir.", result: "Una presencia coherente. Decisiones con datos." },
-  { title: "Chatbots", href: "/servicios/chatbots", detail: "Convierte cada mensaje en una oportunidad. Tu negocio responde, orienta y acompaña a tus clientes incluso cuando tu equipo está ocupado.", result: "Atención que nunca deja esperando." },
-  { title: "Automatizaciones", href: "/servicios/automatizacion-de-procesos", detail: "Conecta tareas que hoy consumen horas y deja que los procesos avancen con menos seguimiento manual. Diseñamos flujos para liberar tiempo en las tareas repetitivas de tu equipo.", result: "Menos tareas. Más capacidad para crecer." },
-  { title: "RPA", href: "/servicios/rpa", detail: "Haz que las tareas manuales y repetitivas sucedan con precisión, todos los días. Tu equipo puede enfocarse en clientes, estrategia y decisiones que sí mueven el negocio.", result: "Tu equipo vuelve a lo importante." },
-  { title: "Inteligencia artificial", href: "/servicios/inteligencia-artificial", detail: "Lleva respuestas, recomendaciones e ideas accionables al momento exacto. La inteligencia artificial deja de ser promesa y se convierte en una ventaja para decidir mejor.", result: "Decisiones más claras, cada día." },
-  { title: "Análisis de datos", href: "/servicios/analisis-de-datos", detail: "Transformamos información dispersa en una lectura clara de lo que está funcionando, dónde está la oportunidad y qué decisión vale la pena tomar después.", result: "Ve con claridad hacia dónde crecer." },
+  { title: "Aplicaciones web", href: "/servicios/paginas-web", detail: "Diseñamos páginas y aplicaciones para que tus clientes entiendan tus servicios y completen el siguiente paso: pedir información, cotizar o iniciar una solicitud.", result: "Cada visita sabe cómo continuar." },
+  { title: "Presencia digital", href: "/servicios/presencia-digital", detail: "Ordenamos tu sitio, Perfil de Empresa en Google y redes; planeamos contenido y campañas y medimos las visitas y contactos que generan.", result: "Información coherente en cada canal." },
+  { title: "Chatbots", href: "/servicios/chatbots", detail: "Configuramos asistentes que responden preguntas frecuentes, orientan a cada persona y dejan su solicitud lista para el equipo; por ejemplo, dudas sobre horarios, servicios o citas.", result: "Respuestas claras, incluso fuera de horario." },
+  { title: "Automatizaciones", href: "/servicios/automatizacion-de-procesos", detail: "Conectamos pasos repetidos —como recibir un formulario, guardar sus datos y avisar a la persona responsable— para reducir capturas y seguimientos manuales.", result: "Menos pasos repetidos para tu equipo." },
+  { title: "RPA", href: "/servicios/rpa", detail: "Automatizamos capturas y movimientos entre sistemas cuando se repiten los mismos pasos; los datos inesperados se separan para que una persona los revise.", result: "Rutinas ordenadas con excepciones visibles." },
+  { title: "Inteligencia artificial", href: "/servicios/inteligencia-artificial", detail: "Integramos IA para buscar en documentos aprobados, clasificar mensajes o preparar borradores, con revisión humana antes de compartir o decidir.", result: "IA aplicada a una tarea concreta." },
+  { title: "Análisis de datos", href: "/servicios/analisis-de-datos", detail: "Reunimos datos de ventas, solicitudes u operación en reportes con métricas acordadas, para detectar pendientes y comparar periodos sin armarlos a mano.", result: "La información lista para revisar." },
 ] as const
 
 type HomeService = (typeof services)[number]
@@ -70,10 +70,10 @@ function HomeServiceCard({ service }: { service: HomeService }) {
 }
 
 const principles = [
-  { number: "01", title: "Enfoque en personas", text: "La tecnología tiene más sentido cuando mejora la vida de las personas." },
-  { number: "02", title: "Soluciones a medida", text: "Cada negocio es único; por eso creamos soluciones que se adaptan a ti." },
-  { number: "03", title: "Resultados reales", text: "Nos enfocamos en generar valor medible y sostenible." },
-  { number: "04", title: "Alianzas a largo plazo", text: "Construimos relaciones duraderas basadas en confianza y crecimiento." },
+  { number: "01", title: "Enfoque en personas", text: "Quitamos pasos innecesarios al equipo sin complicar la experiencia de sus clientes." },
+  { number: "02", title: "Soluciones a medida", text: "Antes de proponer una herramienta, revisamos tus tareas, sistemas y quién los usa." },
+  { number: "03", title: "Resultados reales", text: "Acordamos qué debe mejorar —por ejemplo, tiempos, solicitudes atendidas o capturas— antes de construir." },
+  { number: "04", title: "Alianzas a largo plazo", text: "Después del lanzamiento, priorizamos ajustes y soporte con acuerdos claros." },
 ] as const
 
 const clientLogos = [
@@ -274,7 +274,7 @@ export default function MorbiaWebsite() {
         <div className="relative mx-auto grid min-h-[632px] max-w-7xl items-center gap-12 px-5 pb-16 pt-10 lg:grid-cols-[1.02fr_.98fr] lg:px-8">
           <div data-hero-copy className="max-w-2xl">
             <h1 className="max-w-xl text-5xl font-black leading-[.96] tracking-[-.055em] sm:text-6xl lg:text-7xl">Inteligencia orbitando <span className="text-[#27e3d5]">tus procesos.</span></h1>
-            <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/80">Creamos páginas web, presencia digital, chatbots, automatizaciones e inteligencia artificial para que tu negocio opere con más claridad. Nos ubicamos en Puebla y Tlaxcala y te acompañamos estés donde estés.</p>
+            <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/80">Diseñamos páginas que explican tus servicios, chatbots que responden dudas frecuentes y flujos que conectan tareas repetidas. Estamos en Puebla y Tlaxcala; trabajamos con equipos en cualquier lugar.</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <button onClick={() => goTo("servicios")} className="inline-flex items-center justify-center gap-2 rounded-full bg-[#138ba3] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Explorar soluciones <ArrowRight size={17} /></button>
               <button onClick={() => goTo("nexacv")} className="inline-flex items-center justify-center gap-2 rounded-full border border-[#d7eeee] bg-white/10 px-6 py-4 text-sm font-bold text-[#e8fffb] transition hover:-translate-y-0.5 hover:bg-[#0a668b] hover:text-white">Conoce NexaCV <ChevronRight size={17} /></button>
@@ -298,7 +298,7 @@ export default function MorbiaWebsite() {
         <div className="relative mx-auto grid max-w-7xl gap-14 px-5 lg:grid-cols-[.78fr_1.22fr] lg:items-start lg:px-8">
           <div data-gsap-reveal className="lg:sticky lg:top-28">
             <h2 className="max-w-md text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Todo en órbita, <span className="text-[#00aeb7]">nada al azar.</span></h2>
-            <p className="mt-6 max-w-md text-lg leading-relaxed text-[#496579]">En Morbia creemos en un futuro donde la tecnología impulse el potencial de las personas. Diseñamos soluciones a la medida con estrategia, innovación y cercanía.</p>
+            <p className="mt-6 max-w-md text-lg leading-relaxed text-[#496579]">Empezamos por entender qué se atasca: una solicitud que nadie retoma, información repartida o datos que se capturan dos veces. Después definimos si conviene una página, una integración, automatización o asistencia con IA.</p>
             <blockquote className="mt-9 max-w-sm border-l-4 border-[#11c8c5] pl-5 text-xl font-semibold leading-snug text-[#0a4771]">La tecnología es más poderosa cuando impulsa personas.</blockquote>
           </div>
           <div className="relative">
@@ -329,7 +329,7 @@ export default function MorbiaWebsite() {
         <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
           <div data-gsap-reveal className="max-w-3xl">
             <h2 className="text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Soluciones tecnológicas para un mundo en evolución.</h2>
-            <p className="mt-5 text-lg leading-relaxed text-white/75">Donde esté tu negocio, conectamos presencia digital, páginas web, chatbots, automatización, inteligencia artificial y datos para atender mejor y trabajar con más claridad.</p>
+            <p className="mt-5 text-lg leading-relaxed text-white/75">Desde una página que explica tus servicios y recibe solicitudes hasta flujos que actualizan registros o asistentes que contestan preguntas frecuentes: elegimos el alcance según la tarea que quieres mejorar.</p>
             <AnalyticsLink href="/servicios-tecnologicos-puebla-tlaxcala" contentId="regional-services:home" className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#73f7eb] transition hover:text-white">Explora todas nuestras soluciones <ArrowRight size={16} /></AnalyticsLink>
           </div>
           <div className="mt-12 space-y-14">
@@ -359,7 +359,7 @@ export default function MorbiaWebsite() {
           </div>
           <div data-gsap-reveal className="order-1 lg:order-2">
             <h3 className="text-3xl font-black leading-tight tracking-[-.035em]">Tu siguiente oportunidad empieza con un CV mejor.</h3>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-[#496579]">Crea, optimiza y potencia tu CV con inteligencia artificial. Una plataforma simple, profesional y lista para ayudarte a alcanzar nuevas oportunidades.</p>
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-[#496579]">NexaCV te ayuda a redactar tu currículum, adaptar tu experiencia a una vacante y revisar su lectura ante filtros ATS antes de descargarlo en PDF.</p>
             <div className="mt-8 grid gap-3 sm:grid-cols-2">{[[FileText, "Crea tu CV profesional"], [Sparkles, "Optimiza con IA"], [ScanSearch, "Puntuación ATS en tiempo real"], [Download, "Exporta y comparte"]].map(([Icon, label]) => { const FeatureIcon = Icon as typeof FileText; return <div key={label as string} className="flex items-center gap-3 rounded-2xl bg-[#effbfc] p-4 font-semibold text-[#0b5578]"><FeatureIcon className="text-[#00bcb9]" size={22} />{label as string}</div> })}</div>
             <a href="https://nexacv.morbia.com.mx" target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#138ba3] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Conoce NexaCV <ArrowRight size={17} /></a>
           </div>
@@ -373,7 +373,7 @@ export default function MorbiaWebsite() {
           <div data-gsap-reveal className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
             <div><h2 className="text-4xl font-black tracking-[-.045em] sm:text-5xl">Empresas que confían en nosotros.</h2></div>
             <div className="flex items-center justify-between gap-4 lg:justify-end">
-              <p className="max-w-sm text-[#527082]">Construimos tecnología útil para organizaciones que quieren moverse con claridad.</p>
+              <p className="max-w-sm text-[#527082]">Hemos desarrollado sitios y productos digitales para empresas de distintos sectores.</p>
               <div className="flex shrink-0 gap-2" role="group" aria-label="Controles de clientes">
                 <button type="button" onClick={() => scrollClients(-1)} aria-label="Ver clientes anteriores" className="grid h-11 w-11 place-items-center rounded-full border border-[#a9d6dd] bg-white/80 text-[#07517d] transition hover:border-[#138ba3] hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#087e92]"><ChevronLeft size={20} aria-hidden="true" /></button>
                 <button type="button" onClick={() => scrollClients(1)} aria-label="Ver más clientes" className="grid h-11 w-11 place-items-center rounded-full border border-[#a9d6dd] bg-white/80 text-[#07517d] transition hover:border-[#138ba3] hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#087e92]"><ChevronRight size={20} aria-hidden="true" /></button>
@@ -386,7 +386,7 @@ export default function MorbiaWebsite() {
         </div>
       </section>
 
-      <section id="contacto" className="morbia-diagonal relative scroll-mt-20 overflow-hidden py-20 text-white lg:py-24"><div className="absolute inset-0 bg-[#04345d]/84" /><div className="relative mx-auto flex max-w-7xl flex-col justify-between gap-10 px-5 lg:flex-row lg:items-center lg:px-8"><div data-gsap-reveal className="max-w-2xl"><h2 className="text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Conversemos sobre tu próximo proyecto.</h2><p className="mt-5 text-lg text-white/75">Estamos listos para escuchar tus ideas y convertirlas en soluciones.</p><div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium text-white/85"><a href="mailto:contacto@morbia.com.mx" className="flex items-center gap-2 hover:text-[#62f7eb]"><Mail size={18} />contacto@morbia.com.mx</a><a href="tel:+522215268440" className="flex items-center gap-2 hover:text-[#62f7eb]"><Phone size={18} />(+52) 221 526 8440</a><span className="flex items-center gap-2"><MapPin size={18} />Ubicación: Puebla y Tlaxcala</span></div></div><a data-gsap-reveal href="https://wa.me/522215268440" target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#138ba3] px-7 py-4 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Hablemos hoy <ArrowRight size={17} /></a></div></section>
+      <section id="contacto" className="morbia-diagonal relative scroll-mt-20 overflow-hidden py-20 text-white lg:py-24"><div className="absolute inset-0 bg-[#04345d]/84" /><div className="relative mx-auto flex max-w-7xl flex-col justify-between gap-10 px-5 lg:flex-row lg:items-center lg:px-8"><div data-gsap-reveal className="max-w-2xl"><h2 className="text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">¿Qué te gustaría hacer más fácil en tu negocio?</h2><p className="mt-5 text-lg text-white/75">Cuéntanos qué tarea, consulta o recorrido de cliente quieres mejorar. Revisamos contigo qué conviene cambiar y qué no hace falta construir.</p><div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium text-white/85"><a href="mailto:contacto@morbia.com.mx" className="flex items-center gap-2 hover:text-[#62f7eb]"><Mail size={18} />contacto@morbia.com.mx</a><a href="tel:+522215268440" className="flex items-center gap-2 hover:text-[#62f7eb]"><Phone size={18} />(+52) 221 526 8440</a><span className="flex items-center gap-2"><MapPin size={18} />Ubicación: Puebla y Tlaxcala</span></div></div><a data-gsap-reveal href="https://wa.me/522215268440" target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#138ba3] px-7 py-4 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Hablemos hoy <ArrowRight size={17} /></a></div></section>
 
       <footer className="bg-[#042b4d] py-12 text-white"><div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-[1fr_auto] lg:px-8"><div><Image src="/images/main-logo.png" alt="Morbia" width={170} height={55} className="h-10 w-auto brightness-0 invert" /><p className="mt-5 text-sm font-semibold tracking-[.12em] text-[#5eece3]">INTELIGENCIA ORBITANDO TUS PROCESOS</p><p className="mt-4 text-sm text-white/55">© 2026 Morbia. Todos los derechos reservados.</p></div><div className="md:text-right"><p className="text-sm font-bold text-white/75">Síguenos</p><div className="mt-4 flex gap-3 md:justify-end">{socials.map(([label, href, Icon]) => <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-[#27e3d5] hover:bg-[#19e0d0] hover:text-[#05335c]"><Icon size={17} /></a>)}</div><div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/60 md:justify-end">{navItems.slice(1).map(([label, id]) => <a key={id} href={`#${id}`} onClick={(event) => { event.preventDefault(); goTo(id) }} className="hover:text-white">{label}</a>)}</div></div></div></footer>
       <FloatingChat />
