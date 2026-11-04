@@ -53,7 +53,7 @@ const serviceGroups = [
 
 function HomeServiceCard({ service }: { service: HomeService }) {
   return (
-    <article data-service-card className="service-hover-card group relative flex flex-col justify-end overflow-hidden border border-[#79eee3]/20 bg-[linear-gradient(145deg,rgba(7,73,111,.9),rgba(4,53,92,.78))] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,.1)] transition-colors duration-300 hover:border-[#72e8df]/60 hover:bg-[linear-gradient(145deg,rgba(8,89,125,.94),rgba(4,58,94,.86))] focus-within:border-[#72e8df]/60">
+    <article className="service-hover-card group relative flex flex-col justify-end overflow-hidden border border-[#79eee3]/20 bg-[linear-gradient(145deg,rgba(7,73,111,.9),rgba(4,53,92,.78))] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,.1)] transition-colors duration-300 hover:border-[#72e8df]/60 hover:bg-[linear-gradient(145deg,rgba(8,89,125,.94),rgba(4,58,94,.86))] focus-within:border-[#72e8df]/60">
       <div className="relative z-10 mt-auto">
         <h4 className="text-xl font-bold text-white sm:text-2xl">
           <AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:title`} className="rounded hover:text-[#77f6eb]">{service.title}</AnalyticsLink>
@@ -161,28 +161,10 @@ export default function MorbiaWebsite() {
     gsap.to(select("[data-globe-world]"), { rotation: 7, scale: 1.04, duration: 2.4, yoyo: true, repeat: -1, ease: "sine.inOut" })
     gsap.to(select("[data-globe-shell]"), { y: -7, scale: 1.025, duration: 2.8, yoyo: true, repeat: -1, ease: "sine.inOut" })
 
-    const reveal = select("[data-gsap-reveal]")
-    ScrollTrigger.batch(reveal, {
-      start: "top 84%",
-      onEnter: (elements) => gsap.from(elements, { y: 18, duration: 0.55, stagger: 0.08, ease: "power2.out", overwrite: true }),
-    })
-    gsap.set(select("[data-client-logo]"), { autoAlpha: 1 })
-    ScrollTrigger.batch(select("[data-client-logo]"), {
-      start: "top 86%",
-      onEnter: (elements) => gsap.from(elements, { autoAlpha: 0, duration: 0.55, stagger: 0.08, ease: "power3.out", overwrite: true }),
-    })
-    ScrollTrigger.batch(select("[data-service-card]"), {
-      start: "top 86%",
-      onEnter: (elements) => {
-        gsap.from(elements, { y: 34, autoAlpha: 0, scale: 0.97, duration: 0.72, stagger: 0.1, ease: "power3.out", overwrite: true })
-      },
-    })
-
     startClientAutoplay(0)
 
     if (aboutSection) {
       gsap.from(select("[data-about-principle]"), {
-        autoAlpha: 0,
         x: 36,
         duration: 0.72,
         stagger: 0.12,
@@ -195,13 +177,6 @@ export default function MorbiaWebsite() {
         duration: 1.05,
         ease: "power2.out",
         scrollTrigger: { trigger: aboutSection, start: "top 68%", once: true },
-      })
-      gsap.to(select("[data-about-orbit]"), {
-        rotation: 360,
-        duration: 20,
-        repeat: -1,
-        ease: "none",
-        scrollTrigger: { trigger: aboutSection, start: "top 78%", once: true },
       })
     }
 
@@ -296,7 +271,7 @@ export default function MorbiaWebsite() {
       <section id="nosotros" className="relative isolate scroll-mt-20 overflow-hidden bg-white py-20 lg:py-28">
         <div aria-hidden="true" className="absolute right-[-9rem] top-14 hidden h-72 w-72 rounded-full border border-[#7ae8e0]/35 lg:block" />
         <div className="relative mx-auto grid max-w-7xl gap-14 px-5 lg:grid-cols-[.78fr_1.22fr] lg:items-start lg:px-8">
-          <div data-gsap-reveal className="lg:sticky lg:top-28">
+          <div className="lg:sticky lg:top-28">
             <h2 className="max-w-md text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Todo en órbita, <span className="text-[#00aeb7]">nada al azar.</span></h2>
             <p className="mt-6 max-w-md text-lg leading-relaxed text-[#496579]">Empezamos por entender qué se atasca: una solicitud que nadie retoma, información repartida o datos que se capturan dos veces. Después definimos si conviene una página, una integración, automatización o asistencia con IA.</p>
             <blockquote className="mt-9 max-w-sm text-xl font-semibold leading-snug text-[#0a4771]">La tecnología es más poderosa cuando impulsa personas.</blockquote>
@@ -326,7 +301,7 @@ export default function MorbiaWebsite() {
       <section id="servicios" className="morbia-diagonal relative scroll-mt-20 overflow-hidden py-20 text-white lg:py-28">
         <div className="absolute inset-0 bg-[#06345c]/82" />
         <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
-          <div data-gsap-reveal className="max-w-3xl">
+          <div className="max-w-3xl">
             <h2 className="text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Soluciones tecnológicas para un mundo en evolución.</h2>
             <p className="mt-5 text-lg leading-relaxed text-white/75">Desde una página que explica tus servicios y recibe solicitudes hasta flujos que actualizan registros o asistentes que contestan preguntas frecuentes: elegimos el alcance según la tarea que quieres mejorar.</p>
             <AnalyticsLink href="/servicios-tecnologicos-puebla-tlaxcala" contentId="regional-services:home" className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#73f7eb] transition hover:text-white">Explora todas nuestras soluciones <ArrowRight size={16} /></AnalyticsLink>
@@ -334,7 +309,7 @@ export default function MorbiaWebsite() {
           <div className="mt-12 space-y-14">
             {serviceGroups.map((group) => (
               <div key={group.id}>
-                <div data-gsap-reveal className="mb-6 flex flex-col gap-2 sm:mb-7 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
+                <div className="mb-6 flex flex-col gap-2 sm:mb-7 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
                   <h3 className="text-2xl font-black tracking-[-.035em] text-white sm:text-3xl">{group.title}</h3>
                   <p className="max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">{group.description}</p>
                 </div>
@@ -349,14 +324,14 @@ export default function MorbiaWebsite() {
 
       <section id="nexacv" className="scroll-mt-20 overflow-hidden bg-white py-20 lg:py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 lg:grid-cols-[.92fr_1.08fr] lg:px-8">
-          <div data-gsap-reveal className="relative order-2 overflow-hidden rounded-2xl bg-[linear-gradient(135deg,#063a69,#007f9e_55%,#09c8bd)] p-4 shadow-2xl shadow-[#057893]/20 lg:order-1">
+          <div className="relative order-2 overflow-hidden rounded-2xl bg-[linear-gradient(135deg,#063a69,#007f9e_55%,#09c8bd)] p-4 shadow-2xl shadow-[#057893]/20 lg:order-1">
             <div className="absolute inset-0 rounded-2xl opacity-60 [background-image:linear-gradient(135deg,transparent_0%,transparent_47%,rgba(255,255,255,.16)_48%,transparent_50%)]" />
             <div className="relative grid min-h-[25rem] place-items-center rounded-xl border border-white/15 bg-[radial-gradient(circle_at_50%_34%,#0c91ac_0%,#06416b_49%,#032e55_100%)] p-6 sm:min-h-[31rem] sm:p-10">
               <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(135deg,transparent_0%,transparent_47%,rgba(91,244,230,.22)_48%,transparent_50%)]" />
               <Image src="/images/nexacv-logo.png" alt="NexaCV by Morbia" width={1254} height={1254} className="relative h-auto w-full max-w-md drop-shadow-[0_18px_28px_rgba(0,0,0,.35)]" />
             </div>
           </div>
-          <div data-gsap-reveal className="order-1 lg:order-2">
+          <div className="order-1 lg:order-2">
             <h3 className="text-3xl font-black leading-tight tracking-[-.035em]">Tu siguiente oportunidad empieza con un CV mejor.</h3>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-[#496579]">NexaCV te ayuda a redactar tu currículum, adaptar tu experiencia a una vacante y revisar su lectura ante filtros ATS antes de descargarlo en PDF.</p>
             <div className="mt-8 grid gap-3 sm:grid-cols-2">{[[FileText, "Crea tu CV profesional"], [Sparkles, "Optimiza con IA"], [ScanSearch, "Puntuación ATS en tiempo real"], [Download, "Exporta y comparte"]].map(([Icon, label]) => { const FeatureIcon = Icon as typeof FileText; return <div key={label as string} className="flex items-center gap-3 rounded-lg bg-[#effbfc] p-4 font-semibold text-[#0b5578]"><FeatureIcon className="text-[#00bcb9]" size={22} />{label as string}</div> })}</div>
@@ -369,7 +344,7 @@ export default function MorbiaWebsite() {
 
       <section id="clientes" className="scroll-mt-20 overflow-hidden bg-[#eaf8fa] py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-5 lg:px-8">
-          <div data-gsap-reveal className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
+          <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
             <div><h2 className="text-4xl font-black tracking-[-.045em] sm:text-5xl">Empresas que confían en nosotros.</h2></div>
             <div className="flex items-center justify-between gap-4 lg:justify-end">
               <p className="max-w-sm text-[#527082]">Hemos desarrollado sitios y productos digitales para empresas de distintos sectores.</p>
@@ -385,7 +360,21 @@ export default function MorbiaWebsite() {
         </div>
       </section>
 
-      <section id="contacto" className="morbia-diagonal relative scroll-mt-20 overflow-hidden py-20 text-white lg:py-24"><div className="absolute inset-0 bg-[#04345d]/84" /><div className="relative mx-auto flex max-w-7xl flex-col justify-between gap-10 px-5 lg:flex-row lg:items-center lg:px-8"><div data-gsap-reveal className="max-w-2xl"><h2 className="text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">¿Qué te gustaría hacer más fácil en tu negocio?</h2><p className="mt-5 text-lg text-white/75">Cuéntanos qué tarea, consulta o recorrido de cliente quieres mejorar. Revisamos contigo qué conviene cambiar y qué no hace falta construir.</p><div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium text-white/85"><a href="mailto:contacto@morbia.com.mx" className="flex items-center gap-2 hover:text-[#62f7eb]"><Mail size={18} />contacto@morbia.com.mx</a><a href="tel:+522215268440" className="flex items-center gap-2 hover:text-[#62f7eb]"><Phone size={18} />(+52) 221 526 8440</a><span className="flex items-center gap-2"><MapPin size={18} />Ubicación: Puebla y Tlaxcala</span></div></div><a data-gsap-reveal href="https://wa.me/522215268440" target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#138ba3] px-7 py-4 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Hablemos hoy <ArrowRight size={17} /></a></div></section>
+      <section id="contacto" className="morbia-diagonal relative scroll-mt-20 overflow-hidden py-20 text-white lg:py-24">
+        <div className="absolute inset-0 bg-[#04345d]/84" />
+        <div className="relative mx-auto flex max-w-7xl flex-col justify-between gap-10 px-5 lg:flex-row lg:items-center lg:px-8">
+          <div className="max-w-2xl">
+            <h2 className="text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">¿Qué te gustaría hacer más fácil en tu negocio?</h2>
+            <p className="mt-5 text-lg text-white/75">Cuéntanos qué tarea, consulta o recorrido de cliente quieres mejorar. Revisamos contigo qué conviene cambiar y qué no hace falta construir.</p>
+            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium text-white/85">
+              <a href="mailto:contacto@morbia.com.mx" className="flex items-center gap-2 hover:text-[#62f7eb]"><Mail size={18} />contacto@morbia.com.mx</a>
+              <a href="tel:+522215268440" className="flex items-center gap-2 hover:text-[#62f7eb]"><Phone size={18} />(+52) 221 526 8440</a>
+              <span className="flex items-center gap-2"><MapPin size={18} />Ubicación: Puebla y Tlaxcala</span>
+            </div>
+          </div>
+          <a href="https://wa.me/522215268440" target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#138ba3] px-7 py-4 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Hablemos hoy <ArrowRight size={17} /></a>
+        </div>
+      </section>
 
       <footer className="bg-[#042b4d] py-12 text-white"><div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-[1fr_auto] lg:px-8"><div><Image src="/images/main-logo.png" alt="Morbia" width={170} height={55} className="h-10 w-auto brightness-0 invert" /><p className="mt-5 text-sm font-semibold tracking-[.12em] text-[#5eece3]">INTELIGENCIA ORBITANDO TUS PROCESOS</p><p className="mt-4 text-sm text-white/55">© 2026 Morbia. Todos los derechos reservados.</p></div><div className="md:text-right"><p className="text-sm font-bold text-white/75">Síguenos</p><div className="mt-4 flex gap-3 md:justify-end">{socials.map(([label, href, Icon]) => <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-[#27e3d5] hover:bg-[#19e0d0] hover:text-[#05335c]"><Icon size={17} /></a>)}</div><div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/60 md:justify-end">{navItems.slice(1).map(([label, id]) => <a key={id} href={`#${id}`} onClick={(event) => { event.preventDefault(); goTo(id) }} className="hover:text-white">{label}</a>)}</div></div></div></footer>
       <FloatingChat />

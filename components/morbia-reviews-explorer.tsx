@@ -1,14 +1,9 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { useGSAP } from "@gsap/react"
+import { useEffect, useMemo, useState } from "react"
 import { TbArrowUpRight as ArrowUpRight, TbChevronLeft as ChevronLeft, TbChevronRight as ChevronRight, TbStar as Star } from "react-icons/tb"
 import { FcGoogle } from "react-icons/fc"
 import type { MorbiaReview, MorbiaReviewsData } from "@/lib/morbia-reviews"
-
-gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 const PAGE_SIZE = 3
 
@@ -42,8 +37,6 @@ export default function MorbiaReviewsExplorer() {
   const [data, setData] = useState<MorbiaReviewsData>(initialData)
   const [page, setPage] = useState(0)
   const [selectedId, setSelectedId] = useState(initialData.reviews[0]?.id || "")
-  const explorerRef = useRef<HTMLDivElement>(null)
-  const featuredRef = useRef<HTMLElement>(null)
   const pageCount = Math.max(1, Math.ceil(data.reviews.length / PAGE_SIZE))
   const pageReviews = useMemo(() => data.reviews.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE), [data.reviews, page])
   const selectedReview = data.reviews.find((review) => review.id === selectedId) || pageReviews[0]
@@ -61,24 +54,6 @@ export default function MorbiaReviewsExplorer() {
     return () => controller.abort()
   }, [])
 
-  useGSAP(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
-    const select = gsap.utils.selector(explorerRef)
-    gsap.from(select("[data-review-reveal]"), {
-      autoAlpha: 0,
-      y: 20,
-      duration: 0.55,
-      stagger: 0.12,
-      ease: "power3.out",
-      scrollTrigger: { trigger: explorerRef.current, start: "top 78%", once: true },
-    })
-  }, { scope: explorerRef })
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !featuredRef.current) return
-    gsap.fromTo(featuredRef.current, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.42, ease: "power3.out", overwrite: true })
-  }, [selectedId])
-
   const changePage = (nextPage: number) => {
     const safePage = Math.min(Math.max(nextPage, 0), pageCount - 1)
     const nextReviews = data.reviews.slice(safePage * PAGE_SIZE, safePage * PAGE_SIZE + PAGE_SIZE)
@@ -86,12 +61,12 @@ export default function MorbiaReviewsExplorer() {
     setSelectedId(nextReviews[0]?.id || "")
   }
 
-  if (!selectedReview) return <div ref={explorerRef}>
+  if (!selectedReview) return <div>
     <div data-review-reveal className="mb-6 flex flex-col justify-between gap-5 lg:flex-row lg:items-end"><div className="max-w-3xl"><h2 className="text-3xl font-black tracking-[-.045em] sm:text-4xl">Conoce las opiniones de Morbia en Google.</h2><p className="mt-3 text-base leading-relaxed text-[#527082]">El perfil público de Google Maps es la fuente oficial de nuestras opiniones.</p></div>{data.mapsUrl && <a className="group flex min-w-52 items-center gap-4 self-start rounded-xl border border-[#d4ebf2] bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:border-[#10c8c0] lg:self-auto" href={data.mapsUrl} target="_blank" rel="noreferrer"><span className="grid h-11 w-11 place-items-center rounded-lg bg-[#eaf9fc]"><FcGoogle size={25} aria-hidden="true" /></span><span><strong className="block text-xl text-[#06345f]">Google Maps</strong><span className="mt-1 block text-xs text-[#527082]">Ver perfil verificado</span></span><ArrowUpRight className="ml-auto text-[#00aeb7]" size={18} /></a>}</div>
     <div data-review-reveal className="morbia-diagonal relative overflow-hidden rounded-2xl p-7 text-white shadow-2xl shadow-[#00587a]/20 sm:p-8"><div className="absolute inset-0 bg-[#04345d]/84" /><div className="relative max-w-2xl"><h3 className="text-2xl font-black tracking-[-.04em] sm:text-3xl">Las opiniones se publican directamente desde nuestro perfil de Google.</h3><p className="mt-3 text-base leading-relaxed text-white/75">Estamos conectando la fuente para mostrarlas aquí. Mientras tanto, puedes consultarlas sin intermediarios.</p>{data.mapsUrl && <a href={data.mapsUrl} target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#19e0d0] px-5 py-3 text-sm font-bold text-[#05335c]">Ver opiniones en Google <ArrowUpRight size={16} /></a>}</div></div>
   </div>
 
-  return <div ref={explorerRef}>
+  return <div>
     <div data-review-reveal className="mb-6 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
       <div className="max-w-3xl">
         <h2 className="text-3xl font-black tracking-[-.045em] sm:text-4xl">{data.source === "google" ? "Experiencias reales, publicadas en Google." : "Conoce las opiniones de Morbia en Google."}</h2>
@@ -105,7 +80,7 @@ export default function MorbiaReviewsExplorer() {
     </div>
 
     <div className="grid gap-4 lg:grid-cols-[1.08fr_.92fr]">
-      <article ref={featuredRef} data-review-reveal className="morbia-diagonal relative flex min-h-[330px] flex-col justify-between overflow-hidden rounded-2xl p-6 text-white shadow-2xl shadow-[#00587a]/20 sm:p-7">
+      <article className="morbia-diagonal relative flex min-h-[330px] flex-col justify-between overflow-hidden rounded-2xl p-6 text-white shadow-2xl shadow-[#00587a]/20 sm:p-7">
         <div className="absolute inset-0 bg-[#04345d]/84" />
         <div className="relative flex items-center justify-between"><span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-bold tracking-[.12em]">{data.source === "google" ? "GOOGLE REVIEWS" : "CLIENTE MORBIA"}</span><Stars rating={selectedReview.rating} size={16} /></div>
         <blockquote className="relative my-6 max-w-2xl text-xl font-bold leading-snug tracking-[-.025em] sm:text-2xl">“{selectedReview.text}”</blockquote>
