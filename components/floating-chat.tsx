@@ -688,7 +688,7 @@ export default function FloatingChat() {
                   <p className="text-white text-base sm:text-sm font-medium mb-1">
                     ¡Hola!
                   </p>
-                  <p className="text-white/65 text-sm sm:text-sm leading-relaxed">
+                  <p className="text-[#eaf6f7] text-sm sm:text-sm leading-relaxed">
                     Soy el asistente inteligente de Morbia. Escribe tu mensaje para comenzar.
                   </p>
                 </div>
@@ -763,7 +763,7 @@ export default function FloatingChat() {
                 onKeyDown={handleKeyDown}
                 placeholder="Escribe tu mensaje..."
                 disabled={isLoading}
-                className="min-w-0 flex-1 bg-transparent text-white text-[16px] placeholder:text-white/40 outline-none disabled:opacity-50"
+                className="min-w-0 flex-1 bg-transparent text-white text-[16px] placeholder:text-[#c0dce5] outline-none disabled:opacity-50"
               />
               <button
                 onClick={sendMessage}
@@ -774,7 +774,7 @@ export default function FloatingChat() {
                 <Send size={16} className="sm:w-[14px] sm:h-[14px]" />
               </button>
             </div>
-            <p className="text-[10px] sm:text-xs text-white/40 text-center mt-2">
+            <p className="text-[10px] sm:text-xs text-[#c0dce5] text-center mt-2">
               Powered by Morbia AI
             </p>
           </div>

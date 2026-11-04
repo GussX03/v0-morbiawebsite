@@ -60,7 +60,7 @@ function HomeServiceCard({ service }: { service: HomeService }) {
         </h4>
         <div data-service-detail className="service-hover-detail">
           <div>
-            <p className="leading-relaxed text-white/80">{service.detail}</p>
+            <p className="leading-relaxed text-[#eaf6f7]">{service.detail}</p>
             <p className="mt-4 text-sm font-bold text-[#d9faf6]">{service.result}</p>
             <AnalyticsLink href={service.href} contentId={`service:${service.title.toLowerCase()}:home`} className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-[#64f8ec]">Conoce este servicio <ArrowRight size={15} aria-hidden="true" /></AnalyticsLink>
           </div>
@@ -249,7 +249,7 @@ export default function MorbiaWebsite() {
         <div className="relative mx-auto grid min-h-[632px] max-w-7xl items-center gap-12 px-5 pb-16 pt-10 lg:grid-cols-[1.02fr_.98fr] lg:px-8">
           <div data-hero-copy className="max-w-2xl">
             <h1 className="max-w-xl text-5xl font-black leading-[.96] tracking-[-.055em] sm:text-6xl lg:text-7xl">Inteligencia orbitando <span className="text-[#27e3d5]">tus procesos.</span></h1>
-            <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/80">Diseñamos páginas que explican tus servicios, chatbots que responden dudas frecuentes y flujos que conectan tareas repetidas. Estamos en Puebla y Tlaxcala; trabajamos con equipos en cualquier lugar.</p>
+            <p className="mt-6 max-w-lg text-lg leading-relaxed text-[#eaf6f7]">Diseñamos páginas que explican tus servicios, chatbots que responden dudas frecuentes y flujos que conectan tareas repetidas. Estamos en Puebla y Tlaxcala; trabajamos con equipos en cualquier lugar.</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <button onClick={() => goTo("servicios")} className="inline-flex items-center justify-center gap-2 rounded-full bg-[#138ba3] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-[#0d708d]/25 transition hover:-translate-y-0.5 hover:bg-[#075b82]">Explorar soluciones <ArrowRight size={17} /></button>
               <button onClick={() => goTo("nexacv")} className="inline-flex items-center justify-center gap-2 rounded-full border border-[#d7eeee] bg-white/10 px-6 py-4 text-sm font-bold text-[#e8fffb] transition hover:-translate-y-0.5 hover:bg-[#0a668b] hover:text-white">Conoce NexaCV <ChevronRight size={17} /></button>
@@ -299,11 +299,11 @@ export default function MorbiaWebsite() {
       </section>
 
       <section id="servicios" className="morbia-diagonal relative scroll-mt-20 overflow-hidden py-20 text-white lg:py-28">
-        <div className="absolute inset-0 bg-[#06345c]/82" />
+        <div className="absolute inset-0 bg-[#06345c]/92" />
         <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
           <div className="max-w-3xl">
             <h2 className="text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">Soluciones tecnológicas para un mundo en evolución.</h2>
-            <p className="mt-5 text-lg leading-relaxed text-white/75">Desde una página que explica tus servicios y recibe solicitudes hasta flujos que actualizan registros o asistentes que contestan preguntas frecuentes: elegimos el alcance según la tarea que quieres mejorar.</p>
+            <p className="mt-5 text-lg leading-relaxed text-[#eaf6f7]">Desde una página que explica tus servicios y recibe solicitudes hasta flujos que actualizan registros o asistentes que contestan preguntas frecuentes: elegimos el alcance según la tarea que quieres mejorar.</p>
             <AnalyticsLink href="/servicios-tecnologicos-puebla-tlaxcala" contentId="regional-services:home" className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#73f7eb] transition hover:text-white">Explora todas nuestras soluciones <ArrowRight size={16} /></AnalyticsLink>
           </div>
           <div className="mt-12 space-y-14">
@@ -311,7 +311,7 @@ export default function MorbiaWebsite() {
               <div key={group.id}>
                 <div className="mb-6 flex flex-col gap-2 sm:mb-7 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
                   <h3 className="text-2xl font-black tracking-[-.035em] text-white sm:text-3xl">{group.title}</h3>
-                  <p className="max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">{group.description}</p>
+                  <p className="max-w-2xl text-sm leading-relaxed text-[#eaf6f7] sm:text-base">{group.description}</p>
                 </div>
                 <div data-services-track className={`grid gap-4 ${group.id === "connect" ? "md:grid-cols-3" : "md:grid-cols-2 xl:grid-cols-4"}`}>
                   {group.services.map((service) => <HomeServiceCard key={service.title} service={service} />)}
@@ -361,12 +361,12 @@ export default function MorbiaWebsite() {
       </section>
 
       <section id="contacto" className="morbia-diagonal relative scroll-mt-20 overflow-hidden py-20 text-white lg:py-24">
-        <div className="absolute inset-0 bg-[#04345d]/84" />
+        <div className="absolute inset-0 bg-[#04345d]/94" />
         <div className="relative mx-auto flex max-w-7xl flex-col justify-between gap-10 px-5 lg:flex-row lg:items-center lg:px-8">
           <div className="max-w-2xl">
             <h2 className="text-4xl font-black leading-[.98] tracking-[-.045em] sm:text-5xl">¿Qué te gustaría hacer más fácil en tu negocio?</h2>
-            <p className="mt-5 text-lg text-white/75">Cuéntanos qué tarea, consulta o recorrido de cliente quieres mejorar. Revisamos contigo qué conviene cambiar y qué no hace falta construir.</p>
-            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium text-white/85">
+            <p className="mt-5 text-lg text-[#eaf6f7]">Cuéntanos qué tarea, consulta o recorrido de cliente quieres mejorar. Revisamos contigo qué conviene cambiar y qué no hace falta construir.</p>
+            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium text-[#f1fbfc]">
               <a href="mailto:contacto@morbia.com.mx" className="flex items-center gap-2 hover:text-[#62f7eb]"><Mail size={18} />contacto@morbia.com.mx</a>
               <a href="tel:+522215268440" className="flex items-center gap-2 hover:text-[#62f7eb]"><Phone size={18} />(+52) 221 526 8440</a>
               <span className="flex items-center gap-2"><MapPin size={18} />Ubicación: Puebla y Tlaxcala</span>
@@ -376,7 +376,7 @@ export default function MorbiaWebsite() {
         </div>
       </section>
 
-      <footer className="bg-[#042b4d] py-12 text-white"><div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-[1fr_auto] lg:px-8"><div><Image src="/images/main-logo.png" alt="Morbia" width={170} height={55} className="h-10 w-auto brightness-0 invert" /><p className="mt-5 text-sm font-semibold tracking-[.12em] text-[#5eece3]">INTELIGENCIA ORBITANDO TUS PROCESOS</p><p className="mt-4 text-sm text-white/55">© 2026 Morbia. Todos los derechos reservados.</p></div><div className="md:text-right"><p className="text-sm font-bold text-white/75">Síguenos</p><div className="mt-4 flex gap-3 md:justify-end">{socials.map(([label, href, Icon]) => <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-[#27e3d5] hover:bg-[#19e0d0] hover:text-[#05335c]"><Icon size={17} /></a>)}</div><div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/60 md:justify-end">{navItems.slice(1).map(([label, id]) => <a key={id} href={`#${id}`} onClick={(event) => { event.preventDefault(); goTo(id) }} className="hover:text-white">{label}</a>)}</div></div></div></footer>
+      <footer className="bg-[#042b4d] py-12 text-white"><div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-[1fr_auto] lg:px-8"><div><Image src="/images/main-logo.png" alt="Morbia" width={170} height={55} className="h-10 w-auto brightness-0 invert" /><p className="mt-5 text-sm font-semibold tracking-[.12em] text-[#5eece3]">INTELIGENCIA ORBITANDO TUS PROCESOS</p><p className="mt-4 text-sm text-[#d5e8ed]">© 2026 Morbia. Todos los derechos reservados.</p></div><div className="md:text-right"><p className="text-sm font-bold text-[#eaf6f7]">Síguenos</p><div className="mt-4 flex gap-3 md:justify-end">{socials.map(([label, href, Icon]) => <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-[#27e3d5] hover:bg-[#19e0d0] hover:text-[#05335c]"><Icon size={17} /></a>)}</div><div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-[#d5e8ed] md:justify-end">{navItems.slice(1).map(([label, id]) => <a key={id} href={`#${id}`} onClick={(event) => { event.preventDefault(); goTo(id) }} className="hover:text-white">{label}</a>)}</div></div></div></footer>
       <FloatingChat />
     </main>
   )

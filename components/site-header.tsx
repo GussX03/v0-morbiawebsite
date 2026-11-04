@@ -86,7 +86,7 @@ export default function SiteHeader({ home = false }: { home?: boolean }) {
     setDesktopMenu("")
   }
 
-  const navLinkClass = (id: SectionId) => `relative whitespace-nowrap rounded py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-1/2 after:h-1 after:w-1 after:-translate-x-1/2 after:rounded-full after:bg-[#65eee1] after:transition-all after:duration-300 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#65eee1] ${activeSection === id ? "text-white after:w-5" : "text-white/75 after:scale-0"}`
+  const navLinkClass = (id: SectionId) => `relative whitespace-nowrap rounded py-2 text-sm font-medium transition after:absolute after:bottom-0 after:left-1/2 after:h-1 after:w-1 after:-translate-x-1/2 after:rounded-full after:bg-[#65eee1] after:transition-all after:duration-300 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#65eee1] ${activeSection === id ? "text-white after:w-5" : "text-[#d5e8ed] after:scale-0"}`
 
   return (
     <>
@@ -152,7 +152,7 @@ export default function SiteHeader({ home = false }: { home?: boolean }) {
             <ul>
               {navigation.map(([label, id]) => (
                 <li key={id}>
-                  <Link href={home ? `#${id}` : `/#${id}`} onClick={(event) => { if (home) event.preventDefault(); navigate(id) }} aria-current={activeSection === id ? "location" : undefined} className={`block rounded py-3 text-sm font-medium transition-colors hover:text-[#74e5df] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#65eee1] ${activeSection === id ? "text-[#74e5df]" : "text-white/85"}`}>{label}</Link>
+                  <Link href={home ? `#${id}` : `/#${id}`} onClick={(event) => { if (home) event.preventDefault(); navigate(id) }} aria-current={activeSection === id ? "location" : undefined} className={`block rounded py-3 text-sm font-medium transition-colors hover:text-[#74e5df] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#65eee1] ${activeSection === id ? "text-[#74e5df]" : "text-[#eaf6f7]"}`}>{label}</Link>
                   {id === "servicios" && (
                     <ul aria-label="Servicios de Morbia" className="mb-3 ml-0.5 border-l border-[#74e5df]/20 pl-4">
                       {servicePages.map((service) => {

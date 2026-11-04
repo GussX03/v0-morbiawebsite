@@ -412,7 +412,7 @@ export default function PrivacyNoticePage() {
               Este Aviso de Privacidad describe cómo se recopilan, usan, almacenan y eliminan los datos personales de
               las personas usuarias de FinZen, aplicación móvil iOS y servicios relacionados.
             </p>
-            <p className="mt-6 text-sm text-gray-400">
+            <p className="mt-6 text-sm text-gray-300">
               <span className="font-semibold text-gray-300">Última actualización:</span> 2026-05-03
             </p>
           </div>
@@ -439,7 +439,7 @@ export default function PrivacyNoticePage() {
             <a className="mt-3 block break-words text-sm text-[#61e59c] hover:text-white" href={`mailto:${privacyEmail}`}>
               {privacyEmail}
             </a>
-            <p className="mt-5 text-xs leading-5 text-gray-400">
+            <p className="mt-5 text-xs leading-5 text-gray-300">
               Usa este correo para derechos ARCO, eliminación de cuenta, consultas de privacidad y seguimiento de
               solicitudes.
             </p>

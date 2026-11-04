@@ -59,7 +59,7 @@
 .morbia-chat-surface {
   background-color: #05345b;
   background-image:
-    linear-gradient(145deg, rgba(3, 40, 72, 0.9), rgba(0, 118, 140, 0.72)),
+    linear-gradient(145deg, rgba(3, 40, 72, 0.97), rgba(3, 67, 94, 0.96)),
     url("/images/morbia-diagonal-bg.jpg");
   background-position: center;
   background-size: cover;
@@ -105,7 +105,7 @@
 @media (min-width: 1024px) { .site-header-contact { display: inline-flex; } }
 .service-button:focus-visible, .service-page a:focus-visible, .service-page summary:focus-visible { outline: 3px solid #16b5bd; outline-offset: 5px; }
 .service-hero { position: relative; isolation: isolate; overflow: hidden; padding-block: 8rem 4rem; color: #edf9fa; }
-.service-hero::before { position: absolute; z-index: -1; inset: 0; content: ""; background: linear-gradient(105deg, rgb(3 29 61 / .96), rgb(3 57 86 / .87), rgb(3 89 106 / .55)); }
+.service-hero::before { position: absolute; z-index: -1; inset: 0; content: ""; background: linear-gradient(105deg, rgb(3 29 61 / .97), rgb(3 49 78 / .95), rgb(3 65 88 / .94)); }
 .service-breadcrumb { display: flex; align-items: center; gap: .5rem; margin-bottom: 2rem; font-size: .8rem; line-height: 1.5; color: #bcdfe6; }
 .service-breadcrumb a:hover { color: #fff; }
 .service-photo { position: relative; overflow: hidden; border-radius: var(--morbia-radius-feature); background: #0b526d; }

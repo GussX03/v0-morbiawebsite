@@ -98,7 +98,7 @@ export default function ServiciosTecnologicosPueblaTlaxcalaPage() {
         </section>
 
         <section className="service-section morbia-diagonal relative isolate overflow-hidden text-white">
-          <div className="absolute inset-0 -z-10 bg-[#04345d]/90" />
+          <div className="absolute inset-0 -z-10 bg-[#04345d]/94" />
           <div className="service-container">
             <div data-service-reveal className="max-w-3xl"><h2 className="text-3xl font-black leading-[1.08] tracking-[-.04em] sm:text-5xl">No tienes que saber qué tecnología necesitas.</h2><p className="mt-6 max-w-2xl text-lg leading-8 text-[#d4e9ed]">Empieza por lo que quieres cambiar. Estas situaciones pueden ayudarte a encontrar una primera opción; también podemos combinar servicios cuando tu operación lo necesita.</p></div>
             <div className="mt-10 grid gap-x-12 gap-y-8 md:grid-cols-2">{needs.map((need) => <div key={need.slug} data-service-reveal className="border-t border-[#80d8dc]/25 pt-6"><h3 className="max-w-lg text-xl font-bold leading-7 text-[#f1fbfc]">{need.title}</h3><p className="mt-3 max-w-lg leading-7 text-[#c0dce5]">{need.text}</p><AnalyticsLink href={`/servicios/${need.slug}`} contentId={`service:${need.slug}:need`} className="mt-5 inline-flex items-center gap-2 rounded text-sm font-bold text-[#70f0e5] hover:text-white">Explorar {need.label.toLowerCase()} <ArrowRight size={16} /></AnalyticsLink></div>)}</div>

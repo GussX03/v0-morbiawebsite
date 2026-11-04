@@ -89,11 +89,11 @@ export default async function ServicePage({ params }: ServiceRouteProps) {
               <div className="mt-10 space-y-7">{story.signals.map((signal) => <div key={signal.title} data-service-reveal><h3 className="text-lg font-bold leading-7 text-[#0b4d70]">{signal.title}</h3><p className="mt-2 leading-7 text-[#527082]">{signal.text}</p></div>)}</div>
             </div>
             <aside data-service-reveal className="morbia-diagonal relative isolate overflow-hidden rounded-2xl border border-[#5bc0ca]/40 p-6 text-white shadow-[0_20px_55px_rgba(4,72,104,.14)] sm:p-9">
-              <div className="absolute inset-0 -z-10 bg-[linear-gradient(135deg,rgba(3,47,82,.97),rgba(3,62,92,.94),rgba(2,106,121,.86))]" />
+              <div className="absolute inset-0 -z-10 bg-[linear-gradient(135deg,rgba(3,47,82,.98),rgba(3,62,92,.97),rgba(2,76,104,.97))]" />
               <span data-service-symbol className="mb-5 grid h-14 w-14 place-items-center rounded-lg border border-[#6ee2df]/25 bg-[#6de9e2]/10 text-[#75f0e8]"><Icon size={29} strokeWidth={1.8} /></span>
               <h2 className="text-3xl font-black leading-tight tracking-[-.035em]">Lo que podemos resolver.</h2>
-              <p className="mt-4 leading-7 text-[#c4dee7]">{story.audience}</p>
-              <ul className="mt-8 space-y-6">{story.solutions.map((solution) => <li key={solution.title} className="flex gap-3"><Check size={20} className="mt-1 shrink-0 text-[#6de9e2]" /><div><h3 className="text-base font-bold leading-7 text-[#eefafb]">{solution.title}</h3><p className="mt-1 text-sm leading-7 text-[#c6dee7]">{solution.text}</p></div></li>)}</ul>
+              <p className="mt-4 leading-7 text-[#eaf6f7]">{story.audience}</p>
+              <ul className="mt-8 space-y-6">{story.solutions.map((solution) => <li key={solution.title} className="flex gap-3"><Check size={20} className="mt-1 shrink-0 text-[#6de9e2]" /><div><h3 className="text-base font-bold leading-7 text-[#eefafb]">{solution.title}</h3><p className="mt-1 text-sm leading-7 text-[#eaf6f7]">{solution.text}</p></div></li>)}</ul>
               <a href="#hablemos" className="service-button mt-8">Hablemos hoy <ArrowRight size={17} /></a>
             </aside>
           </div>
