@@ -30,7 +30,7 @@ const schema = {
     {
       "@type": "CollectionPage", "@id": `${pageUrl}#webpage`, url: pageUrl,
       name: "Servicios de tecnología en Puebla y Tlaxcala",
-      description: "Capacidades de Morbia para empresas de Puebla y Tlaxcala: presencia digital, SEO, Google Maps, páginas web, chatbots, RPA, automatización, inteligencia artificial y análisis de datos.",
+      description: "Servicios de tecnología para empresas. Morbia se ubica en Puebla y Tlaxcala y trabaja en proyectos remotos de presencia digital, SEO, páginas web, chatbots, automatización, RPA, inteligencia artificial y análisis de datos.",
       inLanguage: "es-MX", isPartOf: { "@id": `${siteUrl}/#website` }, about: { "@id": `${siteUrl}/#organization` },
       mainEntity: { "@type": "ItemList", numberOfItems: regionalServiceGroups.length, itemListElement: regionalServiceGroups.map((service, index) => ({ "@type": "ListItem", position: index + 1, name: service.title, url: `${siteUrl}/servicios/${service.slug}` })) },
       mentions: { "@type": "ItemList", name: "Capacidades de los servicios de Morbia", numberOfItems: regionalCapabilities.length, itemListElement: regionalCapabilities.map((name, index) => ({ "@type": "ListItem", position: index + 1, name })) },

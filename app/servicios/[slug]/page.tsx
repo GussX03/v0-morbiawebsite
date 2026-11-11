@@ -44,7 +44,7 @@ export default async function ServicePage({ params }: ServiceRouteProps) {
       {
         "@type": "Service", "@id": `${pageUrl}#service`, name: service.title, description: service.description, url: pageUrl,
         image: `${siteUrl}${serviceImages[service.slug].src}`, provider: { "@id": `${siteUrl}/#organization` },
-        areaServed: [{ "@type": "City", name: "Puebla, Puebla, México" }, { "@type": "State", name: "Tlaxcala, México" }],
+        areaServed: [{ "@type": "Country", name: "México" }, { "@type": "City", name: "Puebla, Puebla, México" }, { "@type": "State", name: "Tlaxcala, México" }],
       },
       { "@type": "WebPage", "@id": `${pageUrl}#webpage`, url: pageUrl, name: service.title, description: service.description, inLanguage: "es-MX", isPartOf: { "@id": `${siteUrl}/#website` }, mainEntity: { "@id": `${pageUrl}#service` } },
       {
@@ -119,7 +119,7 @@ export default async function ServicePage({ params }: ServiceRouteProps) {
         <section className="service-section" id="preguntas">
           <div className="service-container grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:gap-16">
             <div data-service-reveal><h2 className="service-heading">Antes de dar el siguiente paso.</h2><p className="service-lead">Respuestas claras para empezar a valorar si este servicio tiene sentido para tu negocio.</p></div>
-            <div data-service-reveal>{story.questions.map((item) => <details key={item.question} className="service-faq border-b border-[#c8e2e8]"><summary>{item.question}<Plus size={21} aria-hidden="true" /></summary><p>{item.answer}</p></details>)}</div>
+            <div data-service-reveal>{story.questions.map((item) => <details key={item.question} className="service-faq border-b border-[#c8e2e8]"><summary>{item.question}<Plus size={21} aria-hidden="true" /></summary><p>{item.answer}</p>{item.sourceUrl && <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer" className="mb-6 inline-flex text-sm font-semibold text-[#08718a] underline underline-offset-4 hover:text-[#043b66]">{item.sourceLabel ?? "Fuente oficial"}</a>}</details>)}</div>
           </div>
         </section>
 

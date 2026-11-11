@@ -4,9 +4,10 @@ import Link from "next/link"
 import { TbClock as Clock, TbFileText as FileText, TbHelpCircle as HelpCircle, TbMail as Mail, TbMapPin as MapPin, TbPhone as Phone, TbSettings as Settings, TbShieldCheck as ShieldCheck, TbTrash as Trash2 } from "react-icons/tb"
 
 export const metadata: Metadata = {
-  title: "Aviso de Privacidad - FinZen | Morbia",
+  title: "Aviso de privacidad de FinZen",
   description:
     "Aviso de Privacidad de FinZen, aplicación móvil iOS desarrollada por Morbia para finanzas personales.",
+  alternates: { canonical: "/aviso-de-privacidad" },
 }
 
 const privacyEmail = "privacy@morbia.com.mx"

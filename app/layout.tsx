@@ -46,6 +46,9 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
+  verification: {
+    google: "SNflDTQhYZt8u6L-S1319VL9nO-BOHKCn8AMwLlWNEk",
+  },
   openGraph: {
     type: "website",
     locale: "es_MX",
@@ -99,6 +102,7 @@ const organizationSchema = {
         addressCountry: "MX",
       },
       areaServed: [
+        { "@type": "Country", name: "México" },
         { "@type": "City", name: "Puebla, Puebla, México" },
         { "@type": "State", name: "Tlaxcala, México" },
       ],

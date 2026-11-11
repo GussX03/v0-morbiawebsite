@@ -8,7 +8,7 @@ export type ServiceStory = {
   solutions: { title: string; text: string }[]
   example: { title: string; context: string; before: string; after: string }
   benefits: { title: string; text: string }[]
-  questions: { question: string; answer: string }[]
+  questions: { question: string; answer: string; sourceUrl?: string; sourceLabel?: string }[]
 }
 
 export const serviceStories: Record<string, ServiceStory> = {
@@ -28,7 +28,7 @@ export const serviceStories: Record<string, ServiceStory> = {
     ],
     solutions: [
       { title: "Auditoría y estrategia por canales", text: "Revisamos cómo te encuentran, qué información reciben y qué necesita lograr cada canal. Priorizamos mejoras realistas en vez de abrir perfiles o campañas sin un objetivo claro." },
-      { title: "SEO para buscadores y respuestas de IA", text: "Mejoramos la base técnica y el contenido de tu sitio para que explique con claridad tus servicios y pueda ser rastreado. Una estrategia útil también organiza la información para que los buscadores y asistentes entiendan mejor el contexto, sin fórmulas ni promesas de posición." },
+      { title: "SEO para buscadores y respuestas de IA", text: "Mejoramos la base técnica y el contenido de tu sitio para que explique con claridad tus servicios y pueda ser rastreado. Con acceso autorizado a Search Console, revisamos consultas, páginas e indexación; la estrategia organiza la información para buscadores y asistentes sin prometer posiciones." },
       { title: "Perfil de Empresa en Google y Maps", text: "Ayudamos a crear o reclamar el perfil, completar datos, categorías, horarios, enlaces, fotos y publicaciones, y responder a reseñas reales sin comprar opiniones ni incentivar calificaciones. Google limita estos perfiles a negocios elegibles; trabajamos con invitaciones de acceso y el negocio conserva la propiedad de su cuenta." },
       { title: "Redes sociales con una línea editorial", text: "Definimos los canales, temas, tono, calendario, textos y piezas que tienen sentido para tu audiencia. La publicación y la atención de comentarios o mensajes se acuerdan dentro del alcance de cada proyecto." },
       { title: "Fotografía y producción de video", text: "Planeamos imágenes de tus espacios, productos, servicios y equipo, además de videos cortos para redes o campañas. Los formatos y entregables se definen antes de cada producción." },
@@ -52,6 +52,7 @@ export const serviceStories: Record<string, ServiceStory> = {
       { question: "¿Ustedes toman las fotos y producen los videos?", answer: "Sí, cuando la producción forma parte del alcance acordado. Definimos qué contenido se necesita, dónde se realizará, los formatos y las entregas antes de programar la sesión." },
       { question: "¿El presupuesto de anuncios está incluido?", answer: "No. Los honorarios de planeación y gestión se especifican por separado de la inversión que el cliente autoriza y paga a Google, Meta u otra plataforma." },
       { question: "¿Cómo sabré si la estrategia funciona?", answer: "Acordamos los indicadores y, con tu autorización, revisamos el desempeño orgánico en Search Console y las visitas o acciones medibles en GA4, el perfil de Google y los paneles de anuncios. El detalle depende de los permisos y de que la medición esté configurada correctamente." },
+      { question: "¿Cómo aviso a Google de una página nueva o actualizada?", answer: "Con acceso de propietario o usuario completo en Search Console, inspecciona la URL canónica y usa Solicitar indexación para una página pública que gestionas. Para varias páginas, envía el sitemap.xml. Antes verifica que la página responda correctamente, no tenga noindex ni bloqueo de rastreo y use el canonical esperado. La solicitud y el sitemap ayudan a descubrir cambios, pero no garantizan rastreo, indexación ni posición.", sourceUrl: "https://developers.google.com/search/docs/crawling-indexing/ask-google-to-recrawl", sourceLabel: "Guía oficial de Google para solicitar rastreo" },
     ],
   },
   "paginas-web": {
