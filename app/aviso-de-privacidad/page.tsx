@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
+import { PrivacyPreferencesButton } from "@/components/analytics-consent"
 import { TbClock as Clock, TbFileText as FileText, TbHelpCircle as HelpCircle, TbMail as Mail, TbMapPin as MapPin, TbPhone as Phone, TbSettings as Settings, TbShieldCheck as ShieldCheck, TbTrash as Trash2 } from "react-icons/tb"
 
 export const metadata: Metadata = {
@@ -213,7 +214,7 @@ const sections: PrivacySection[] = [
       {
         subtitle: "3.5 Datos de esta página web",
         items: [
-          "La página pública de Morbia donde se aloja este aviso puede usar Google Analytics para medición agregada de visitas y desempeño del sitio.",
+          "La página pública de Morbia donde se aloja este aviso usa Google Analytics para medición agregada de visitas y desempeño únicamente después de que la persona visitante acepta la medición; si cambia su elección a Solo necesarias, actualizamos el consentimiento a denegado y la página se recarga con la medición desactivada.",
           "Estos datos web no forman parte del expediente financiero de FinZen, pero pueden incluir información técnica como páginas visitadas, interacciones, datos aproximados de dispositivo o navegador y eventos de uso del sitio.",
         ],
       },
@@ -282,8 +283,8 @@ const sections: PrivacySection[] = [
   {
     title: "9. Cookies y medición web",
     content: [
-      "Esta página pública puede usar cookies, identificadores o tecnologías similares asociados a Google Analytics para entender visitas, rendimiento, páginas consultadas e interacciones agregadas del sitio.",
-      "Puedes desactivar o limitar estas tecnologías desde la configuración de tu navegador, bloqueando cookies de terceros, eliminando cookies almacenadas o usando herramientas de exclusión provistas por el navegador o por Google cuando estén disponibles.",
+      "Esta página pública usa Google Analytics para medir visitas y clics de contacto únicamente después de que la persona visitante acepta la medición. Si elige Solo necesarias, la etiqueta no se carga; si revoca una aceptación previa, actualizamos el consentimiento a denegado y recargamos la página con la medición desactivada.",
+      "Puedes cambiar tu elección desde Preferencias de cookies al pie de las páginas públicas de Morbia. La decisión se guarda en este navegador y puedes borrarla desde su configuración.",
       "La desactivación de cookies de medición web no impide el acceso a este aviso ni afecta el funcionamiento principal de FinZen.",
     ],
   },
@@ -611,6 +612,7 @@ export default function PrivacyNoticePage() {
                   </a>
                 ))}
               </div>
+              <PrivacyPreferencesButton className="mt-5 text-sm text-gray-300 underline underline-offset-4 hover:text-white" />
             </div>
           </div>
         </div>

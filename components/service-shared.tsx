@@ -3,6 +3,7 @@ import Link from "next/link"
 import { TbArrowRight as ArrowRight, TbMail as Mail, TbPhone as Phone } from "react-icons/tb"
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTiktok, FaWhatsapp } from "react-icons/fa6"
 import AnalyticsLink from "@/components/analytics-link"
+import { PrivacyPreferencesButton } from "@/components/analytics-consent"
 import { serviceApproach } from "@/lib/service-stories"
 
 export function ServiceApproach() {
@@ -32,13 +33,13 @@ export function ServiceContact({ service = "servicios" }: { service?: string }) 
 }
 
 const socials = [
-  ["Facebook", "https://www.facebook.com/share/1JCLHGkqxF/?mibextid=wwXIfr", FaFacebookF],
-  ["Instagram", "https://www.instagram.com/morbia_mx?igsh=YTlva3FpMzIxeDNk", FaInstagram],
+  ["Facebook", "https://www.facebook.com/p/Morbia-61577588638869/", FaFacebookF],
+  ["Instagram", "https://www.instagram.com/morbia_mx/", FaInstagram],
   ["TikTok", "https://www.tiktok.com/@morbiamx", FaTiktok],
   ["WhatsApp", "https://wa.me/522215268440", FaWhatsapp],
   ["LinkedIn", "https://www.linkedin.com/company/morbia/", FaLinkedinIn],
 ] as const
 
 export function ServiceFooter() {
-  return <footer className="bg-[#042b4d] py-12 text-white"><div className="service-container grid gap-9 md:grid-cols-[1fr_auto]"><div><Link href="/" aria-label="Ir al inicio de Morbia"><Image src="/images/main-logo.png" alt="Morbia" width={170} height={55} className="h-10 w-auto brightness-0 invert" /></Link><p className="mt-5 text-sm font-semibold tracking-[.1em] text-[#5eece3]">INTELIGENCIA ORBITANDO TUS PROCESOS</p><a href="tel:+522215268440" className="mt-5 inline-flex items-center gap-2 text-sm text-[#eaf6f7] hover:text-white"><Phone size={16} /> (+52) 221 526 8440</a><p className="mt-3 text-sm text-[#d5e8ed]">© 2026 Morbia. Todos los derechos reservados.</p></div><div className="md:text-right"><p className="text-sm font-bold text-[#eaf6f7]">Síguenos</p><div className="mt-4 flex gap-3 md:justify-end">{socials.map(([label, href, Icon]) => <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="grid h-11 w-11 place-items-center rounded-full border border-white/20 text-white transition hover:border-[#27e3d5] hover:bg-[#08718a]"><Icon size={17} /></a>)}</div><div className="mt-7 flex flex-wrap gap-x-5 gap-y-3 text-sm text-[#d5e8ed] md:justify-end"><Link href="/#servicios" className="hover:text-white">Volver a la portada</Link><Link href="/servicios-tecnologicos-puebla-tlaxcala" className="hover:text-white">Todos los servicios</Link><Link href="/aviso-de-privacidad" className="hover:text-white">Privacidad</Link></div></div></div></footer>
+  return <footer className="bg-[#042b4d] py-12 text-white"><div className="service-container grid gap-9 md:grid-cols-[1fr_auto]"><div><Link href="/" aria-label="Ir al inicio de Morbia"><Image src="/images/main-logo.png" alt="Morbia" width={170} height={55} className="h-10 w-auto brightness-0 invert" /></Link><p className="mt-5 text-sm font-semibold tracking-[.1em] text-[#5eece3]">INTELIGENCIA ORBITANDO TUS PROCESOS</p><a href="tel:+522215268440" className="mt-5 inline-flex items-center gap-2 text-sm text-[#eaf6f7] hover:text-white"><Phone size={16} /> (+52) 221 526 8440</a><p className="mt-3 text-sm text-[#d5e8ed]">© 2026 Morbia. Todos los derechos reservados.</p></div><div className="md:text-right"><p className="text-sm font-bold text-[#eaf6f7]">Síguenos</p><div className="mt-4 flex gap-3 md:justify-end">{socials.map(([label, href, Icon]) => <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="grid h-11 w-11 place-items-center rounded-full border border-white/20 text-white transition hover:border-[#27e3d5] hover:bg-[#08718a]"><Icon size={17} /></a>)}</div><div className="mt-7 flex flex-wrap gap-x-5 gap-y-3 text-sm text-[#d5e8ed] md:justify-end"><Link href="/#servicios" className="hover:text-white">Volver a la portada</Link><Link href="/servicios-tecnologicos-puebla-tlaxcala" className="hover:text-white">Todos los servicios</Link><Link href="/aviso-de-privacidad" className="hover:text-white">Privacidad</Link><PrivacyPreferencesButton className="hover:text-white" /></div></div></div></footer>
 }

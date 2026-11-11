@@ -1,7 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
-import Script from "next/script"
 import { Figtree, Source_Serif_4 } from "next/font/google"
+import { AnalyticsConsentManager } from "@/components/analytics-consent"
 import { servicePages, siteUrl } from "@/lib/seo-content"
 import "./globals.css"
 
@@ -59,8 +59,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/images/morbia-diagonal-bg.jpg",
-        width: 1200,
-        height: 630,
+        width: 1024,
+        height: 1024,
         alt: "Morbia, inteligencia orbitando tus procesos",
       },
     ],
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
     icon: [
       {
         url: "/favicon.png",
-        sizes: "16x16",
+        sizes: "256x256",
         type: "image/png",
       },
     ],
@@ -107,10 +107,11 @@ const organizationSchema = {
         { "@type": "State", name: "Tlaxcala, México" },
       ],
       sameAs: [
-        "https://www.facebook.com/share/1JCLHGkqxF/?mibextid=wwXIfr",
-        "https://www.instagram.com/morbia_mx?igsh=YTlva3FpMzIxeDNk",
+        "https://www.facebook.com/p/Morbia-61577588638869/",
+        "https://www.instagram.com/morbia_mx/",
         "https://www.tiktok.com/@morbiamx",
         "https://www.linkedin.com/company/morbia/",
+        "https://www.google.com/maps/place/Morbia/@19.0400474,-98.1921822,12z/data=!3m1!4b1!4m6!3m5!1s0xaaa0000f18d746cf:0x95d6e124df4644ed!8m2!3d19.0400474!4d-98.1921822!16s%2Fg%2F11n3ppxs3r",
       ],
       hasOfferCatalog: {
         "@type": "OfferCatalog",
@@ -149,21 +150,11 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
-        {/* Google tag (gtag.js) */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-XF3NM0ZLF8"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-XF3NM0ZLF8');
-          `}
-        </Script>
       </head>
-      <body className={`${morbiaFont.variable} ${morbiaDisplayFont.variable}`}>{children}</body>
+      <body className={`${morbiaFont.variable} ${morbiaDisplayFont.variable}`}>
+        <AnalyticsConsentManager />
+        {children}
+      </body>
     </html>
   )
 }

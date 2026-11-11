@@ -12,6 +12,7 @@ import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useGSAP } from "@gsap/react"
 import FloatingChat from "@/components/floating-chat"
+import { PrivacyPreferencesButton } from "@/components/analytics-consent"
 import MorbiaReviewsExplorer from "@/components/morbia-reviews-explorer"
 import AnalyticsLink from "@/components/analytics-link"
 import SiteHeader from "@/components/site-header"
@@ -90,11 +91,11 @@ const clientLogos = [
 const clientCarouselLogos = [...clientLogos, ...clientLogos]
 
 const socials = [
-  ["Facebook", "https://www.facebook.com/share/1JCLHGkqxF/?mibextid=wwXIfr", FaFacebookF],
-  ["Instagram", "https://www.instagram.com/morbia_mx?igsh=YTlva3FpMzIxeDNk", FaInstagram],
+  ["Facebook", "https://www.facebook.com/p/Morbia-61577588638869/", FaFacebookF],
+  ["Instagram", "https://www.instagram.com/morbia_mx/", FaInstagram],
   ["TikTok", "https://www.tiktok.com/@morbiamx", FaTiktok],
   ["WhatsApp", "https://wa.me/522215268440", FaWhatsapp],
-  ["LinkedIn", "http://linkedin.com/company/morbia/", FaLinkedinIn],
+  ["LinkedIn", "https://www.linkedin.com/company/morbia/", FaLinkedinIn],
 ] as const
 
 export default function MorbiaWebsite() {
@@ -390,7 +391,7 @@ export default function MorbiaWebsite() {
         </div>
       </section>
 
-      <footer className="bg-[#042b4d] py-12 text-white"><div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-[1fr_auto] lg:px-8"><div><Image src="/images/main-logo.png" alt="Morbia" width={170} height={55} className="h-10 w-auto brightness-0 invert" /><p className="mt-5 text-sm font-semibold tracking-[.12em] text-[#5eece3]">INTELIGENCIA ORBITANDO TUS PROCESOS</p><p className="mt-4 text-sm text-[#d5e8ed]">© 2026 Morbia. Todos los derechos reservados.</p></div><div className="md:text-right"><p className="text-sm font-bold text-[#eaf6f7]">Síguenos</p><div className="mt-4 flex gap-3 md:justify-end">{socials.map(([label, href, Icon]) => <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-[#27e3d5] hover:bg-[#19e0d0] hover:text-[#05335c]"><Icon size={17} /></a>)}</div><div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-[#d5e8ed] md:justify-end">{navItems.slice(1).map(([label, id]) => <a key={id} href={`#${id}`} onClick={(event) => { event.preventDefault(); goTo(id) }} className="hover:text-white">{label}</a>)}</div></div></div></footer>
+      <footer className="bg-[#042b4d] py-12 text-white"><div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-[1fr_auto] lg:px-8"><div><Image src="/images/main-logo.png" alt="Morbia" width={170} height={55} className="h-10 w-auto brightness-0 invert" /><p className="mt-5 text-sm font-semibold tracking-[.12em] text-[#5eece3]">INTELIGENCIA ORBITANDO TUS PROCESOS</p><p className="mt-4 text-sm text-[#d5e8ed]">© 2026 Morbia. Todos los derechos reservados.</p></div><div className="md:text-right"><p className="text-sm font-bold text-[#eaf6f7]">Síguenos</p><div className="mt-4 flex gap-3 md:justify-end">{socials.map(([label, href, Icon]) => <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-[#27e3d5] hover:bg-[#19e0d0] hover:text-[#05335c]"><Icon size={17} /></a>)}</div><div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-[#d5e8ed] md:justify-end">{navItems.slice(1).map(([label, id]) => <a key={id} href={`#${id}`} onClick={(event) => { event.preventDefault(); goTo(id) }} className="hover:text-white">{label}</a>)}<a href="/aviso-de-privacidad" className="hover:text-white">Privacidad</a><PrivacyPreferencesButton className="hover:text-white" /></div></div></div></footer>
       <FloatingChat />
     </main>
   )
