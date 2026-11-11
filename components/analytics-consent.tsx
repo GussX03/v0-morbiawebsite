@@ -178,16 +178,17 @@ export function AnalyticsConsentManager() {
   return (
     <section
       aria-label="Preferencias de privacidad"
-      className="fixed bottom-24 left-4 z-[120] w-[min(34rem,calc(100vw-2rem))] rounded-2xl border border-[#62e7df]/35 bg-[#052f53]/[.98] p-5 text-[#eef8fa] shadow-[0_20px_65px_rgba(0,20,45,.42)] md:bottom-4"
+      className="fixed bottom-24 left-4 z-[120] w-[min(42rem,calc(100vw-2rem))] rounded-2xl border border-[#62e7df]/35 bg-[#052f53]/[.98] p-3 text-[#eef8fa] shadow-[0_20px_65px_rgba(0,20,45,.42)] md:bottom-4 md:p-4"
     >
-      <p className="text-sm font-bold text-white">Privacidad de Morbia</p>
-      <p className="mt-2 text-sm leading-6 text-[#d7e8ed]">
-        Si aceptas, Google Analytics medirá las páginas que visitas y los clics de contacto. La medición publicitaria permanece desactivada. Puedes cambiar tu elección desde el pie de página.
-      </p>
-      <a href="/aviso-de-privacidad" className="mt-2 inline-flex text-sm font-semibold text-[#72eee3] underline-offset-4 hover:underline">
-        Leer el aviso de privacidad
-      </a>
-      <div className="mt-4 flex flex-wrap justify-end gap-2">
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <div className="min-w-0 md:max-w-[28rem]">
+          <p className="text-sm font-bold text-white">Privacidad de Morbia</p>
+          <p className="mt-1 text-xs leading-5 text-[#d7e8ed]">
+            Si aceptas, Analytics medirá visitas y clics de contacto; la medición publicitaria sigue desactivada.{" "}
+            <a href="/aviso-de-privacidad" className="font-semibold text-[#72eee3] underline-offset-4 hover:underline">Aviso de privacidad</a>
+          </p>
+        </div>
+        <div className="flex flex-wrap justify-end gap-2">
         {choice && (
           <button
             type="button"
@@ -211,6 +212,7 @@ export function AnalyticsConsentManager() {
         >
           Aceptar medición
         </button>
+      </div>
       </div>
     </section>
   )
